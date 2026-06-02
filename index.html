@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="我的助理"/>
+<title>我的每日助理</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.2.0/dist/tabler-icons.min.css"/>
+<style>
+:root {
+  --bg: #ffffff; --bg2: #f5f5f5; --bg3: #ececec;
+  --text: #1a1a1a; --text2: #555; --text3: #999;
+  --border: rgba(0,0,0,0.1); --border2: rgba(0,0,0,0.18);
+  --success: #2d8a4e; --success-bg: #eaf3de;
+  --danger: #c0392b; --danger-bg: #fcebeb;
+  --info: #1a6fb5; --info-bg: #e6f1fb;
+  --warn: #a05c00; --warn-bg: #faeeda;
+  --radius: 10px; --radius-lg: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e; --bg2: #2c2c2e; --bg3: #3a3a3c;
+    --text: #f2f2f7; --text2: #aeaeb2; --text3: #636366;
+    --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
+    --success: #6fcf97; --success-bg: #173404;
+    --danger: #ff6b6b; --danger-bg: #501313;
+    --info: #5baef0; --info-bg: #042c53;
+    --warn: #f0a500; --warn-bg: #412402;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: var(--bg3); color: var(--text); min-height: 100vh; }
+.app { max-width: 430px; margin: 0 auto; background: var(--bg3); min-height: 100vh; padding-bottom: 80px; }
+.header { background: var(--bg); padding: 56px 20px 16px; border-bottom: 0.5px solid var(--border); }
+.header-row { display: flex; justify-content: space-between; align-items: flex-start; }
+.greeting { font-size: 22px; font-weight: 600; color: var(--text); }
+.subdate { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.streak-badge { background: var(--warn-bg); color: var(--warn); font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 20px; }
+.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: var(--bg); border-top: 0.5px solid var(--border); display: flex; padding: 8px 0 20px; z-index: 100; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; border: none; background: none; cursor: pointer; padding: 4px 0; color: var(--text3); font-size: 10px; }
+.nav-item i { font-size: 22px; }
+.nav-item.active { color: var(--info); }
+.panel { display: none; padding: 16px; }
+.panel.active { display: block; }
+.sec-label { font-size: 11px; font-weight: 600; letter-spacing: .07em; color: var(--text3); text-transform: uppercase; margin-bottom: 8px; margin-top: 4px; }
+.card { background: var(--bg); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 12px; }
+.task-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
+.task-item:last-of-type { border-bottom: none; padding-bottom: 0; }
+.chk { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border2); flex-shrink: 0; margin-top: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; }
+.chk.done { background: var(--success-bg); border-color: var(--success); }
+.chk.done::after { content:''; width:9px; height:9px; background: var(--success); border-radius:50%; }
+.task-body { flex: 1; min-width: 0; }
+.task-title { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.4; }
+.task-title.done { text-decoration: line-through; color: var(--text3); }
+.task-meta { font-size: 12px; color: var(--text2); margin-top: 3px; }
+.del-btn { background: none; border: none; cursor: pointer; color: var(--text3); padding: 4px; font-size: 18px; flex-shrink: 0; }
+.ttag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 6px; margin-right: 4px; }
+.t-morning { background: var(--warn-bg); color: var(--warn); }
+.t-noon { background: var(--info-bg); color: var(--info); }
+.t-night { background: var(--bg2); color: var(--text2); }
+.t-weekend { background: var(--success-bg); color: var(--success); }
+.t-custom { background: var(--bg2); color: var(--text2); }
+.prog-bar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 10px; }
+.prog-fill { height: 100%; border-radius: 2px; background: var(--success); transition: width .4s; }
+.add-row { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--border); }
+.add-row input, .ask-bar input { flex: 1; padding: 10px 12px; font-size: 15px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius); color: var(--text); outline: none; }
+.add-row button, .ask-bar button, .action-btn { padding: 10px 14px; font-size: 14px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg2); color: var(--text); cursor: pointer; white-space: nowrap; font-weight: 500; }
+.news-item { padding: 10px 0; border-bottom: 0.5px solid var(--border); }
+.news-item:last-child { border-bottom: none; }
+.ntag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; margin-bottom: 5px; }
+.nt-world { background: var(--info-bg); color: var(--info); }
+.nt-chem { background: var(--success-bg); color: var(--success); }
+.nt-invest { background: var(--warn-bg); color: var(--warn); }
+.news-hl { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.news-sm { font-size: 13px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
+.loading-pill { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text3); padding: 4px 0; }
+.spinner { width: 14px; height: 14px; border: 2px solid var(--border2); border-top-color: var(--text2); border-radius: 50%; animation: spin .8s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px; }
+.stat-card { background: var(--bg); border-radius: var(--radius-lg); padding: 14px; }
+.stat-lbl { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+.stat-val { font-size: 26px; font-weight: 600; color: var(--text); }
+.stat-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.hist-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 0.5px solid var(--border); font-size: 14px; }
+.hist-item:last-child { border-bottom: none; }
+.hist-date { color: var(--text2); }
+.hist-dots { display: flex; gap: 5px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border2); }
+.dot.done { background: var(--success); }
+.q-card { background: var(--bg2); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 12px; }
+.qtag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 6px; margin-bottom: 10px; }
+.qt-relation { background: var(--danger-bg); color: var(--danger); }
+.qt-self { background: var(--info-bg); color: var(--info); }
+.qt-life { background: var(--success-bg); color: var(--success); }
+.q-text { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.6; margin-bottom: 8px; }
+.q-hint { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.btn-row { display: flex; gap: 8px; margin-top: 12px; }
+.btn { flex: 1; padding: 10px; font-size: 14px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); cursor: pointer; font-weight: 500; }
+.textarea { width: 100%; padding: 10px 12px; font-size: 14px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text); resize: none; margin-top: 10px; line-height: 1.6; font-family: inherit; outline: none; }
+.daily-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--border); font-size: 14px; }
+.daily-item:last-child { border-bottom: none; }
+.sm-chk { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border2); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.sm-chk.done { background: var(--danger-bg); border-color: var(--danger); }
+.sm-chk.done::after { content:''; width:8px; height:8px; background: var(--danger); border-radius:50%; }
+.daily-txt { flex: 1; color: var(--text); }
+.daily-txt.done { text-decoration: line-through; color: var(--text3); }
+.heart-prog-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 10px; }
+.heart-prog-fill { height: 100%; border-radius: 2px; background: var(--danger); transition: width .4s; }
+.counter-row { display: flex; gap: 10px; margin-bottom: 12px; }
+.counter { flex: 1; background: var(--bg); border-radius: var(--radius-lg); padding: 14px 10px; text-align: center; }
+.cnt-num { font-size: 24px; font-weight: 600; color: var(--text); }
+.cnt-lbl { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.exp-item { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 0.5px solid var(--border); }
+.exp-item:last-child { border-bottom: none; }
+.exp-cat { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 6px; margin-bottom: 4px; }
+.ec-food { background: var(--warn-bg); color: var(--warn); }
+.ec-outdoor { background: var(--success-bg); color: var(--success); }
+.ec-culture { background: var(--info-bg); color: var(--info); }
+.ec-travel { background: var(--danger-bg); color: var(--danger); }
+.ec-craft { background: var(--bg2); color: var(--text2); }
+.ec-sport { background: var(--success-bg); color: var(--success); }
+.exp-main { flex: 1; min-width: 0; }
+.exp-title { font-size: 15px; font-weight: 500; color: var(--text); }
+.exp-title.done { text-decoration: line-through; color: var(--text3); }
+.exp-sub { font-size: 13px; color: var(--text2); margin-top: 3px; }
+.exp-actions { display: flex; gap: 8px; flex-shrink: 0; margin-top: 2px; }
+.icon-btn { background: none; border: 1px solid var(--border2); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 15px; color: var(--text2); }
+.icon-btn.aw { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+.icon-btn.ad { border-color: var(--success); color: var(--success); background: var(--success-bg); }
+.filter-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.fbtn { padding: 5px 11px; font-size: 12px; border: 0.5px solid var(--border2); border-radius: 20px; background: none; color: var(--text2); cursor: pointer; font-weight: 500; }
+.fbtn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.ask-bar { display: flex; gap: 8px; }
+.ai-resp { background: var(--bg2); border-radius: var(--radius); padding: 12px; font-size: 14px; color: var(--text); line-height: 1.6; margin-top: 10px; }
+.notif-row { display: flex; align-items: center; gap: 10px; }
+.notif-status { font-size: 14px; color: var(--text2); flex: 1; }
+.time-row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 0.5px solid var(--border); }
+.time-row label { font-size: 14px; color: var(--text2); }
+.time-row input[type=time] { padding: 7px 10px; font-size: 14px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg2); color: var(--text); outline: none; }
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.75); border-radius: 20px; padding: 9px 18px; font-size: 13px; color: #fff; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; z-index: 200; }
+.toast.show { opacity: 1; }
+.quote-box { background: var(--danger-bg); border-left: 3px solid var(--danger); border-radius: 0 var(--radius) var(--radius) 0; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: var(--text2); line-height: 1.7; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <div class="greeting" id="greeting"></div>
+      <div class="subdate" id="subdate"></div>
+    </div>
+    <div class="streak-badge" id="streak-badge">🔥 1 天</div>
+  </div>
+</div>
+
+<!-- 今日 -->
+<div id="tab-today" class="panel active">
+  <div class="sec-label" style="margin-top:8px;">今日學習任務</div>
+  <div class="card">
+    <div id="task-list"></div>
+    <div class="add-row">
+      <input type="text" id="new-task" placeholder="新增自訂任務..." maxlength="40"/>
+      <button onclick="addTask()">新增</button>
+    </div>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="task-prog"></div></div>
+  <div class="sec-label" style="margin-top:16px;">問 AI 助理</div>
+  <div class="card">
+    <div class="ask-bar">
+      <input type="text" id="ask-input" placeholder="例如：今天德文複習什麼？"/>
+      <button onclick="askAI()">送出</button>
+    </div>
+    <div id="ai-area"></div>
+  </div>
+</div>
+
+<!-- 新聞 -->
+<div id="tab-news" class="panel">
+  <div class="sec-label" style="margin-top:8px;">今日新聞彙整</div>
+  <div class="card" id="news-card">
+    <div class="loading-pill"><div class="spinner"></div>AI 搜尋最新資訊中...</div>
+  </div>
+</div>
+
+<!-- 學哥 -->
+<div id="tab-heart" class="panel">
+  <div class="sec-label" style="margin-top:8px;">今日思考題</div>
+  <div class="q-card">
+    <div class="qtag" id="qtag"></div>
+    <div class="q-text" id="qtext"></div>
+    <div class="q-hint" id="qhint"></div>
+    <div class="btn-row">
+      <button class="btn" onclick="nextQ()">換一題</button>
+      <button class="btn" id="save-btn" onclick="toggleSaved()">⭐ 收藏</button>
+    </div>
+    <textarea class="textarea" id="q-note" rows="3" placeholder="寫下你的想法..." oninput="saveQNote()"></textarea>
+  </div>
+  <div class="quote-box">「為什麼他愛我，是因為他需要我這樣的人，所以他會為了我付出他可以付出的愛。」</div>
+  <div class="sec-label">每天對學哥做的小事</div>
+  <div class="card">
+    <div id="daily-list"></div>
+    <div class="heart-prog-bar"><div class="heart-prog-fill" id="heart-prog"></div></div>
+  </div>
+  <div class="sec-label">關係平衡筆記</div>
+  <div class="card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:6px;">開銷、個性互補、牡羊火象⋯ 想到什麼記在這裡</div>
+    <textarea class="textarea" id="balance-note" rows="3" placeholder="今天的想法..." oninput="saveBalance()" style="margin-top:0;"></textarea>
+  </div>
+</div>
+
+<!-- 體驗 -->
+<div id="tab-exp" class="panel">
+  <div class="counter-row" style="margin-top:8px;">
+    <div class="counter"><div class="cnt-num" id="cnt-want">0</div><div class="cnt-lbl">想去</div></div>
+    <div class="counter"><div class="cnt-num" id="cnt-done">0</div><div class="cnt-lbl">完成</div></div>
+    <div class="counter"><div class="cnt-num" id="cnt-left">0</div><div class="cnt-lbl">待探索</div></div>
+  </div>
+  <div class="filter-row">
+    <button class="fbtn active" onclick="filterExp('all',this)">全部</button>
+    <button class="fbtn" onclick="filterExp('want',this)">想去</button>
+    <button class="fbtn" onclick="filterExp('done',this)">完成</button>
+    <button class="fbtn" onclick="filterExp('food',this)">美食</button>
+    <button class="fbtn" onclick="filterExp('outdoor',this)">戶外</button>
+    <button class="fbtn" onclick="filterExp('culture',this)">文化</button>
+    <button class="fbtn" onclick="filterExp('travel',this)">旅遊</button>
+  </div>
+  <div class="card" id="exp-list"></div>
+</div>
+
+<!-- 紀錄 -->
+<div id="tab-stats" class="panel">
+  <div class="stat-grid" style="margin-top:8px;">
+    <div class="stat-card"><div class="stat-lbl">連續打卡</div><div class="stat-val" id="s-streak">-</div><div class="stat-sub">天</div></div>
+    <div class="stat-card"><div class="stat-lbl">本週完成率</div><div class="stat-val" id="s-rate">-</div><div class="stat-sub">%</div></div>
+    <div class="stat-card"><div class="stat-lbl">累計完成</div><div class="stat-val" id="s-total">-</div><div class="stat-sub">項任務</div></div>
+    <div class="stat-card"><div class="stat-lbl">最長連續</div><div class="stat-val" id="s-best">-</div><div class="stat-sub">天</div></div>
+  </div>
+  <div class="sec-label">最近 7 天</div>
+  <div class="card" id="hist-list"></div>
+</div>
+
+<!-- 設定 -->
+<div id="tab-settings" class="panel">
+  <div class="sec-label" style="margin-top:8px;">推播通知</div>
+  <div class="card">
+    <div class="notif-row">
+      <div class="notif-status" id="notif-status">載入中...</div>
+      <button class="action-btn" id="notif-btn" onclick="toggleNotif()">-</button>
+    </div>
+    <div class="time-row"><label>早上提醒</label><input type="time" id="t-morning" value="08:00" onchange="saveNotifTime()"/></div>
+    <div class="time-row"><label>晚上提醒</label><input type="time" id="t-evening" value="21:00" onchange="saveNotifTime()"/></div>
+    <div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border);">
+      <button class="action-btn" onclick="testNotif()" style="width:100%;">發送測試通知</button>
+    </div>
+  </div>
+  <div class="sec-label">加入手機主畫面</div>
+  <div class="card" style="font-size:14px;color:var(--text2);line-height:1.8;">
+    Safari 瀏覽器開啟此頁面<br>
+    → 點底部「分享」按鈕 <i class="ti ti-share"></i><br>
+    → 選「加入主畫面」<br>
+    → 桌面就有 App 圖示了！
+  </div>
+  <div class="sec-label">資料管理</div>
+  <div class="card">
+    <button class="action-btn" onclick="clearToday()" style="width:100%;margin-bottom:10px;">重置今日打勾</button>
+    <button class="action-btn" onclick="clearAll()" style="width:100%;color:var(--danger);">清除所有資料</button>
+  </div>
+</div>
+
+<!-- 底部導覽 -->
+<div class="bottom-nav">
+  <button class="nav-item active" onclick="sw('today',this)" id="nav-today">
+    <i class="ti ti-home"></i><span>今日</span>
+  </button>
+  <button class="nav-item" onclick="sw('news',this)" id="nav-news">
+    <i class="ti ti-news"></i><span>新聞</span>
+  </button>
+  <button class="nav-item" onclick="sw('heart',this)" id="nav-heart">
+    <i class="ti ti-heart"></i><span>學哥</span>
+  </button>
+  <button class="nav-item" onclick="sw('exp',this)" id="nav-exp">
+    <i class="ti ti-map-2"></i><span>體驗</span>
+  </button>
+  <button class="nav-item" onclick="sw('stats',this)" id="nav-stats">
+    <i class="ti ti-chart-bar"></i><span>紀錄</span>
+  </button>
+  <button class="nav-item" onclick="sw('settings',this)" id="nav-settings">
+    <i class="ti ti-settings"></i><span>設定</span>
+  </button>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SK='fulldash_v3';
+function load(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function save(d){localStorage.setItem(SK,JSON.stringify(d));}
+let db=load();
+if(!db.history)db.history={};
+if(!db.custom)db.custom=[];
+if(!db.notifTime)db.notifTime={morning:'08:00',evening:'21:00'};
+if(!db.streak)db.streak={current:0,best:0};
+if(!db.totalDone)db.totalDone=0;
+if(!db.qIndex)db.qIndex=0;
+if(!db.notes)db.notes={};
+if(!db.saved)db.saved=[];
+if(!db.expStatus)db.expStatus={};
+if(!db.dailyDone)db.dailyDone={};
+if(!db.balanceNote)db.balanceNote='';
+
+const DAYS=['日','一','二','三','四','五','六'];
+const now=new Date();
+const todayStr=now.toISOString().slice(0,10);
+const dow=now.getDay();
+const isWE=dow===0||dow===6;
+const hr=now.getHours();
+
+document.getElementById('greeting').textContent=hr<12?'早安！':hr<18?'午安！':'晚安！';
+document.getElementById('subdate').textContent=now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate()+' 週'+DAYS[dow];
+
+const baseWeekday=[
+  {id:'en1',time:'morning',label:'早上',title:'Engoo 文章默讀',meta:'Cambly Daily Lesson・5 分鐘',fixed:true},
+  {id:'en2',time:'noon',label:'午休',title:'ESL Podcast 聆聽',meta:'6 Minute English / All Ears English・10-15 分鐘',fixed:true},
+  {id:'en3',time:'night',label:'睡前',title:'英文日記 3 句',meta:'用英文描述今天發生的事・5 分鐘',fixed:true},
+  {id:'de1',time:'noon',label:'每日',title:'德文詞彙複習',meta:'Anki 單字複習・15 分鐘',fixed:true},
+];
+const baseWeekend=[
+  {id:'en4',time:'weekend',label:'週末',title:'Cambly 課程',meta:'30 分鐘，效果比平日好 3 倍',fixed:true},
+  {id:'de2',time:'weekend',label:'週末',title:'德文正規課程',meta:'補習班 / 線上課自學・60-90 分鐘',fixed:true},
+  {id:'de3',time:'noon',label:'本週',title:'德文聽力練習',meta:'YouTube 德語頻道 / Podcast・30 分鐘',fixed:true},
+  {id:'de4',time:'noon',label:'本週',title:'德文口說或寫作',meta:'語言交換或寫日記・30 分鐘',fixed:true},
+];
+const baseTasks=isWE?baseWeekend:baseWeekday;
+if(!db.history[todayStr])db.history[todayStr]={};
+
+function allTasks(){return[...baseTasks,...db.custom.map(t=>({...t,time:'custom',label:'自訂',fixed:false}))];}
+
+function renderTasks(){
+  const all=allTasks();
+  document.getElementById('task-list').innerHTML=all.map(t=>{
+    const done=!!db.history[todayStr][t.id];
+    return`<div class="task-item">
+      <div class="chk ${done?'done':''}" onclick="toggleTask('${t.id}')"></div>
+      <div class="task-body">
+        <div class="task-title ${done?'done':''}">${t.title}</div>
+        <div class="task-meta"><span class="ttag t-${t.time}">${t.label}</span>${t.meta||''}</div>
+      </div>
+      ${!t.fixed?`<button class="del-btn" onclick="delTask('${t.id}')">×</button>`:''}
+    </div>`;
+  }).join('');
+  const dc=all.filter(t=>db.history[todayStr][t.id]).length;
+  document.getElementById('task-prog').style.width=(all.length?Math.round(dc/all.length*100):0)+'%';
+}
+
+function toggleTask(id){
+  const prev=!!db.history[todayStr][id];
+  db.history[todayStr][id]=!prev;
+  if(!prev)db.totalDone=(db.totalDone||0)+1;
+  else db.totalDone=Math.max(0,(db.totalDone||0)-1);
+  save(db);renderTasks();updateStreak();
+}
+function addTask(){
+  const inp=document.getElementById('new-task');
+  const v=inp.value.trim();if(!v)return;
+  db.custom.push({id:'c_'+Date.now(),title:v,meta:'',fixed:false});
+  save(db);inp.value='';renderTasks();showToast('已新增：'+v);
+}
+function delTask(id){
+  db.custom=db.custom.filter(t=>t.id!==id);
+  delete db.history[todayStr][id];
+  save(db);renderTasks();showToast('已刪除');
+}
+document.getElementById('new-task').addEventListener('keydown',e=>{if(e.key==='Enter')addTask();});
+
+function updateStreak(){
+  let s=0;
+  for(let i=0;i<365;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const h=db.history[ds];
+    if(!h||!Object.keys(h).some(k=>h[k]))break;
+    s++;
+  }
+  db.streak.current=s;db.streak.best=Math.max(db.streak.best||0,s);
+  save(db);
+  document.getElementById('streak-badge').textContent='🔥 '+s+' 天';
+}
+
+function calcWeekRate(){
+  let tot=0,dn=0;
+  for(let i=0;i<7;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const h=db.history[d.toISOString().slice(0,10)];
+    if(h){const k=Object.keys(h);tot+=k.length;dn+=k.filter(x=>h[x]).length;}
+  }
+  return tot>0?Math.round(dn/tot*100):0;
+}
+
+function renderStats(){
+  document.getElementById('s-streak').textContent=db.streak.current||0;
+  document.getElementById('s-best').textContent=db.streak.best||0;
+  document.getElementById('s-rate').textContent=calcWeekRate();
+  document.getElementById('s-total').textContent=db.totalDone||0;
+  const all=allTasks();
+  let rows='';
+  for(let i=0;i<7;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const lbl=i===0?'今天':(d.getMonth()+1)+'/'+d.getDate();
+    const h=db.history[ds]||{};
+    const dots=all.map(t=>`<div class="dot ${h[t.id]?'done':''}"></div>`).join('');
+    rows+=`<div class="hist-item"><span class="hist-date">${lbl}</span><div class="hist-dots">${dots}</div></div>`;
+  }
+  document.getElementById('hist-list').innerHTML=rows;
+}
+
+const questions=[
+  {tag:'relation',label:'關係思考',text:'要怎麼表達「我愛你」這件事？怎麼讓我愛的人知道我愛他？',hint:'不只是說出口，行動、眼神、習慣，都是表達的方式。'},
+  {tag:'self',label:'認識自己',text:'我是一個什麼樣的人？我需要什麼樣的人？',hint:'學哥說他愛你，是因為他需要你這樣的人。那你需要什麼樣的人呢？'},
+  {tag:'life',label:'人生方向',text:'有一件事，如果要做可以做一輩子，那會是什麼？',hint:'從家庭、社交、健康、信仰、個人發展五個維度想想看。'},
+  {tag:'relation',label:'關係思考',text:'什麼是愛？我現在是喜歡他，但怎麼樣去愛一個人？',hint:'喜歡和愛的差別，對你來說是什麼？'},
+  {tag:'relation',label:'關係思考',text:'我要怎麼平衡我們兩個的開銷？',hint:'不只是金錢，還有付出感和心理上的平衡。'},
+  {tag:'self',label:'認識自己',text:'要和牡羊座的火象個性相處，我需要具備什麼？',hint:'不是去改變他，而是怎麼和這樣的能量互補共存。'},
+  {tag:'life',label:'人生方向',text:'家庭、社交、健康、信仰、個人發展，現在最需要投入哪個維度？',hint:'不用全部都強，但要清楚現在最重要的是哪個。'},
+  {tag:'relation',label:'日常行動',text:'這個月學哥有什麼還沒完成的事？我可以怎麼幫他或督促他？',hint:'愛不只是陪伴，也包括幫對方成為更好的自己。'},
+];
+
+let curQ=db.qIndex%questions.length;
+function renderQ(){
+  const q=questions[curQ];
+  document.getElementById('qtag').textContent=q.label;
+  document.getElementById('qtag').className='qtag qt-'+q.tag;
+  document.getElementById('qtext').textContent=q.text;
+  document.getElementById('qhint').textContent=q.hint;
+  document.getElementById('q-note').value=db.notes['q'+curQ]||'';
+  document.getElementById('save-btn').textContent=db.saved.includes(curQ)?'⭐ 已收藏':'⭐ 收藏';
+}
+function nextQ(){curQ=(curQ+1)%questions.length;db.qIndex=curQ;save(db);renderQ();}
+function toggleSaved(){
+  const i=db.saved.indexOf(curQ);
+  if(i>-1)db.saved.splice(i,1);else db.saved.push(curQ);
+  save(db);renderQ();showToast(i>-1?'已取消收藏':'已收藏');
+}
+function saveQNote(){db.notes['q'+curQ]=document.getElementById('q-note').value;save(db);}
+function saveBalance(){db.balanceNote=document.getElementById('balance-note').value;save(db);}
+
+const dailyActions=[
+  {id:'d1',text:'打電話確認學哥到家了沒'},
+  {id:'d2',text:'今天有沒有機會幫他買晚餐？'},
+  {id:'d3',text:'他最近有喜歡什麼東西，可以幫他買或做嗎？'},
+  {id:'d4',text:'這個月他有什麼還沒完成的事？'},
+];
+if(!db.dailyDone[todayStr])db.dailyDone[todayStr]={};
+function renderDaily(){
+  document.getElementById('daily-list').innerHTML=dailyActions.map(a=>{
+    const done=!!db.dailyDone[todayStr][a.id];
+    return`<div class="daily-item">
+      <div class="sm-chk ${done?'done':''}" onclick="toggleDaily('${a.id}')"></div>
+      <div class="daily-txt ${done?'done':''}">${a.text}</div>
+    </div>`;
+  }).join('');
+  const dc=dailyActions.filter(a=>db.dailyDone[todayStr][a.id]).length;
+  document.getElementById('heart-prog').style.width=Math.round(dc/dailyActions.length*100)+'%';
+  document.getElementById('balance-note').value=db.balanceNote||'';
+}
+function toggleDaily(id){db.dailyDone[todayStr][id]=!db.dailyDone[todayStr][id];save(db);renderDaily();}
+
+const experiences=[
+  {id:'x1',cat:'food',cl:'美食',title:'一起做一道從沒做過的料理',sub:'選一個完全陌生的食譜，一起下廚'},
+  {id:'x2',cat:'outdoor',cl:'戶外',title:'第一次一起爬山',sub:'台北大屯山、象山、七星山都適合'},
+  {id:'x3',cat:'culture',cl:'文化',title:'一起看一場現場音樂表演',sub:'爵士、古典、獨立樂團都算'},
+  {id:'x4',cat:'travel',cl:'旅遊',title:'第一次一起出遊過夜',sub:'不論遠近，重點是第一次'},
+  {id:'x5',cat:'food',cl:'美食',title:'一起去吃一家排隊名店',sub:'提前研究、一起等待、一起評價'},
+  {id:'x6',cat:'culture',cl:'文化',title:'一起去看展覽',sub:'美術館、設計展、攝影展'},
+  {id:'x7',cat:'outdoor',cl:'戶外',title:'第一次一起騎腳踏車',sub:'租 YouBike 環河或找一條路線'},
+  {id:'x8',cat:'craft',cl:'手作',title:'一起做一個手作小物',sub:'陶藝、皮革、蠟燭、香氛都可以'},
+  {id:'x9',cat:'outdoor',cl:'戶外',title:'一起看日出或日落',sub:'找一個好地點，記錄這個時刻'},
+  {id:'x10',cat:'culture',cl:'文化',title:'一起看一部從沒看過類型的電影',sub:'一人選一部不熟悉的類型互換看'},
+  {id:'x11',cat:'food',cl:'美食',title:'第一次一起吃某種沒吃過的料理',sub:'選一個兩個人都沒吃過的異國料理'},
+  {id:'x12',cat:'sport',cl:'運動',title:'一起嘗試一項新運動',sub:'攀岩、桌球、羽毛球、衝浪都算'},
+  {id:'x13',cat:'travel',cl:'旅遊',title:'第一次一起坐夜車或長途旅程',sub:'過程本身就是體驗'},
+  {id:'x14',cat:'craft',cl:'手作',title:'一起拍一組正式的紀念照',sub:'租服裝或找一個有意義的地點'},
+  {id:'x15',cat:'outdoor',cl:'戶外',title:'一起去夜市吃遍所有想吃的',sub:'不設限，吃到不想動為止'},
+  {id:'x16',cat:'culture',cl:'文化',title:'一起去對方的家鄉',sub:'讓對方帶你認識他長大的地方'},
+  {id:'x17',cat:'sport',cl:'運動',title:'一起去游泳或玩水',sub:'海邊、游泳池或水上樂園'},
+  {id:'x18',cat:'travel',cl:'旅遊',title:'一起去一個完全陌生的城市',sub:'沒有計畫，當天決定要去哪裡'},
+];
+
+let expFilter='all';
+function renderExp(){
+  let list=experiences;
+  if(expFilter==='want')list=experiences.filter(e=>db.expStatus[e.id]==='want');
+  else if(expFilter==='done')list=experiences.filter(e=>db.expStatus[e.id]==='done');
+  else if(['food','outdoor','culture','travel','craft','sport'].includes(expFilter))
+    list=experiences.filter(e=>e.cat===expFilter);
+  const el=document.getElementById('exp-list');
+  el.innerHTML=list.length===0
+    ?'<div style="font-size:14px;color:var(--text3);padding:8px 0;">沒有符合的項目</div>'
+    :list.map(e=>{
+      const st=db.expStatus[e.id]||'';
+      return`<div class="exp-item">
+        <div class="exp-main">
+          <div><span class="exp-cat ec-${e.cat}">${e.cl}</span></div>
+          <div class="exp-title ${st==='done'?'done':''}">${e.title}</div>
+          <div class="exp-sub">${e.sub}</div>
+        </div>
+        <div class="exp-actions">
+          <button class="icon-btn ${st==='want'?'aw':''}" onclick="setExp('${e.id}','want')">♡</button>
+          <button class="icon-btn ${st==='done'?'ad':''}" onclick="setExp('${e.id}','done')">✓</button>
+        </div>
+      </div>`;
+    }).join('');
+  document.getElementById('cnt-want').textContent=experiences.filter(e=>db.expStatus[e.id]==='want').length;
+  document.getElementById('cnt-done').textContent=experiences.filter(e=>db.expStatus[e.id]==='done').length;
+  document.getElementById('cnt-left').textContent=experiences.filter(e=>db.expStatus[e.id]!=='done').length;
+}
+function setExp(id,st){
+  db.expStatus[id]=db.expStatus[id]===st?null:st;
+  save(db);renderExp();
+  showToast(db.expStatus[id]==='want'?'加入想去清單':db.expStatus[id]==='done'?'記錄完成！':'已取消');
+}
+function filterExp(f,btn){
+  expFilter=f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderExp();
+}
+
+let newsLoaded=false;
+async function loadNews(){
+  newsLoaded=true;
+  const card=document.getElementById('news-card');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        tools:[{type:'web_search_20250305',name:'web_search'}],
+        system:`你是每日新聞彙整助理。搜尋今日最新新聞後只回傳 JSON，不要任何說明或 markdown。格式：{"news":[{"tag":"world","headline":"...","summary":"..."},{"tag":"chem","headline":"...","summary":"..."},{"tag":"invest","headline":"...","summary":"..."}]}。每類一則，headline 最多20字，summary 最多45字，全部繁體中文。`,
+        messages:[{role:'user',content:'今天是'+todayStr+'，請搜尋今日重要新聞。'}]
+      })
+    });
+    const data=await res.json();
+    let txt=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+    txt=txt.replace(/```json|```/g,'').trim();
+    const p=JSON.parse(txt);
+    const tm={world:'nt-world',chem:'nt-chem',invest:'nt-invest'};
+    const tl={world:'世界大事',chem:'化工新技術',invest:'投資趨勢'};
+    card.innerHTML=p.news.map(n=>`
+      <div class="news-item">
+        <div class="ntag ${tm[n.tag]}">${tl[n.tag]}</div>
+        <div class="news-hl">${n.headline}</div>
+        <div class="news-sm">${n.summary}</div>
+      </div>`).join('');
+  }catch(e){
+    card.innerHTML=`<div style="font-size:14px;color:var(--text2);">無法載入，請稍後再試。</div>`;
+  }
+}
+
+async function askAI(){
+  const inp=document.getElementById('ask-input');
+  const area=document.getElementById('ai-area');
+  const q=inp.value.trim();if(!q)return;
+  area.innerHTML='<div class="ai-resp"><div class="loading-pill"><div class="spinner"></div>思考中...</div></div>';
+  inp.value='';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:'你是貼心的個人助理，幫助用戶管理英文德文學習、新聞、股票投資和日常提醒。用繁體中文回答，簡潔有重點，不超過120字。',
+        messages:[{role:'user',content:q}]
+      })
+    });
+    const data=await res.json();
+    const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+    area.innerHTML=`<div class="ai-resp">${text}</div>`;
+  }catch(e){
+    area.innerHTML=`<div class="ai-resp">出了點問題，請再試一次。</div>`;
+  }
+}
+document.getElementById('ask-input').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
+
+function renderNotif(){
+  const s=document.getElementById('notif-status');
+  const b=document.getElementById('notif-btn');
+  if(!('Notification'in window)){s.textContent='此瀏覽器不支援通知';b.style.display='none';return;}
+  if(Notification.permission==='granted'){s.textContent='通知已開啟 ✓';b.textContent='已開啟';}
+  else if(Notification.permission==='denied'){s.textContent='通知已被封鎖（請至設定開啟）';b.style.display='none';}
+  else{s.textContent='尚未開啟通知';b.textContent='開啟通知';}
+  document.getElementById('t-morning').value=db.notifTime.morning;
+  document.getElementById('t-evening').value=db.notifTime.evening;
+}
+function toggleNotif(){
+  if(Notification.permission==='granted'){showToast('可調整下方時間設定');return;}
+  Notification.requestPermission().then(p=>{renderNotif();if(p==='granted'){showToast('通知已開啟！');scheduleNotif();}});
+}
+function saveNotifTime(){
+  db.notifTime.morning=document.getElementById('t-morning').value;
+  db.notifTime.evening=document.getElementById('t-evening').value;
+  save(db);showToast('提醒時間已儲存');scheduleNotif();
+}
+function testNotif(){
+  if(Notification.permission!=='granted'){showToast('請先開啟通知權限');return;}
+  new Notification('每日提醒',{body:'今天的任務準備好了！英文和德文加油 🌟'});
+  showToast('測試通知已發送');
+}
+function scheduleNotif(){
+  if(Notification.permission!=='granted')return;
+  if(window._ni)clearInterval(window._ni);
+  window._ni=setInterval(()=>{
+    const n=new Date();
+    const hm=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
+    if(hm===db.notifTime.morning)new Notification('早安！今日任務',{body:'記得完成英文和德文學習 🌟'});
+    if(hm===db.notifTime.evening){
+      const rem=allTasks().filter(t=>!db.history[todayStr][t.id]).length;
+      new Notification('晚間提醒',{body:rem>0?`還有 ${rem} 項任務未完成，加油！`:'今天所有任務完成了 🎉'});
+    }
+  },60000);
+}
+function clearToday(){db.history[todayStr]={};save(db);renderTasks();showToast('今日紀錄已重置');}
+function clearAll(){if(confirm('確定要清除所有資料嗎？')){localStorage.removeItem(SK);location.reload();}}
+
+function sw(tab,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+  if(tab==='stats')renderStats();
+  if(tab==='news'&&!newsLoaded)loadNews();
+  if(tab==='settings')renderNotif();
+  if(tab==='heart'){renderQ();renderDaily();}
+  if(tab==='exp')renderExp();
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+renderTasks();updateStreak();scheduleNotif();
+</script>
+</body>
+</html>
