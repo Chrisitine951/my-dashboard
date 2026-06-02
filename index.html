@@ -534,33 +534,48 @@ async function loadNews(){
   newsLoaded=true;
   const card=document.getElementById('news-card');
   card.innerHTML='<div class="loading-pill"><div class="spinner"></div>載入最新新聞中...</div>';
-  const API='https://api.rss2json.com/v1/api.json?rss_url=';
   const sources=[
-    {tag:'world',label:'世界大事',cls:'nt-world',url:'https://feeds.bbci.co.uk/news/world/rss.xml'},
-    {tag:'chem',label:'化工新技術',cls:'nt-chem',url:'http://feeds.feedburner.com/cen_latestnews'},
-    {tag:'invest',label:'投資趨勢',cls:'nt-invest',url:'https://finance.yahoo.com/news/rssindex'},
+    {label:'世界大事',cls:'nt-world',url:'https://feeds.bbci.co.uk/news/world/rss.xml'},
+    {label:'化工新技術',cls:'nt-chem',url:'https://cen.acs.org/rss/cen-news.xml'},
+    {label:'投資趨勢',cls:'nt-invest',url:'https://feeds.content.dowjones.io/public/rss/mw_realtimeheadlines'},
   ];
+  async function fetchRSS(url){
+    const proxy='https://api.allorigins.win/get?url='+encodeURIComponent(url);
+    const res=await fetch(proxy);
+    const data=await res.json();
+    const parser=new DOMParser();
+    const xml=parser.parseFromString(data.contents,'text/xml');
+    const item=xml.querySelector('item');
+    if(!item)return null;
+    const title=item.querySelector('title')?.textContent||'';
+    const desc=item.querySelector('description')?.textContent||'';
+    const link=item.querySelector('link')?.textContent||'';
+    const summary=desc.replace(/<[^>]+>/g,'').replace(/&[^;]+;/g,'').replace(/\s+/g,' ').trim().slice(0,100);
+    return{title:title.slice(0,80),summary,link};
+  }
   try{
-    const results=await Promise.all(sources.map(async s=>{
-      const res=await fetch(API+encodeURIComponent(s.url)+'&count=1');
-      const data=await res.json();
-      const item=data.items&&data.items[0];
-      if(!item)return null;
-      const headline=item.title?item.title.slice(0,60):'';
-      const raw=item.description||item.content||'';
-      const summary=raw.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim().slice(0,100);
-      const link=item.link||'';
-      return{...s,headline,summary,link};
-    }));
-    card.innerHTML=results.filter(Boolean).map(n=>`
-      <div class="news-item" onclick="openLink('${n.link}')" style="cursor:pointer;">
-        <div class="ntag ${n.cls}">${n.label}</div>
-        <div class="news-hl">${n.headline}</div>
-        <div class="news-sm">${n.summary}</div>
-        <div style="font-size:11px;color:var(--info);margin-top:4px;">點擊閱讀全文 →</div>
-      </div>`).join('');
+    const results=await Promise.allSettled(sources.map(s=>fetchRSS(s.url)));
+    let html='';
+    results.forEach((r,i)=>{
+      const s=sources[i];
+      if(r.status==='fulfilled'&&r.value){
+        const n=r.value;
+        html+=`<div class="news-item" onclick="openLink('${n.link}')" style="cursor:pointer;">
+          <div class="ntag ${s.cls}">${s.label}</div>
+          <div class="news-hl">${n.title}</div>
+          <div class="news-sm">${n.summary}</div>
+          <div style="font-size:11px;color:var(--info);margin-top:4px;">點擊閱讀全文 →</div>
+        </div>`;
+      } else {
+        html+=`<div class="news-item">
+          <div class="ntag ${s.cls}">${s.label}</div>
+          <div class="news-hl" style="color:var(--text3);">暫時無法載入</div>
+        </div>`;
+      }
+    });
+    card.innerHTML=html;
   }catch(e){
-    card.innerHTML=`<div style="font-size:14px;color:var(--text2);">無法載入新聞，請確認網路連線後再試。</div>`;
+    card.innerHTML=`<div style="font-size:14px;color:var(--text2);">無法載入新聞，請稍後再試。</div>`;
   }
 }
 function openLink(url){if(url)window.open(url,'_blank');}
