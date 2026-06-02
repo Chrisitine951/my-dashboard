@@ -271,6 +271,138 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-se
   </div>
 </div>
 
+<!-- 更多（紀錄+設定） -->
+<div id="tab-more" class="panel">
+  <div class="sec-label" style="margin-top:8px;">學習打卡紀錄</div>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-lbl">連續打卡</div><div class="stat-val" id="s-streak">-</div><div class="stat-sub">天</div></div>
+    <div class="stat-card"><div class="stat-lbl">本週完成率</div><div class="stat-val" id="s-rate">-</div><div class="stat-sub">%</div></div>
+    <div class="stat-card"><div class="stat-lbl">累計完成</div><div class="stat-val" id="s-total">-</div><div class="stat-sub">項任務</div></div>
+    <div class="stat-card"><div class="stat-lbl">最長連續</div><div class="stat-val" id="s-best">-</div><div class="stat-sub">天</div></div>
+  </div>
+  <div class="sec-label">最近 7 天</div>
+  <div class="card" id="hist-list2"></div>
+  <div class="sec-label" style="margin-top:12px;">推播通知</div>
+  <div class="card">
+    <div class="notif-row">
+      <div class="notif-status" id="notif-status">載入中...</div>
+      <button class="action-btn" id="notif-btn" onclick="toggleNotif()">-</button>
+    </div>
+    <div class="time-row"><label>早上提醒</label><input type="time" id="t-morning" value="08:00" onchange="saveNotifTime()"/></div>
+    <div class="time-row"><label>晚上提醒</label><input type="time" id="t-evening" value="21:00" onchange="saveNotifTime()"/></div>
+    <div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border);">
+      <button class="action-btn" onclick="testNotif()" style="width:100%;">發送測試通知</button>
+    </div>
+  </div>
+  <div class="sec-label">加入手機主畫面</div>
+  <div class="card" style="font-size:14px;color:var(--text2);line-height:1.8;">
+    Safari → 分享 → 加入主畫面
+  </div>
+  <div class="sec-label">資料管理</div>
+  <div class="card">
+    <button class="action-btn" onclick="clearToday()" style="width:100%;margin-bottom:10px;">重置今日打勾</button>
+    <button class="action-btn" onclick="clearAll()" style="width:100%;color:var(--danger);">清除所有資料</button>
+  </div>
+</div>
+
+<!-- Cambly 英文筆記 -->
+<div id="tab-cambly" class="panel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;margin-top:8px;">
+    <div class="sec-label" style="margin:0;">Cambly 學習筆記</div>
+    <div style="background:var(--info-bg);color:var(--info);font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;" id="cb-lesson-count">0 堂課</div>
+  </div>
+
+  <!-- 子分頁 -->
+  <div style="display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:var(--radius);margin-bottom:12px;">
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:var(--bg);color:var(--text);cursor:pointer;border-radius:8px;font-weight:600;border:0.5px solid var(--border);" onclick="cbTab('record',this)" id="cbt-record">記錄</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('review',this)" id="cbt-review">複習</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('history',this)" id="cbt-history">歷史</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('export',this)" id="cbt-export">匯出</button>
+  </div>
+
+  <!-- 記錄 -->
+  <div id="cbp-record">
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;">本次課程</div>
+      <input type="text" id="cb-date" placeholder="上課日期，例：2026/06/02" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <input type="text" id="cb-topic" placeholder="課程主題" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <textarea id="cb-notes" placeholder="課程筆記、心得、老師建議..." style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;min-height:80px;resize:vertical;line-height:1.6;font-family:inherit;"></textarea>
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;">新增單字</div>
+      <input type="text" id="cb-word-en" placeholder="英文單字" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <select id="cb-word-pos" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;">
+          <option>adj.</option><option>n.</option><option>v.</option><option>adv.</option><option>phrase</option><option>idiom</option>
+        </select>
+        <input type="text" id="cb-word-zh" placeholder="中文意思" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;"/>
+      </div>
+      <input type="text" id="cb-word-ex" placeholder="例句" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <button onclick="cbAddWord()" style="padding:8px 14px;font-size:13px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;font-weight:500;">＋ 加入單字</button>
+      <div id="cb-word-list" style="margin-top:10px;"></div>
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;">語法糾正</div>
+      <input type="text" id="cb-corr-wrong" placeholder="我說的（錯誤）" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <input type="text" id="cb-corr-right" placeholder="正確說法" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <button onclick="cbAddCorr()" style="padding:8px 14px;font-size:13px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;font-weight:500;">＋ 加入糾正</button>
+      <div id="cb-corr-list" style="margin-top:10px;"></div>
+    </div>
+    <button onclick="cbSaveLesson()" style="width:100%;padding:14px;font-size:15px;font-weight:600;border:none;border-radius:var(--radius-lg);background:var(--text);color:var(--bg);cursor:pointer;margin-bottom:12px;">💾 儲存本次課程</button>
+  </div>
+
+  <!-- 複習 -->
+  <div id="cbp-review" style="display:none;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+      <div class="stat-card"><div class="stat-lbl">單字</div><div class="stat-val" id="cb-stat-words">0</div></div>
+      <div class="stat-card"><div class="stat-lbl">課程</div><div class="stat-val" id="cb-stat-lessons">0</div></div>
+      <div class="stat-card"><div class="stat-lbl">糾正</div><div class="stat-val" id="cb-stat-corr">0</div></div>
+    </div>
+    <div class="card" id="cb-flashcard" onclick="cbFlip()" style="min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;">
+      <div id="cbfc-front">
+        <div style="font-size:28px;font-weight:600;color:var(--text);" id="cbfc-word">點擊開始</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px;" id="cbfc-pos"></div>
+      </div>
+      <div id="cbfc-back" style="display:none;width:100%;">
+        <div style="font-size:20px;font-weight:600;color:var(--text);margin-bottom:8px;" id="cbfc-zh"></div>
+        <div style="font-size:13px;color:var(--text2);font-style:italic;line-height:1.5;" id="cbfc-ex"></div>
+      </div>
+      <div style="font-size:12px;color:var(--text3);margin-top:16px;" id="cbfc-hint">點擊翻牌</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px;" id="cbfc-nav">
+      <button onclick="cbPrev()" style="padding:8px 16px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">←</button>
+      <span style="font-size:13px;color:var(--text2);min-width:60px;text-align:center;" id="cbfc-prog">0/0</span>
+      <button onclick="cbNext()" style="padding:8px 16px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">→</button>
+      <button onclick="cbShuffle()" style="padding:8px 16px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">⇄</button>
+    </div>
+    <div class="card">
+      <div class="sec-label" style="margin-bottom:8px;">所有單字</div>
+      <div id="cb-all-words"></div>
+    </div>
+  </div>
+
+  <!-- 歷史 -->
+  <div id="cbp-history" style="display:none;">
+    <div id="cb-history-list"></div>
+  </div>
+
+  <!-- 匯出 -->
+  <div id="cbp-export" style="display:none;">
+    <div class="card" style="background:var(--warn-bg);border:0.5px solid var(--warn);font-size:13px;color:var(--text2);line-height:1.7;">
+      在 Notion 建立 Database → 點「複製內容」→ 貼到 Notion 新頁面
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;margin-bottom:8px;">最新課程 Notion 格式</div>
+      <div id="cb-notion-preview" style="background:var(--bg2);border-radius:var(--radius);padding:12px;font-size:12px;color:var(--text2);line-height:1.7;max-height:280px;overflow-y:auto;white-space:pre-wrap;margin-bottom:10px;">請先儲存課程</div>
+      <button onclick="cbCopyNotion()" style="width:100%;padding:12px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">📋 複製 Notion 內容</button>
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;margin-bottom:8px;">所有單字 CSV</div>
+      <button onclick="cbCopyCSV()" style="padding:10px 16px;font-size:13px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">📊 複製 CSV</button>
+    </div>
+  </div>
+</div>
+
 <!-- 底部導覽 -->
 <div class="bottom-nav">
   <button class="nav-item active" onclick="sw('today',this)" id="nav-today">
@@ -285,11 +417,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-se
   <button class="nav-item" onclick="sw('exp',this)" id="nav-exp">
     <i class="ti ti-map-2"></i><span>體驗</span>
   </button>
-  <button class="nav-item" onclick="sw('stats',this)" id="nav-stats">
-    <i class="ti ti-chart-bar"></i><span>紀錄</span>
+  <button class="nav-item" onclick="sw('cambly',this)" id="nav-cambly">
+    <i class="ti ti-book"></i><span>英文</span>
   </button>
-  <button class="nav-item" onclick="sw('settings',this)" id="nav-settings">
-    <i class="ti ti-settings"></i><span>設定</span>
+  <button class="nav-item" onclick="sw('more',this)" id="nav-more">
+    <i class="ti ti-dots"></i><span>更多</span>
   </button>
 </div>
 </div>
@@ -656,11 +788,29 @@ function sw(tab,btn){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   btn.classList.add('active');
-  if(tab==='stats')renderStats();
+  if(tab==='more'){renderStats();renderNotif();}
   if(tab==='news'&&!newsLoaded)loadNews();
-  if(tab==='settings')renderNotif();
   if(tab==='heart'){renderQ();renderDaily();}
   if(tab==='exp')renderExp();
+  if(tab==='cambly')cbInitRecord();
+}
+
+function renderStats(){
+  document.getElementById('s-streak').textContent=db.streak.current||0;
+  document.getElementById('s-best').textContent=db.streak.best||0;
+  document.getElementById('s-rate').textContent=calcWeekRate();
+  document.getElementById('s-total').textContent=db.totalDone||0;
+  const all=allTasks();
+  let rows='';
+  for(let i=0;i<7;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const lbl=i===0?'今天':(d.getMonth()+1)+'/'+d.getDate();
+    const h=db.history[ds]||{};
+    const dots=all.map(t=>`<div class="dot ${h[t.id]?'done':''}"></div>`).join('');
+    rows+=`<div class="hist-item"><span class="hist-date">${lbl}</span><div class="hist-dots">${dots}</div></div>`;
+  }
+  document.getElementById('hist-list2').innerHTML=rows;
 }
 
 function showToast(msg){
@@ -669,7 +819,219 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),2200);
 }
 
+// ── Cambly 筆記 ──
+const CB_KEY='cambly_lessons_v1';
+let cbLessons=JSON.parse(localStorage.getItem(CB_KEY)||'[]');
+let cbCurWords=[];
+let cbCurCorr=[];
+let cbFcWords=[];
+let cbFcIdx=0;
+let cbFcFlipped=false;
+
+function cbSave(){localStorage.setItem(CB_KEY,JSON.stringify(cbLessons));}
+
+function cbTab(name,btn){
+  ['record','review','history','export'].forEach(n=>{
+    document.getElementById('cbp-'+n).style.display=n===name?'block':'none';
+    document.getElementById('cbt-'+n).style.background=n===name?'var(--bg)':'none';
+    document.getElementById('cbt-'+n).style.color=n===name?'var(--text)':'var(--text3)';
+    document.getElementById('cbt-'+n).style.fontWeight=n===name?'600':'500';
+    document.getElementById('cbt-'+n).style.border=n===name?'0.5px solid var(--border)':'none';
+  });
+  if(name==='review')cbInitReview();
+  if(name==='history')cbRenderHistory();
+  if(name==='export')cbRenderExport();
+}
+
+function cbInitRecord(){
+  document.getElementById('cb-lesson-count').textContent=cbLessons.length+' 堂課';
+}
+
+function cbAddWord(){
+  const en=document.getElementById('cb-word-en').value.trim();
+  const zh=document.getElementById('cb-word-zh').value.trim();
+  const ex=document.getElementById('cb-word-ex').value.trim();
+  const pos=document.getElementById('cb-word-pos').value;
+  if(!en||!zh){showToast('請填入英文和中文');return;}
+  cbCurWords.push({en,zh,ex,pos});
+  ['cb-word-en','cb-word-zh','cb-word-ex'].forEach(id=>document.getElementById(id).value='');
+  cbRenderCurWords();
+}
+
+function cbRenderCurWords(){
+  const el=document.getElementById('cb-word-list');
+  el.innerHTML=cbCurWords.map((w,i)=>`
+    <div style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--border);">
+      <div style="flex:1;">
+        <span style="font-weight:600;font-size:14px;">${w.en}</span>
+        <span style="font-size:11px;background:var(--info-bg);color:var(--info);padding:1px 6px;border-radius:6px;margin-left:6px;">${w.pos}</span>
+        <div style="font-size:13px;color:var(--text2);margin-top:2px;">${w.zh}</div>
+        ${w.ex?`<div style="font-size:12px;color:var(--text3);font-style:italic;">${w.ex}</div>`:''}
+      </div>
+      <button onclick="cbRemoveWord(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;">×</button>
+    </div>`).join('');
+}
+
+function cbRemoveWord(i){cbCurWords.splice(i,1);cbRenderCurWords();}
+
+function cbAddCorr(){
+  const wrong=document.getElementById('cb-corr-wrong').value.trim();
+  const right=document.getElementById('cb-corr-right').value.trim();
+  if(!wrong||!right){showToast('請填入錯誤和正確說法');return;}
+  cbCurCorr.push({wrong,right});
+  ['cb-corr-wrong','cb-corr-right'].forEach(id=>document.getElementById(id).value='');
+  cbRenderCurCorr();
+}
+
+function cbRenderCurCorr(){
+  const el=document.getElementById('cb-corr-list');
+  el.innerHTML=cbCurCorr.map((c,i)=>`
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--border);">
+      <div>
+        <div style="color:var(--danger);text-decoration:line-through;font-size:13px;">✗ ${c.wrong}</div>
+        <div style="color:var(--success);font-weight:500;font-size:13px;">✓ ${c.right}</div>
+      </div>
+      <button onclick="cbRemoveCorr(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;">×</button>
+    </div>`).join('');
+}
+
+function cbRemoveCorr(i){cbCurCorr.splice(i,1);cbRenderCurCorr();}
+
+function cbSaveLesson(){
+  const date=document.getElementById('cb-date').value.trim();
+  const topic=document.getElementById('cb-topic').value.trim();
+  const notes=document.getElementById('cb-notes').value.trim();
+  if(!date&&!topic){showToast('請填入日期或主題');return;}
+  cbLessons.unshift({
+    id:Date.now(),
+    date:date||new Date().toLocaleDateString('zh-TW'),
+    topic:topic||'未記錄主題',
+    notes,words:[...cbCurWords],corrections:[...cbCurCorr]
+  });
+  cbSave();
+  cbCurWords=[];cbCurCorr=[];
+  ['cb-date','cb-topic','cb-notes','cb-word-en','cb-word-zh','cb-word-ex'].forEach(id=>document.getElementById(id).value='');
+  cbRenderCurWords();cbRenderCurCorr();
+  document.getElementById('cb-lesson-count').textContent=cbLessons.length+' 堂課';
+  showToast('課程已儲存 ✓');
+}
+
+function cbInitReview(){
+  const allW=cbLessons.flatMap(l=>l.words);
+  const allC=cbLessons.flatMap(l=>l.corrections);
+  document.getElementById('cb-stat-words').textContent=allW.length;
+  document.getElementById('cb-stat-lessons').textContent=cbLessons.length;
+  document.getElementById('cb-stat-corr').textContent=allC.length;
+  cbFcWords=[...allW];cbFcIdx=0;cbFcFlipped=false;
+  if(cbFcWords.length){cbShowCard();}
+  else{document.getElementById('cbfc-word').textContent='尚無單字';document.getElementById('cbfc-hint').textContent='請先記錄課程';}
+  document.getElementById('cb-all-words').innerHTML=allW.length?allW.map(w=>`
+    <div style="padding:8px 0;border-bottom:0.5px solid var(--border);">
+      <span style="font-weight:600;font-size:14px;">${w.en}</span>
+      <span style="font-size:11px;background:var(--info-bg);color:var(--info);padding:1px 6px;border-radius:6px;margin-left:6px;">${w.pos}</span>
+      <div style="font-size:13px;color:var(--text2);margin-top:2px;">${w.zh}</div>
+      ${w.ex?`<div style="font-size:12px;color:var(--text3);font-style:italic;">${w.ex}</div>`:''}
+    </div>`).join(''):'<div style="font-size:14px;color:var(--text3);padding:8px 0;">尚無單字</div>';
+}
+
+function cbShowCard(){
+  if(!cbFcWords.length)return;
+  const w=cbFcWords[cbFcIdx];
+  document.getElementById('cbfc-word').textContent=w.en;
+  document.getElementById('cbfc-pos').textContent=w.pos;
+  document.getElementById('cbfc-zh').textContent=w.zh;
+  document.getElementById('cbfc-ex').textContent=w.ex||'';
+  document.getElementById('cbfc-front').style.display='block';
+  document.getElementById('cbfc-back').style.display='none';
+  document.getElementById('cbfc-prog').textContent=`${cbFcIdx+1}/${cbFcWords.length}`;
+  cbFcFlipped=false;
+}
+
+function cbFlip(){
+  if(!cbFcWords.length)return;
+  cbFcFlipped=!cbFcFlipped;
+  document.getElementById('cbfc-front').style.display=cbFcFlipped?'none':'block';
+  document.getElementById('cbfc-back').style.display=cbFcFlipped?'block':'none';
+}
+
+function cbNext(){if(!cbFcWords.length)return;cbFcIdx=(cbFcIdx+1)%cbFcWords.length;cbShowCard();}
+function cbPrev(){if(!cbFcWords.length)return;cbFcIdx=(cbFcIdx-1+cbFcWords.length)%cbFcWords.length;cbShowCard();}
+function cbShuffle(){
+  for(let i=cbFcWords.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cbFcWords[i],cbFcWords[j]]=[cbFcWords[j],cbFcWords[i]];}
+  cbFcIdx=0;cbShowCard();showToast('已隨機排列 ⇄');
+}
+
+function cbRenderHistory(){
+  const el=document.getElementById('cb-history-list');
+  if(!cbLessons.length){el.innerHTML='<div style="text-align:center;padding:3rem 1rem;color:var(--text3);font-size:14px;">尚無課程記錄</div>';return;}
+  el.innerHTML=cbLessons.map((l,idx)=>`
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px;">
+        <div>
+          <div style="font-size:16px;font-weight:600;color:var(--text);">${l.topic}</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:2px;">${l.date}</div>
+        </div>
+        <button onclick="cbDeleteLesson(${idx})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;">🗑</button>
+      </div>
+      ${l.notes?`<div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;">${l.notes}</div>`:''}
+      ${l.words.length?`<div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">單字 ${l.words.length} 個</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">${l.words.map(w=>`<span style="font-size:12px;padding:3px 9px;border-radius:20px;background:var(--bg2);color:var(--text2);">${w.en}</span>`).join('')}</div>`:''}
+      ${l.corrections.length?`<div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);">
+        <div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">語法糾正 ${l.corrections.length} 個</div>
+        ${l.corrections.map(c=>`<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--danger);text-decoration:line-through;">✗ ${c.wrong}</span><br><span style="color:var(--success);font-weight:500;">✓ ${c.right}</span></div>`).join('')}
+      </div>`:''}
+    </div>`).join('');
+}
+
+function cbDeleteLesson(idx){
+  if(!confirm('確定刪除這堂課程嗎？'))return;
+  cbLessons.splice(idx,1);cbSave();cbRenderHistory();
+  document.getElementById('cb-lesson-count').textContent=cbLessons.length+' 堂課';
+  showToast('已刪除');
+}
+
+function cbRenderExport(){
+  if(!cbLessons.length)return;
+  const l=cbLessons[0];
+  let text=`# 📚 Cambly 課程筆記 — ${l.date}\n\n**主題：** ${l.topic}\n\n`;
+  if(l.notes)text+=`## 課程筆記\n${l.notes}\n\n`;
+  if(l.words.length){
+    text+=`## 本週單字（${l.words.length} 個）\n\n| 單字 | 詞性 | 中文 | 例句 |\n|---|---|---|---|\n`;
+    l.words.forEach(w=>{text+=`| **${w.en}** | ${w.pos} | ${w.zh} | ${w.ex||'—'} |\n`;});
+    text+='\n';
+  }
+  if(l.corrections.length){
+    text+=`## 語法糾正\n\n`;
+    l.corrections.forEach(c=>{text+=`- ~~${c.wrong}~~ → ✅ **${c.right}**\n`;});
+  }
+  text+=`\n---\n_由我的每日助理匯出_`;
+  document.getElementById('cb-notion-preview').textContent=text;
+}
+
+function cbCopyNotion(){
+  const text=document.getElementById('cb-notion-preview').textContent;
+  if(text.includes('請先儲存')){showToast('請先儲存課程');return;}
+  navigator.clipboard.writeText(text).then(()=>showToast('已複製！貼到 Notion 即可'));
+}
+
+function cbCopyCSV(){
+  const allW=cbLessons.flatMap(l=>l.words);
+  if(!allW.length){showToast('尚無單字');return;}
+  let csv='單字,詞性,中文,例句\n';
+  allW.forEach(w=>{csv+=`"${w.en}","${w.pos}","${w.zh}","${w.ex||''}"\n`;});
+  navigator.clipboard.writeText(csv).then(()=>showToast('CSV 已複製！'));
+}
+
+// 載入 Cambly 預設資料（如果是第一次）
+const CB_PRELOAD='cambly_preloaded_v2';
+if(!cbLessons.length&&!localStorage.getItem(CB_PRELOAD)){
+  cbLessons=[{"id":22,"date":"2026/06/01","topic":"歐洲熱門旅遊國家 + 詞性複習（TJ）","notes":"閱讀 Engoo 文章：Which European countries are most popular with tourists?\n重點：學習國家名稱（noun）vs 形容詞（adjective）的差別，複習八大詞性。\n\n🇬🇧 英國組成：England、Scotland、Wales、Northern Ireland → 合稱 United Kingdom\n📚 八大詞性：Nouns, Verbs, Adjectives, Adverbs, Prepositions, Pronouns, Conjunctions, Interjections","words":[{"en":"historic","pos":"adj.","zh":"具有歷史意義的","ex":"Florence has many historic buildings."},{"en":"hike","pos":"n.","zh":"健行","ex":"You need waterproof shoes for this hike."},{"en":"resort","pos":"n.","zh":"度假村","ex":"We stayed at a beach resort in Mexico."},{"en":"overtourism","pos":"n.","zh":"過度觀光","ex":"Overtourism has become a problem in Venice."},{"en":"continent","pos":"n.","zh":"洲、大陸","ex":"Europe is the world's most visited continent."}],"corrections":[{"wrong":"French and British（當國名用）","right":"France and the UK（國名）/ French and British（形容詞）"}]},{"id":21,"date":"2026/06/01","topic":"《飛吧！熊鷹》紀錄片 + 台灣原住民文化（TJ）","notes":"介紹台灣紀錄片《飛吧！熊鷹》，討論熊鷹生態、瀕危狀況，以及原住民文化與保育的平衡。","words":[{"en":"wingspan","pos":"n.","zh":"翼展","ex":"The wingspan of this eagle is almost 116 cm."},{"en":"endangered","pos":"adj.","zh":"瀕危的","ex":"These eagles are an endangered species."},{"en":"indigenous people","pos":"n.","zh":"原住民","ex":"Indigenous people use feathers to show their royalty."},{"en":"raise awareness","pos":"phrase","zh":"提高大眾意識","ex":"The film's goal is to raise awareness about eagles."},{"en":"lifespan","pos":"n.","zh":"壽命","ex":"The documentary covers the eagle's lifespan."}],"corrections":[{"wrong":"fly mouse","right":"bat（蝙蝠）或 flying squirrel（飛鼠）"},{"wrong":"fender","right":"feather（羽毛）"}]},{"id":20,"date":"2026/05/24","topic":"MBTI、飲食習慣、平行宇宙與人生哲學（Lelo）","notes":"討論素食主義、MBTI、abstract thinking。金句：It's better with you, not that I can't live without you.","words":[{"en":"pescatarian","pos":"n.","zh":"海鮮素食者","ex":"Someone who eats seafood but not meat is pescatarian."},{"en":"empathy","pos":"n.","zh":"同理心","ex":"F types tend to have strong empathy for others."},{"en":"parallel universe","pos":"n.","zh":"平行宇宙","ex":"In a parallel universe, another version of you exists."},{"en":"codependency","pos":"n.","zh":"過度依賴","ex":"Codependency means you can't function without someone."},{"en":"set in stone","pos":"phrase","zh":"板上釘釘、不可改變","ex":"Nothing is set in stone — things can always change."}],"corrections":[{"wrong":"cry before your friend","right":"cry in front of your friends"},{"wrong":"seafood vegetarian","right":"pescatarian"}]}];
+  cbSave();
+  localStorage.setItem(CB_PRELOAD,'v2');
+}
+
 renderTasks();updateStreak();scheduleNotif();
+document.getElementById('cb-lesson-count').textContent=cbLessons.length+' 堂課';
 </script>
 </body>
 </html>
