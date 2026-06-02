@@ -1,420 +1,1676 @@
 [
   {
-    "id": 22, "date": "2026/06/01", "topic": "歐洲熱門旅遊國家 + 詞性複習（TJ）",
-    "notes": "閱讀 Engoo 文章：Which European countries are most popular with tourists?\n重點：學習國家名稱（noun）vs 形容詞（adjective）的差別，複習八大詞性。\n🇬🇧 英國：England、Scotland、Wales、Northern Ireland → United Kingdom\n📚 八大詞性：Nouns, Verbs, Adjectives, Adverbs, Prepositions, Pronouns, Conjunctions, Interjections",
+    "id": 22,
+    "date": "2026/06/01",
+    "topic": "歐洲熱門旅遊國家 + 詞性複習（TJ）",
+    "notes": "閱讀 Engoo 文章：Which European countries are most popular with tourists?\n重點：學習國家名稱（noun）vs 形容詞（adjective）的差別，複習八大詞性。\n\n🇬🇧 英國組成：England、Scotland、Wales、Northern Ireland → 合稱 United Kingdom\n📚 八大詞性：Nouns, Verbs, Adjectives, Adverbs, Prepositions, Pronouns, Conjunctions, Interjections",
     "words": [
-      {"en": "historic", "pos": "adj.", "zh": "具有歷史意義的", "ex": "Florence has many historic buildings."},
-      {"en": "hike", "pos": "n.", "zh": "健行", "ex": "You need waterproof shoes for this hike."},
-      {"en": "resort", "pos": "n.", "zh": "度假村", "ex": "We stayed at a beach resort in Mexico."},
-      {"en": "sight", "pos": "n.", "zh": "景點", "ex": "She showed me the sights in Sydney."},
-      {"en": "complain", "pos": "v.", "zh": "抱怨", "ex": "My friend is constantly complaining about her boyfriend."},
-      {"en": "overtourism", "pos": "n.", "zh": "過度觀光", "ex": "Overtourism has become a problem in Venice."},
-      {"en": "continent", "pos": "n.", "zh": "洲、大陸", "ex": "Europe is the world's most visited continent."},
-      {"en": "German / Germany", "pos": "adj./n.", "zh": "德國人的／德國", "ex": "German culture is very interesting."},
-      {"en": "British / the UK", "pos": "adj./n.", "zh": "英國人的／英國", "ex": "British people drink a lot of tea."},
-      {"en": "Italian / Italy", "pos": "adj./n.", "zh": "義大利人的／義大利", "ex": "Italian food is very popular worldwide."}
+      {
+        "en": "historic",
+        "pos": "adj.",
+        "zh": "具有歷史意義的",
+        "ex": "Florence has many historic buildings."
+      },
+      {
+        "en": "hike",
+        "pos": "n.",
+        "zh": "健行",
+        "ex": "You need waterproof shoes for this hike."
+      },
+      {
+        "en": "resort",
+        "pos": "n.",
+        "zh": "度假村",
+        "ex": "We stayed at a beach resort in Mexico."
+      },
+      {
+        "en": "sight",
+        "pos": "n.",
+        "zh": "景點",
+        "ex": "She showed me the sights in Sydney."
+      },
+      {
+        "en": "complain",
+        "pos": "v.",
+        "zh": "抱怨",
+        "ex": "My friend is constantly complaining about her boyfriend."
+      },
+      {
+        "en": "overtourism",
+        "pos": "n.",
+        "zh": "過度觀光",
+        "ex": "Overtourism has become a problem in Venice."
+      },
+      {
+        "en": "continent",
+        "pos": "n.",
+        "zh": "洲、大陸",
+        "ex": "Europe is the world's most visited continent."
+      },
+      {
+        "en": "German / Germany",
+        "pos": "adj./n.",
+        "zh": "德國人的／德國",
+        "ex": "German culture is very interesting."
+      },
+      {
+        "en": "British / the UK",
+        "pos": "adj./n.",
+        "zh": "英國人的／英國",
+        "ex": "British people drink a lot of tea."
+      },
+      {
+        "en": "Italian / Italy",
+        "pos": "adj./n.",
+        "zh": "義大利人的／義大利",
+        "ex": "Italian food is very popular worldwide."
+      }
     ],
     "corrections": [
-      {"wrong": "French and British（當國名用）", "right": "France and the UK（國名）/ French and British（形容詞）"}
+      {
+        "wrong": "French and British（當國名用）",
+        "right": "France and the UK（國名）/ French and British（形容詞）"
+      }
     ]
   },
   {
-    "id": 21, "date": "2026/06/01", "topic": "《飛吧！熊鷹》紀錄片 + 台灣原住民文化（TJ）",
-    "notes": "介紹台灣紀錄片《飛吧！熊鷹》(Fly! Mountain Hawk Eagle)，討論熊鷹生態、瀕危狀況，以及原住民文化與保育的平衡。\n💡 老師建議：口語很流暢，要開始注意詞性！\n📽️ 老師推薦：Planet Earth（兩季）",
+    "id": 21,
+    "date": "2026/06/01",
+    "topic": "《飛吧！熊鷹》紀錄片 + 台灣原住民文化（TJ）",
+    "notes": "介紹台灣紀錄片《飛吧！熊鷹》(Fly! Mountain Hawk Eagle)，討論熊鷹生態、瀕危狀況，以及原住民文化與保育的平衡。\n\n💡 老師建議：口語很流暢，要開始注意詞性（parts of speech）！\n📽️ 老師推薦：Planet Earth（兩季）\n🇹🇼 你推薦老師：《看見台灣》Beyond Beauty（YouTube 可看）",
     "words": [
-      {"en": "wingspan", "pos": "n.", "zh": "翼展", "ex": "The wingspan of this eagle is almost 116 cm."},
-      {"en": "species", "pos": "n.", "zh": "物種", "ex": "This documentary is about an endangered species."},
-      {"en": "documentary", "pos": "n.", "zh": "紀錄片", "ex": "It's a documentary about eagles in Taiwan."},
-      {"en": "endangered", "pos": "adj.", "zh": "瀕危的", "ex": "These eagles are an endangered species."},
-      {"en": "indigenous people", "pos": "n.", "zh": "原住民", "ex": "Indigenous people use feathers to show their royalty."},
-      {"en": "feather", "pos": "n.", "zh": "羽毛", "ex": "The feather is just a symbol of royalty."},
-      {"en": "proceeds", "pos": "n.", "zh": "收益", "ex": "All proceeds will be used to protect these eagles."},
-      {"en": "raise awareness", "pos": "phrase", "zh": "提高大眾意識", "ex": "The film's goal is to raise awareness about eagles."},
-      {"en": "lifespan", "pos": "n.", "zh": "壽命", "ex": "The documentary covers the eagle's lifespan."},
-      {"en": "flying squirrel", "pos": "n.", "zh": "飛鼠", "ex": "Eagles in Taiwan eat flying squirrels."},
-      {"en": "Muntjac", "pos": "n.", "zh": "山羌（台灣特有）", "ex": "The Muntjac is a deer species found mainly in Taiwan."},
-      {"en": "professor", "pos": "n.", "zh": "教授", "ex": "A university teacher is called a professor."}
+      {
+        "en": "wingspan",
+        "pos": "n.",
+        "zh": "翼展",
+        "ex": "The wingspan of this eagle is almost 116 cm."
+      },
+      {
+        "en": "species",
+        "pos": "n.",
+        "zh": "物種",
+        "ex": "This documentary is about an endangered species."
+      },
+      {
+        "en": "documentary",
+        "pos": "n.",
+        "zh": "紀錄片",
+        "ex": "It's a documentary about eagles in Taiwan."
+      },
+      {
+        "en": "professor",
+        "pos": "n.",
+        "zh": "教授",
+        "ex": "A university teacher is called a professor."
+      },
+      {
+        "en": "endangered",
+        "pos": "adj.",
+        "zh": "瀕危的",
+        "ex": "These eagles are an endangered species."
+      },
+      {
+        "en": "indigenous people",
+        "pos": "n.",
+        "zh": "原住民",
+        "ex": "Indigenous people use feathers to show their royalty."
+      },
+      {
+        "en": "feather",
+        "pos": "n.",
+        "zh": "羽毛",
+        "ex": "The feather is just a symbol of royalty."
+      },
+      {
+        "en": "proceeds",
+        "pos": "n.",
+        "zh": "收益",
+        "ex": "All proceeds will be used to protect these eagles."
+      },
+      {
+        "en": "raise awareness",
+        "pos": "phrase",
+        "zh": "提高大眾意識",
+        "ex": "The film's goal is to raise awareness about eagles."
+      },
+      {
+        "en": "lifespan",
+        "pos": "n.",
+        "zh": "壽命",
+        "ex": "The documentary covers the eagle's lifespan."
+      },
+      {
+        "en": "flying squirrel",
+        "pos": "n.",
+        "zh": "飛鼠",
+        "ex": "Eagles in Taiwan eat flying squirrels."
+      },
+      {
+        "en": "Muntjac",
+        "pos": "n.",
+        "zh": "山羌（台灣特有）",
+        "ex": "The Muntjac is a deer species found mainly in Taiwan."
+      }
     ],
     "corrections": [
-      {"wrong": "fly mouse", "right": "bat（蝙蝠）或 flying squirrel（飛鼠）"},
-      {"wrong": "fender", "right": "feather（羽毛）"},
-      {"wrong": "They will not attack proactive", "right": "They won't attack unless they are hunting."}
+      {
+        "wrong": "fly mouse",
+        "right": "bat（蝙蝠）或 flying squirrel（飛鼠）— 是不同動物！"
+      },
+      {
+        "wrong": "fender",
+        "right": "feather（羽毛）"
+      },
+      {
+        "wrong": "They will not attack proactive",
+        "right": "They won't attack unless they are hunting."
+      }
     ]
   },
   {
-    "id": 20, "date": "2026/05/24", "topic": "MBTI、飲食習慣、平行宇宙與人生哲學（Lelo）",
-    "notes": "討論素食主義、純素、pescatarian 的差別。聊到 MBTI（Christine: ENTP，Lelo: INFJ）。\n💡 金句：It's better with you, not that I can't live without you.\n💡 老師建議：在 YouTube 找喜歡主題的英語頻道",
+    "id": 20,
+    "date": "2026/05/24",
+    "topic": "MBTI、飲食習慣、平行宇宙與人生哲學（Lelo）",
+    "notes": "討論素食主義、純素、pescatarian 的差別。聊到 MBTI（Christine: ENTP，Lelo: INFJ），intuitive vs observant，abstract thinking，T vs F（reason/logic vs empathy）。延伸到 Type A/B、fortune-telling、predestination、parallel universes、FOMO、codependency。\n\n💡 金句：It's better with you, not that I can't live without you.\n💡 老師建議：在 YouTube 找喜歡主題的英語頻道，不要強迫自己",
     "words": [
-      {"en": "king oyster mushroom", "pos": "n.", "zh": "杏鮑菇", "ex": "King oyster mushrooms have a meaty texture."},
-      {"en": "Buddhist", "pos": "adj./n.", "zh": "佛教徒的", "ex": "My grandma is Buddhist and eats vegetarian food."},
-      {"en": "pescatarian", "pos": "n.", "zh": "海鮮素食者", "ex": "Someone who eats seafood but not meat is pescatarian."},
-      {"en": "vegan", "pos": "n./adj.", "zh": "純素者", "ex": "Vegans don't eat any animal products, including eggs."},
-      {"en": "intuitive", "pos": "adj.", "zh": "直覺型的", "ex": "Intuitive people tend to think abstractly."},
-      {"en": "empathy", "pos": "n.", "zh": "同理心", "ex": "F types tend to have strong empathy for others."},
-      {"en": "Type A / Type B", "pos": "n.", "zh": "A型／B型人格", "ex": "Type A people plan every detail of their trips."},
-      {"en": "fortune-telling", "pos": "n.", "zh": "算命", "ex": "Fortune-telling is popular in Taiwan."},
-      {"en": "predestination", "pos": "n.", "zh": "命中注定", "ex": "Do you believe in predestination or free will?"},
-      {"en": "set in stone", "pos": "phrase", "zh": "板上釘釘、不可改變", "ex": "Nothing is set in stone — things can always change."},
-      {"en": "parallel universe", "pos": "n.", "zh": "平行宇宙", "ex": "In a parallel universe, another version of you exists."},
-      {"en": "FOMO", "pos": "n.", "zh": "錯失恐懼", "ex": "I feel FOMO knowing another me might be a billionaire."},
-      {"en": "codependency", "pos": "n.", "zh": "過度依賴", "ex": "Codependency means you can't function without someone."},
-      {"en": "abstract thinking", "pos": "n.", "zh": "抽象思維", "ex": "N types in MBTI are known for abstract thinking."},
-      {"en": "observant", "pos": "adj.", "zh": "觀察型的", "ex": "Observant people describe exactly what they see."},
-      {"en": "plant-based diet", "pos": "n.", "zh": "植物性飲食", "ex": "A plant-based diet means less meat, more vegetables."},
-      {"en": "vegetarian diet", "pos": "n.", "zh": "素食飲食", "ex": "I mostly follow a vegetarian diet."}
+      {
+        "en": "king oyster mushroom",
+        "pos": "n.",
+        "zh": "杏鮑菇",
+        "ex": "King oyster mushrooms have a meaty texture."
+      },
+      {
+        "en": "Buddhist",
+        "pos": "adj./n.",
+        "zh": "佛教徒的",
+        "ex": "My grandma is Buddhist and eats vegetarian food."
+      },
+      {
+        "en": "vegetarian diet",
+        "pos": "n.",
+        "zh": "素食飲食",
+        "ex": "I mostly follow a vegetarian diet."
+      },
+      {
+        "en": "plant-based diet",
+        "pos": "n.",
+        "zh": "植物性飲食",
+        "ex": "A plant-based diet means less meat, more vegetables."
+      },
+      {
+        "en": "pescatarian",
+        "pos": "n.",
+        "zh": "海鮮素食者",
+        "ex": "Someone who eats seafood but not meat is pescatarian."
+      },
+      {
+        "en": "vegan",
+        "pos": "n./adj.",
+        "zh": "純素者",
+        "ex": "Vegans don't eat any animal products, including eggs."
+      },
+      {
+        "en": "intuitive",
+        "pos": "adj.",
+        "zh": "直覺型的",
+        "ex": "Intuitive people tend to think abstractly."
+      },
+      {
+        "en": "observant",
+        "pos": "adj.",
+        "zh": "觀察型的",
+        "ex": "Observant people describe exactly what they see."
+      },
+      {
+        "en": "abstract thinking",
+        "pos": "n.",
+        "zh": "抽象思維",
+        "ex": "N types in MBTI are known for abstract thinking."
+      },
+      {
+        "en": "empathy",
+        "pos": "n.",
+        "zh": "同理心",
+        "ex": "F types tend to have strong empathy for others."
+      },
+      {
+        "en": "Type A / Type B",
+        "pos": "n.",
+        "zh": "A型（計畫型）/ B型（隨性型）人格",
+        "ex": "Type A people plan every detail of their trips."
+      },
+      {
+        "en": "fortune-telling",
+        "pos": "n.",
+        "zh": "算命",
+        "ex": "Fortune-telling is popular in Taiwan."
+      },
+      {
+        "en": "predestination",
+        "pos": "n.",
+        "zh": "命中注定",
+        "ex": "Do you believe in predestination or free will?"
+      },
+      {
+        "en": "set in stone",
+        "pos": "phrase",
+        "zh": "板上釘釘、不可改變",
+        "ex": "Nothing is set in stone — things can always change."
+      },
+      {
+        "en": "parallel universe",
+        "pos": "n.",
+        "zh": "平行宇宙",
+        "ex": "In a parallel universe, another version of you exists."
+      },
+      {
+        "en": "FOMO",
+        "pos": "n.",
+        "zh": "錯失恐懼",
+        "ex": "I feel FOMO knowing another me might be a billionaire."
+      },
+      {
+        "en": "codependency",
+        "pos": "n.",
+        "zh": "過度依賴",
+        "ex": "Codependency means you can't function without someone."
+      }
     ],
     "corrections": [
-      {"wrong": "cry before your friend", "right": "cry in front of your friends"},
-      {"wrong": "seafood vegetarian", "right": "pescatarian"},
-      {"wrong": "I mostly eat vegetarian food", "right": "I mostly follow a vegetarian diet（更自然）"}
+      {
+        "wrong": "I mostly eat vegetarian food",
+        "right": "I mostly follow a vegetarian diet（更自然）"
+      },
+      {
+        "wrong": "seafood vegetarian",
+        "right": "pescatarian"
+      },
+      {
+        "wrong": "cry before your friend",
+        "right": "cry in front of your friends"
+      }
     ]
   },
   {
-    "id": 19, "date": "2026/05/16", "topic": "感官描述、身體特徵詞彙、飲用水文章（Lelo）",
-    "notes": "練習描述圖片中人物的外貌特徵。閱讀 Engoo 文章：Drink Tap Water? No Thanks, Say Most Americans。討論台灣過濾水、煮沸習慣。\n💡 老師建議：注意詞性（parts of speech），學會描述人的外貌",
+    "id": 19,
+    "date": "2026/05/16",
+    "topic": "感官描述、身體特徵詞彙、飲用水文章（Lelo）",
+    "notes": "練習描述圖片中人物的外貌特徵。閱讀 Engoo 文章：Drink Tap Water? No Thanks, Say Most Americans。討論台灣過濾水、煮沸習慣。\n\n💡 老師建議：注意詞性（parts of speech），學會描述人的外貌",
     "words": [
-      {"en": "outline", "pos": "n.", "zh": "大綱", "ex": "Write an outline before starting your report."},
-      {"en": "summary", "pos": "n.", "zh": "摘要", "ex": "Give me a summary of the main points."},
-      {"en": "seminar", "pos": "n.", "zh": "研討會（小型）", "ex": "We had a seminar about chemical recycling."},
-      {"en": "conference", "pos": "n.", "zh": "會議（大型）", "ex": "I presented at an international conference."},
-      {"en": "resume", "pos": "n.", "zh": "履歷", "ex": "I sent my resume to the HR department."},
-      {"en": "heightened senses", "pos": "phrase", "zh": "感官增強", "ex": "When you close your eyes, your other senses are heightened."},
-      {"en": "locs", "pos": "n.", "zh": "編髮（dreadlocks）", "ex": "He has locs down to his shoulders."},
-      {"en": "beard", "pos": "n.", "zh": "鬍子（下巴）", "ex": "He has a beard and a mustache."},
-      {"en": "mustache", "pos": "n.", "zh": "鬍子（上唇）", "ex": "A mustache is the hair above the upper lip."},
-      {"en": "stud earring", "pos": "n.", "zh": "耳釘", "ex": "It's not a dangly earring, it's a stud earring."},
-      {"en": "boiled water", "pos": "n.", "zh": "煮沸的水", "ex": "In Taiwan, we drink boiled and filtered tap water."},
-      {"en": "microplastics", "pos": "n.", "zh": "微塑膠", "ex": "Bottled water may contain microplastics."},
-      {"en": "survey", "pos": "n.", "zh": "調查、問卷", "ex": "According to a survey, 70% prefer bottled water."},
-      {"en": "sip", "pos": "n./v.", "zh": "小口喝", "ex": "I took a sip of water at the start of class."}
+      {
+        "en": "outline",
+        "pos": "n.",
+        "zh": "大綱",
+        "ex": "Write an outline before starting your report."
+      },
+      {
+        "en": "summary",
+        "pos": "n.",
+        "zh": "摘要",
+        "ex": "Give me a summary of the main points."
+      },
+      {
+        "en": "seminar",
+        "pos": "n.",
+        "zh": "研討會（小型）",
+        "ex": "We had a seminar about chemical recycling."
+      },
+      {
+        "en": "conference",
+        "pos": "n.",
+        "zh": "會議（大型）",
+        "ex": "I presented at an international conference."
+      },
+      {
+        "en": "experiments",
+        "pos": "n.",
+        "zh": "實驗",
+        "ex": "In university, I did many experiments in the lab."
+      },
+      {
+        "en": "resume",
+        "pos": "n.",
+        "zh": "履歷",
+        "ex": "I sent my resume to the HR department."
+      },
+      {
+        "en": "heightened senses",
+        "pos": "phrase",
+        "zh": "感官增強",
+        "ex": "When you close your eyes, your other senses are heightened."
+      },
+      {
+        "en": "locs",
+        "pos": "n.",
+        "zh": "編髮（dreadlocks）",
+        "ex": "He has locs down to his shoulders."
+      },
+      {
+        "en": "beard",
+        "pos": "n.",
+        "zh": "鬍子（下巴）",
+        "ex": "He has a beard and a mustache."
+      },
+      {
+        "en": "mustache",
+        "pos": "n.",
+        "zh": "鬍子（上唇）",
+        "ex": "A mustache is the hair above the upper lip."
+      },
+      {
+        "en": "stud earring",
+        "pos": "n.",
+        "zh": "耳釘",
+        "ex": "It's not a dangly earring, it's a stud earring."
+      },
+      {
+        "en": "boiled water",
+        "pos": "n.",
+        "zh": "煮沸的水",
+        "ex": "In Taiwan, we drink boiled and filtered tap water."
+      },
+      {
+        "en": "microplastics",
+        "pos": "n.",
+        "zh": "微塑膠",
+        "ex": "Bottled water may contain microplastics."
+      },
+      {
+        "en": "survey",
+        "pos": "n.",
+        "zh": "調查、問卷",
+        "ex": "According to a survey, 70% prefer bottled water."
+      },
+      {
+        "en": "sip",
+        "pos": "n./v.",
+        "zh": "小口喝",
+        "ex": "I took a sip of water at the start of class."
+      }
     ],
     "corrections": [
-      {"wrong": "your other sentence will feel more", "right": "your other senses are heightened"},
-      {"wrong": "we communication use Chinese", "right": "we communicate in Chinese"},
-      {"wrong": "in Southern Taipei", "right": "south of Taipei"}
+      {
+        "wrong": "your other sentence will feel more",
+        "right": "your other senses are heightened"
+      },
+      {
+        "wrong": "we communication use Chinese",
+        "right": "we communicate in Chinese"
+      },
+      {
+        "wrong": "in Southern Taipei",
+        "right": "south of Taipei"
+      }
     ]
   },
   {
-    "id": 18, "date": "2026/05/16", "topic": "美容保養、Red Light Therapy（Lisa Levine）",
+    "id": 18,
+    "date": "2026/05/16",
+    "topic": "美容保養、Red Light Therapy（Lisa Levine）",
     "notes": "討論台灣人飛去韓國做醫美的趨勢。閱讀 Engoo 文章：Can Red Light Therapy Help Your Skin？",
     "words": [
-      {"en": "skeptical", "pos": "adj.", "zh": "懷疑的", "ex": "I'm skeptical about whether RLT really works."},
-      {"en": "regenerate", "pos": "v.", "zh": "再生", "ex": "Red light therapy helps the skin regenerate."},
-      {"en": "microneedles", "pos": "n.", "zh": "微針", "ex": "Some beauty treatments use microneedles on the face."},
-      {"en": "toner", "pos": "n.", "zh": "化妝水", "ex": "Apply toner before using a face mask."},
-      {"en": "acne", "pos": "n.", "zh": "痘痘", "ex": "RLT is claimed to help reduce acne."},
-      {"en": "wrinkle", "pos": "n.", "zh": "皺紋", "ex": "Fine lines and wrinkles can be reduced with RLT."},
-      {"en": "inflammation", "pos": "n.", "zh": "發炎", "ex": "RLT helps reduce skin inflammation."},
-      {"en": "follicle", "pos": "n.", "zh": "毛囊", "ex": "RLT can protect hair follicles and reduce hair loss."},
-      {"en": "pores", "pos": "n.", "zh": "毛孔", "ex": "Cleanse your face to open up your pores."},
-      {"en": "collagen", "pos": "n.", "zh": "膠原蛋白", "ex": "RLT improves collagen production for smoother skin."},
-      {"en": "infrared", "pos": "adj./n.", "zh": "紅外線", "ex": "Near-infrared light can penetrate deeper into skin."},
-      {"en": "cosmetics", "pos": "n.", "zh": "化妝品", "ex": "K-pop stars use a lot of cosmetics."}
+      {
+        "en": "skeptical",
+        "pos": "adj.",
+        "zh": "懷疑的",
+        "ex": "I'm skeptical about whether RLT really works."
+      },
+      {
+        "en": "regenerate",
+        "pos": "v.",
+        "zh": "再生",
+        "ex": "Red light therapy helps the skin regenerate."
+      },
+      {
+        "en": "microneedles",
+        "pos": "n.",
+        "zh": "微針",
+        "ex": "Some beauty treatments use microneedles on the face."
+      },
+      {
+        "en": "toner",
+        "pos": "n.",
+        "zh": "化妝水",
+        "ex": "Apply toner before using a face mask."
+      },
+      {
+        "en": "acne",
+        "pos": "n.",
+        "zh": "痘痘",
+        "ex": "RLT is claimed to help reduce acne."
+      },
+      {
+        "en": "wrinkle",
+        "pos": "n.",
+        "zh": "皺紋",
+        "ex": "Fine lines and wrinkles can be reduced with RLT."
+      },
+      {
+        "en": "inflammation",
+        "pos": "n.",
+        "zh": "發炎",
+        "ex": "RLT helps reduce skin inflammation."
+      },
+      {
+        "en": "follicle",
+        "pos": "n.",
+        "zh": "毛囊",
+        "ex": "RLT can protect hair follicles and reduce hair loss."
+      },
+      {
+        "en": "pores",
+        "pos": "n.",
+        "zh": "毛孔",
+        "ex": "Cleanse your face to open up your pores."
+      },
+      {
+        "en": "collagen",
+        "pos": "n.",
+        "zh": "膠原蛋白",
+        "ex": "RLT improves collagen production for smoother skin."
+      },
+      {
+        "en": "infrared",
+        "pos": "adj./n.",
+        "zh": "紅外線",
+        "ex": "Near-infrared light can penetrate deeper into skin."
+      },
+      {
+        "en": "cosmetics",
+        "pos": "n.",
+        "zh": "化妝品",
+        "ex": "K-pop stars use a lot of cosmetics."
+      }
     ],
     "corrections": [
-      {"wrong": "Do you have any suggest", "right": "Do you have any recommendations?"}
+      {
+        "wrong": "they have lots of makeup（描述一般人）",
+        "right": "they don't use much makeup"
+      },
+      {
+        "wrong": "Do you have any suggest",
+        "right": "Do you have any recommendations?"
+      },
+      {
+        "wrong": "I could see him playing in real life",
+        "right": "I could see them playing in real life ✅（這個是正確的）"
+      }
     ]
   },
   {
-    "id": 17, "date": "2026/05/10", "topic": "台灣文化、節日、旅遊、家庭（Lisa Marie）",
-    "notes": "討論清明節（Tomb Sweeping Day）、台灣是多元文化島嶼。分享今年已去了3次國外：日本（滑雪板）、韓國x2。計劃10月去美國公路旅行。",
+    "id": 17,
+    "date": "2026/05/10",
+    "topic": "台灣文化、節日、旅遊、家庭（Lisa Marie）",
+    "notes": "討論清明節（Tomb Sweeping Day）、台灣是多元文化島嶼、伊斯蘭祈禱室、民間信仰、母親節康乃馨。分享今年已去了3次國外：日本（滑雪板）、韓國x2。計劃10月去美國公路旅行。",
     "words": [
-      {"en": "gemstones / jewels", "pos": "n.", "zh": "寶石", "ex": "They decorated the temple with gemstones."},
-      {"en": "glistens", "pos": "v.", "zh": "閃閃發亮", "ex": "The temple glistens when the sunlight hits it."},
-      {"en": "ornate", "pos": "adj.", "zh": "裝飾華麗的", "ex": "The temples in Thailand are very ornate."},
-      {"en": "equator", "pos": "n.", "zh": "赤道", "ex": "Countries near the equator are always hot."},
-      {"en": "monsoon", "pos": "n.", "zh": "季風", "ex": "Taiwan is affected by the monsoon season."},
-      {"en": "humidity", "pos": "n.", "zh": "濕度", "ex": "The humidity in Taiwan is very high in summer."},
-      {"en": "tomb sweeping day", "pos": "n.", "zh": "清明節", "ex": "Tomb Sweeping Day is on April 4th in Taiwan."},
-      {"en": "bless", "pos": "v.", "zh": "保佑", "ex": "We pray for our ancestors to bless us."},
-      {"en": "carnation", "pos": "n.", "zh": "康乃馨", "ex": "Carnations are the traditional Mother's Day flower."},
-      {"en": "multicultural", "pos": "adj.", "zh": "多元文化的", "ex": "Taiwan is a multicultural country."},
-      {"en": "folk beliefs / folklore", "pos": "n.", "zh": "民間信仰", "ex": "Going to the temple is part of folk beliefs."},
-      {"en": "pagoda", "pos": "n.", "zh": "塔（佛塔）", "ex": "The Thai temple has a beautiful pagoda."},
-      {"en": "road trip", "pos": "n.", "zh": "公路旅行", "ex": "We planned a road trip across the US."},
-      {"en": "cold front", "pos": "n.", "zh": "冷鋒", "ex": "A cold front is moving in this week."},
-      {"en": "national holiday", "pos": "n.", "zh": "國定假日", "ex": "October 10th is Taiwan's national holiday."},
-      {"en": "ceremony", "pos": "n.", "zh": "儀式", "ex": "We held a ceremony for our grandmother."}
+      {
+        "en": "gemstones / jewels",
+        "pos": "n.",
+        "zh": "寶石",
+        "ex": "They decorated the temple with gemstones."
+      },
+      {
+        "en": "glistens",
+        "pos": "v.",
+        "zh": "閃閃發亮",
+        "ex": "The temple glistens when the sunlight hits it."
+      },
+      {
+        "en": "ornate",
+        "pos": "adj.",
+        "zh": "裝飾華麗的",
+        "ex": "The temples in Thailand are very ornate."
+      },
+      {
+        "en": "equator",
+        "pos": "n.",
+        "zh": "赤道",
+        "ex": "Countries near the equator are always hot."
+      },
+      {
+        "en": "monsoon",
+        "pos": "n.",
+        "zh": "季風",
+        "ex": "Taiwan is affected by the monsoon season."
+      },
+      {
+        "en": "cold front",
+        "pos": "n.",
+        "zh": "冷鋒",
+        "ex": "A cold front is moving in this week."
+      },
+      {
+        "en": "humidity",
+        "pos": "n.",
+        "zh": "濕度",
+        "ex": "The humidity in Taiwan is very high in summer."
+      },
+      {
+        "en": "tomb sweeping day",
+        "pos": "n.",
+        "zh": "清明節",
+        "ex": "Tomb Sweeping Day is on April 4th in Taiwan."
+      },
+      {
+        "en": "bless",
+        "pos": "v.",
+        "zh": "保佑",
+        "ex": "We pray for our ancestors to bless us."
+      },
+      {
+        "en": "national holiday",
+        "pos": "n.",
+        "zh": "國定假日",
+        "ex": "October 10th is Taiwan's national holiday."
+      },
+      {
+        "en": "ceremony",
+        "pos": "n.",
+        "zh": "儀式",
+        "ex": "We held a ceremony for our grandmother."
+      },
+      {
+        "en": "life updates",
+        "pos": "n.",
+        "zh": "近況分享",
+        "ex": "We share life updates during family gatherings."
+      },
+      {
+        "en": "carnation",
+        "pos": "n.",
+        "zh": "康乃馨",
+        "ex": "Carnations are the traditional Mother's Day flower."
+      },
+      {
+        "en": "multicultural",
+        "pos": "adj.",
+        "zh": "多元文化的",
+        "ex": "Taiwan is a multicultural country."
+      },
+      {
+        "en": "folk beliefs / folklore",
+        "pos": "n.",
+        "zh": "民間信仰",
+        "ex": "Going to the temple is part of folk beliefs."
+      },
+      {
+        "en": "pagoda",
+        "pos": "n.",
+        "zh": "塔（佛塔）",
+        "ex": "The Thai temple has a beautiful pagoda."
+      },
+      {
+        "en": "road trip",
+        "pos": "n.",
+        "zh": "公路旅行",
+        "ex": "We planned a road trip across the US."
+      }
     ],
     "corrections": [
-      {"wrong": "it's a city south than Taipei", "right": "it's south of Taipei"},
-      {"wrong": "I do many exercise", "right": "I did a lot of exercise"},
-      {"wrong": "spend many money", "right": "spend a lot of money"}
+      {
+        "wrong": "it's a city south than Taipei",
+        "right": "it's south of Taipei"
+      },
+      {
+        "wrong": "I do many exercise",
+        "right": "I did a lot of exercise"
+      },
+      {
+        "wrong": "spend many money",
+        "right": "spend a lot of money"
+      }
     ]
   },
   {
-    "id": 16, "date": "2026/05/03", "topic": "League of Legends + Nintendo Museum + 工作介紹（Tutor Juliet + Tiffany）",
-    "notes": "介紹工作、討論 LOL 電競比賽、T1 團隊。閱讀 Engoo 文章：New Nintendo Museum Opens in Kyoto。\n💡 Hsinchu is south of Taipei（不是 southern Taiwan）",
+    "id": 16,
+    "date": "2026/05/03",
+    "topic": "League of Legends + Nintendo Museum + 工作介紹（Tutor Juliet + Tiffany）",
+    "notes": "介紹工作、討論 LOL（League of Legends）電競比賽、T1 團隊。閱讀 Engoo 文章：New Nintendo Museum Opens in Kyoto。\n\n💡 Hsinchu is south of Taipei（不是 southern Taiwan）",
     "words": [
-      {"en": "halls of residence", "pos": "n.", "zh": "宿舍", "ex": "I stay in my company's halls of residence during the week."},
-      {"en": "headquarters", "pos": "n.", "zh": "總部", "ex": "Many companies have their headquarters in Taipei."},
-      {"en": "global champion", "pos": "n.", "zh": "全球冠軍", "ex": "T1 has won six global championships."},
-      {"en": "interactive", "pos": "adj.", "zh": "互動的", "ex": "The Nintendo Museum has many interactive exhibits."},
-      {"en": "exhibit", "pos": "n.", "zh": "展覽品", "ex": "You can find exhibits from the NES to the Switch there."},
-      {"en": "influential", "pos": "adj.", "zh": "有影響力的", "ex": "Nintendo is one of the most influential gaming companies."},
-      {"en": "console", "pos": "n.", "zh": "遊戲主機", "ex": "Nintendo has made many different consoles over the years."},
-      {"en": "lottery system", "pos": "n.", "zh": "抽籤制度", "ex": "You need to enter a lottery three months before visiting."},
-      {"en": "south of Taipei", "pos": "phrase", "zh": "在台北南方", "ex": "Hsinchu is south of Taipei, not southern Taiwan."}
+      {
+        "en": "halls of residence",
+        "pos": "n.",
+        "zh": "宿舍",
+        "ex": "I stay in my company's halls of residence during the week."
+      },
+      {
+        "en": "headquarters",
+        "pos": "n.",
+        "zh": "總部",
+        "ex": "Many companies have their headquarters in Taipei."
+      },
+      {
+        "en": "global champion",
+        "pos": "n.",
+        "zh": "全球冠軍",
+        "ex": "T1 has won six global championships."
+      },
+      {
+        "en": "interactive",
+        "pos": "adj.",
+        "zh": "互動的",
+        "ex": "The Nintendo Museum has many interactive exhibits."
+      },
+      {
+        "en": "exhibit",
+        "pos": "n.",
+        "zh": "展覽品",
+        "ex": "You can find exhibits from the NES to the Switch there."
+      },
+      {
+        "en": "influential",
+        "pos": "adj.",
+        "zh": "有影響力的",
+        "ex": "Nintendo is one of the most influential gaming companies."
+      },
+      {
+        "en": "console",
+        "pos": "n.",
+        "zh": "遊戲主機",
+        "ex": "Nintendo has made many different consoles over the years."
+      },
+      {
+        "en": "lottery system",
+        "pos": "n.",
+        "zh": "抽籤制度",
+        "ex": "You need to enter a lottery three months before visiting."
+      },
+      {
+        "en": "south of Taipei",
+        "pos": "phrase",
+        "zh": "在台北南方",
+        "ex": "Hsinchu is south of Taipei, not southern Taiwan."
+      }
     ],
     "corrections": [
-      {"wrong": "I'm born in Taiwan", "right": "I was born in Taiwan"},
-      {"wrong": "right now is the vacation", "right": "right now I am on vacation"},
-      {"wrong": "It also have the stock in US", "right": "It also has stock in the US"}
+      {
+        "wrong": "I'm born in Taiwan",
+        "right": "I was born in Taiwan"
+      },
+      {
+        "wrong": "right now is the vacation",
+        "right": "right now I am on vacation"
+      },
+      {
+        "wrong": "It's most famous company",
+        "right": "It's the most famous company"
+      },
+      {
+        "wrong": "It also have the stock in US",
+        "right": "It also has stock in the US"
+      }
     ]
   },
   {
-    "id": 15, "date": "2026/04/26", "topic": "首爾旅遊、LOL 粉絲活動（Robin Lea）",
+    "id": 15,
+    "date": "2026/04/26",
+    "topic": "首爾旅遊、LOL 粉絲活動（Robin Lea）",
     "notes": "在首爾參加 T1 的三天粉絲活動。有點懂韓文所以能幫旁邊的臺灣人翻譯。今天是活動第一天，T1贏了，可以看粉絲見面會。",
     "words": [
-      {"en": "host", "pos": "n.", "zh": "主持人", "ex": "The host of the fan event spoke in Korean."},
-      {"en": "fun vs funny", "pos": "—", "zh": "fun=好玩 vs funny=好笑", "ex": "The event was fun (enjoyable), not just funny (humorous)."},
-      {"en": "sensitive to smells", "pos": "phrase", "zh": "對氣味敏感", "ex": "I'm sensitive to smells, so I can't have pets."},
-      {"en": "ferret", "pos": "n.", "zh": "雪貂", "ex": "Ferrets are cute but have a very strong smell."},
-      {"en": "vulnerable", "pos": "adj.", "zh": "脆弱的", "ex": "Fish are vulnerable to temperature changes."}
+      {
+        "en": "host",
+        "pos": "n.",
+        "zh": "主持人",
+        "ex": "The host of the fan event spoke in Korean."
+      },
+      {
+        "en": "fun vs funny",
+        "pos": "—",
+        "zh": "fun=好玩 vs funny=好笑",
+        "ex": "The event was fun (enjoyable), not just funny (humorous)."
+      },
+      {
+        "en": "sensitive to smells",
+        "pos": "phrase",
+        "zh": "對氣味敏感",
+        "ex": "I'm sensitive to smells, so I can't have pets."
+      },
+      {
+        "en": "ferret",
+        "pos": "n.",
+        "zh": "雪貂",
+        "ex": "Ferrets are cute but have a very strong smell."
+      },
+      {
+        "en": "vulnerable",
+        "pos": "adj.",
+        "zh": "脆弱的",
+        "ex": "Fish are vulnerable to temperature changes."
+      }
     ],
     "corrections": [
-      {"wrong": "So I stay in Korea right now", "right": "So I am staying in Korea right now"},
-      {"wrong": "I will told her", "right": "I will tell her"},
-      {"wrong": "sensitive for the smell", "right": "sensitive to the smell"}
+      {
+        "wrong": "So I stay in Korea right now",
+        "right": "So I am staying in Korea right now"
+      },
+      {
+        "wrong": "I will told her",
+        "right": "I will tell her"
+      },
+      {
+        "wrong": "sensitive for the smell",
+        "right": "sensitive to the smell"
+      }
     ]
   },
   {
-    "id": 14, "date": "2026/04/23", "topic": "韓劇推薦、音樂、等飛機（Lyn Rose）",
-    "notes": "在機場等飛往韓國的航班。討論韓劇：Squid Game、The Extraordinary Lawyer Woo、Glory。聊到 Justin Bieber 和 Adele 的歌。",
+    "id": 14,
+    "date": "2026/04/23",
+    "topic": "韓劇推薦、音樂、等飛機（Lyn Rose）",
+    "notes": "在機場等飛往韓國的航班。討論韓劇：Squid Game、The Extraordinary Lawyer Woo、When Life Gives You Tangerines、Glory。聊到 Justin Bieber 和 Adele 的歌。",
     "words": [
-      {"en": "versatile", "pos": "adj.", "zh": "多才多藝的", "ex": "IU is a versatile actress who can play many different roles."},
-      {"en": "actress", "pos": "n.", "zh": "女演員", "ex": "A woman actor is called an actress."},
-      {"en": "autism", "pos": "n.", "zh": "自閉症", "ex": "The Extraordinary Lawyer Woo features a character with autism."},
-      {"en": "adolescent", "pos": "n.", "zh": "青少年", "ex": "Justin Bieber was an adolescent when he became famous."},
-      {"en": "familiarise yourself with", "pos": "phrase", "zh": "熟悉某事", "ex": "I'd better familiarise myself with the bus route first."}
+      {
+        "en": "versatile",
+        "pos": "adj.",
+        "zh": "多才多藝的",
+        "ex": "IU is a versatile actress who can play many different roles."
+      },
+      {
+        "en": "actress",
+        "pos": "n.",
+        "zh": "女演員",
+        "ex": "A woman actor is called an actress."
+      },
+      {
+        "en": "autism",
+        "pos": "n.",
+        "zh": "自閉症",
+        "ex": "The Extraordinary Lawyer Woo features a character with autism."
+      },
+      {
+        "en": "Chasing Pavements",
+        "pos": "n.",
+        "zh": "阿黛爾歌曲",
+        "ex": "Chasing Pavements is one of Adele's early famous songs."
+      },
+      {
+        "en": "Set Fire to the Rain",
+        "pos": "n.",
+        "zh": "阿黛爾歌曲",
+        "ex": "Set Fire to the Rain is a lively energetic Adele song."
+      },
+      {
+        "en": "adolescent",
+        "pos": "n.",
+        "zh": "青少年",
+        "ex": "Justin Bieber was an adolescent when he became famous."
+      },
+      {
+        "en": "familiarise yourself with",
+        "pos": "phrase",
+        "zh": "熟悉某事",
+        "ex": "I'd better familiarise myself with the bus route first."
+      }
     ],
     "corrections": [
-      {"wrong": "I plan to traveling to Korea", "right": "I plan to travel to Korea"},
-      {"wrong": "I will hear that song", "right": "I will listen to that song"}
+      {
+        "wrong": "I plan to traveling to Korea",
+        "right": "I plan to travel to Korea"
+      },
+      {
+        "wrong": "I will hear that song",
+        "right": "I will listen to that song"
+      }
     ]
   },
   {
-    "id": 13, "date": "2026/04/19", "topic": "台灣食物、軟球、新竹競爭環境（Anita + Nikita）",
-    "notes": "早上和朋友打軟球、去公園玩 Pokemon Go 風格的送別活動。討論台灣食物、珍珠奶茶、手搖飲。\n💡 老師 Anita 建議：多嘗試不同主題的 Engoo 文章",
+    "id": 13,
+    "date": "2026/04/19",
+    "topic": "台灣食物、軟球、新竹競爭環境（Anita + Nikita）",
+    "notes": "早上和朋友打軟球、去公園玩 Pokemon Go 風格的送別活動。討論台灣食物：大腸麵線（oyster vermicelli）、珍珠奶茶、手搖飲。新竹工程師多、學校競爭激烈。\n\n💡 老師 Anita 建議：多嘗試不同主題的 Engoo 文章",
     "words": [
-      {"en": "chit chat", "pos": "n.", "zh": "閒聊", "ex": "We can just have some chit chat today."},
-      {"en": "broth", "pos": "n.", "zh": "湯底（清湯）", "ex": "The Taiwanese soup has a Chinese medicine broth."},
-      {"en": "bubble tea", "pos": "n.", "zh": "珍珠奶茶", "ex": "Bubble tea was invented in Taiwan."},
-      {"en": "handshake drink", "pos": "n.", "zh": "手搖飲", "ex": "Taiwanese handshake drinks are freshly shaken each time."},
-      {"en": "public transportation", "pos": "n.", "zh": "大眾運輸", "ex": "Hsinchu's public transportation isn't very convenient."},
-      {"en": "intense competition", "pos": "n.", "zh": "激烈競爭", "ex": "There is intense competition for school spots in Hsinchu."},
-      {"en": "compassionate", "pos": "adj.", "zh": "富同情心的", "ex": "Taiwanese people are known for being kind and compassionate."},
-      {"en": "northern lights / aurora", "pos": "n.", "zh": "北極光", "ex": "You can see the aurora borealis in Yellowknife, Canada."}
+      {
+        "en": "chit chat",
+        "pos": "n.",
+        "zh": "閒聊",
+        "ex": "We can just have some chit chat today."
+      },
+      {
+        "en": "broth",
+        "pos": "n.",
+        "zh": "湯底（清湯）",
+        "ex": "The Taiwanese soup has a Chinese medicine broth."
+      },
+      {
+        "en": "bubble tea",
+        "pos": "n.",
+        "zh": "珍珠奶茶",
+        "ex": "Bubble tea was invented in Taiwan."
+      },
+      {
+        "en": "handshake drink",
+        "pos": "n.",
+        "zh": "手搖飲",
+        "ex": "Taiwanese handshake drinks are freshly shaken each time."
+      },
+      {
+        "en": "public transportation",
+        "pos": "n.",
+        "zh": "大眾運輸",
+        "ex": "Hsinchu's public transportation isn't very convenient."
+      },
+      {
+        "en": "intense competition",
+        "pos": "n.",
+        "zh": "激烈競爭",
+        "ex": "There is intense competition for school spots in Hsinchu."
+      },
+      {
+        "en": "limited seats",
+        "pos": "n.",
+        "zh": "名額有限",
+        "ex": "Students must study hard because of limited school seats."
+      },
+      {
+        "en": "compassionate",
+        "pos": "adj.",
+        "zh": "富同情心的",
+        "ex": "Taiwanese people are known for being kind and compassionate."
+      },
+      {
+        "en": "Yellowknife",
+        "pos": "n.",
+        "zh": "黃刀鎮（加拿大）",
+        "ex": "My friend went to Yellowknife to see the northern lights."
+      },
+      {
+        "en": "northern lights / aurora",
+        "pos": "n.",
+        "zh": "北極光",
+        "ex": "You can see the aurora borealis in Yellowknife, Canada."
+      }
     ],
     "corrections": [
-      {"wrong": "one people is like one Pokemon", "right": "one person is like one Pokémon"},
-      {"wrong": "she plan to change her work", "right": "she plans to change her job"},
-      {"wrong": "I just come back to home", "right": "I just came back home"}
+      {
+        "wrong": "one people is like one Pokemon",
+        "right": "one person is like one Pokémon"
+      },
+      {
+        "wrong": "she plan to change her work",
+        "right": "she plans to change her job"
+      },
+      {
+        "wrong": "I just come back to home",
+        "right": "I just came back home"
+      },
+      {
+        "wrong": "kind and passionate",
+        "right": "kind and compassionate（情境不同）"
+      }
     ]
   },
   {
-    "id": 12, "date": "2026/04/18", "topic": "旅遊對談、交通方式（Kay Sokolowski）",
-    "notes": "進行旅遊主題的對談練習。回答問題：去過哪些國家、最喜歡哪個、旅行風格（舒適型 vs 探險型）。",
+    "id": 12,
+    "date": "2026/04/18",
+    "topic": "旅遊對談、交通方式（Kay Sokolowski）",
+    "notes": "進行旅遊主題的對談練習。回答問題：去過哪些國家、最喜歡哪個、如何選擇目的地、旅行風格（舒適型 vs 探險型）。",
     "words": [
-      {"en": "four times a year", "pos": "phrase", "zh": "一年四次", "ex": "I try to travel four times a year."},
-      {"en": "stimulating new experiences", "pos": "phrase", "zh": "刺激的新體驗", "ex": "Do you prefer comfort or stimulating new experiences?"},
-      {"en": "French bread", "pos": "n.", "zh": "法國麵包（越南）", "ex": "Vietnam has delicious French bread due to its history."},
-      {"en": "savory / sweet flavor", "pos": "n.", "zh": "鹹味／甜味", "ex": "Thai food has both sweet and savory flavors."}
+      {
+        "en": "four times a year",
+        "pos": "phrase",
+        "zh": "一年四次",
+        "ex": "I try to travel four times a year."
+      },
+      {
+        "en": "stimulating new experiences",
+        "pos": "phrase",
+        "zh": "刺激的新體驗",
+        "ex": "Do you prefer comfort or stimulating new experiences?"
+      },
+      {
+        "en": "French bread",
+        "pos": "n.",
+        "zh": "法國麵包（越南）",
+        "ex": "Vietnam has delicious French bread due to its history."
+      },
+      {
+        "en": "savory / sweet flavor",
+        "pos": "n.",
+        "zh": "鹹味／甜味",
+        "ex": "Thai food has both sweet and savory flavors."
+      }
     ],
     "corrections": [
-      {"wrong": "I just wake up", "right": "I just woke up"},
-      {"wrong": "I have traveled to many Asia countries", "right": "I have traveled to many Asian countries"},
-      {"wrong": "planned to there", "right": "planned to go there"}
+      {
+        "wrong": "I just wake up",
+        "right": "I just woke up"
+      },
+      {
+        "wrong": "I have traveled to many Asia countries",
+        "right": "I have traveled to many Asian countries"
+      },
+      {
+        "wrong": "planned to there",
+        "right": "planned to go there"
+      }
     ]
   },
   {
-    "id": 11, "date": "2026/04/05", "topic": "日本旅遊、台灣美食、各國比較（Kat x2）",
-    "notes": "清明節假期，在台北奶奶家。討論日本旅遊（去過5次以上）。閱讀 Engoo 文章：Survey Shows Type of Country Japanese People Want。",
+    "id": 11,
+    "date": "2026/04/05",
+    "topic": "日本旅遊、台灣美食、各國比較（Kat x2）",
+    "notes": "清明節假期，在台北奶奶家。討論日本旅遊（去過5次以上）。閱讀 Engoo 文章：Survey Shows Type of Country Japanese People Want。學習 world-class、welfare、equality、desire 等單字。",
     "words": [
-      {"en": "world-class", "pos": "adj.", "zh": "世界頂級的", "ex": "Japan has a world-class rugby team."},
-      {"en": "welfare", "pos": "n.", "zh": "福利（政府補助）", "ex": "Finland has one of the best welfare systems in the world."},
-      {"en": "equality", "pos": "n.", "zh": "平等", "ex": "Sweden ranks highly in terms of gender equality."},
-      {"en": "high cost of living", "pos": "phrase", "zh": "高生活費", "ex": "Sweden has a very high cost of living."},
-      {"en": "defense", "pos": "n.", "zh": "國防", "ex": "Military measures for protecting a country are called defense."},
-      {"en": "desire", "pos": "n.", "zh": "渴望", "ex": "My biggest desire is to travel to Europe someday."},
-      {"en": "challenge", "pos": "v.", "zh": "挑戰", "ex": "I want a job that challenges my skills."},
-      {"en": "pension", "pos": "n.", "zh": "退休金", "ex": "The government pays a pension to retired workers."},
-      {"en": "roller coaster", "pos": "n.", "zh": "雲霄飛車", "ex": "I love riding roller coasters at Universal Studios."},
-      {"en": "jealous", "pos": "adj.", "zh": "嫉妒的", "ex": "I feel jealous that my parents went to Japan for cherry blossoms."},
-      {"en": "considering my options", "pos": "phrase", "zh": "考慮我的選擇", "ex": "I'm still considering my options for studying abroad."}
+      {
+        "en": "world-class",
+        "pos": "adj.",
+        "zh": "世界頂級的",
+        "ex": "Japan has a world-class rugby team."
+      },
+      {
+        "en": "welfare",
+        "pos": "n.",
+        "zh": "福利（政府補助）",
+        "ex": "Finland has one of the best welfare systems in the world."
+      },
+      {
+        "en": "equality",
+        "pos": "n.",
+        "zh": "平等",
+        "ex": "Sweden ranks highly in terms of gender equality."
+      },
+      {
+        "en": "high cost of living",
+        "pos": "phrase",
+        "zh": "高生活費",
+        "ex": "Sweden has a very high cost of living."
+      },
+      {
+        "en": "defense",
+        "pos": "n.",
+        "zh": "國防",
+        "ex": "Military measures for protecting a country are called defense."
+      },
+      {
+        "en": "desire",
+        "pos": "n.",
+        "zh": "渴望",
+        "ex": "My biggest desire is to travel to Europe someday."
+      },
+      {
+        "en": "challenge",
+        "pos": "v.",
+        "zh": "挑戰",
+        "ex": "I want a job that challenges my skills."
+      },
+      {
+        "en": "pension",
+        "pos": "n.",
+        "zh": "退休金",
+        "ex": "The government pays a pension to retired workers."
+      },
+      {
+        "en": "roller coaster",
+        "pos": "n.",
+        "zh": "雲霄飛車",
+        "ex": "I love riding roller coasters at Universal Studios."
+      },
+      {
+        "en": "jealous",
+        "pos": "adj.",
+        "zh": "嫉妒的",
+        "ex": "I feel jealous that my parents went to Japan for cherry blossoms."
+      },
+      {
+        "en": "considering my options",
+        "pos": "phrase",
+        "zh": "考慮我的選擇",
+        "ex": "I'm still considering my options for studying abroad."
+      }
     ],
     "corrections": [
-      {"wrong": "my parents is stay in Hsinchu", "right": "my parents are staying in Hsinchu"},
-      {"wrong": "I choose to, to went to Universal", "right": "I chose to go to Universal"},
-      {"wrong": "I would choice different place", "right": "I would choose a different place"}
+      {
+        "wrong": "my parents is stay in Hsinchu",
+        "right": "my parents are staying in Hsinchu"
+      },
+      {
+        "wrong": "I choose to, to went to Universal",
+        "right": "I chose to go to Universal"
+      },
+      {
+        "wrong": "I would choice different place",
+        "right": "I would choose a different place"
+      }
     ]
   },
   {
-    "id": 10, "date": "2026/03/28", "topic": "求職對談 + 過去式練習（Kay Sokolowski + TJ）",
-    "notes": "和 Kay 進行求職主題英語對談。和 TJ 練習過去式動詞，分享和弟弟去餐廳吃飯、逛 Arcade 的一天。\n📌 重要：past tense — eat→ate, go→went, come→came, pick up→picked up",
+    "id": 10,
+    "date": "2026/03/28",
+    "topic": "求職對談 + 過去式練習（Kay Sokolowski + TJ）",
+    "notes": "和 Kay 進行求職主題英語對談。和 TJ 練習過去式動詞，分享和弟弟去餐廳吃飯、逛 Arcade 的一天。\n\n📌 重要：past tense practice — eat→ate, go→went, come→came, pick up→picked up\n📌 Arcade（電玩遊樂場）、pick up（接送）是重要片語",
     "words": [
-      {"en": "the Netherlands", "pos": "n.", "zh": "荷蘭", "ex": "The Netherlands is famous for renewable energy."},
-      {"en": "renewable energy", "pos": "n.", "zh": "再生能源", "ex": "I want to study renewable energy in the Netherlands."},
-      {"en": "redundant", "pos": "adj.", "zh": "被AI取代的", "ex": "AI might make some jobs redundant in the future."},
-      {"en": "resume / CV", "pos": "n.", "zh": "履歷", "ex": "I sent my resume to the HR department."},
-      {"en": "rewarding", "pos": "adj.", "zh": "有成就感的", "ex": "Teaching is a very rewarding job."},
-      {"en": "arcade", "pos": "n.", "zh": "電玩遊樂場", "ex": "After lunch, we went to an arcade to play games."},
-      {"en": "pick up", "pos": "v.", "zh": "接（某人）", "ex": "I picked up my brother at 1 PM."}
+      {
+        "en": "the Netherlands",
+        "pos": "n.",
+        "zh": "荷蘭",
+        "ex": "The Netherlands is famous for renewable energy."
+      },
+      {
+        "en": "renewable energy",
+        "pos": "n.",
+        "zh": "再生能源",
+        "ex": "I want to study renewable energy in the Netherlands."
+      },
+      {
+        "en": "redundant",
+        "pos": "adj.",
+        "zh": "被AI取代的",
+        "ex": "AI might make some jobs redundant in the future."
+      },
+      {
+        "en": "resume / CV",
+        "pos": "n.",
+        "zh": "履歷",
+        "ex": "I sent my resume to the HR department."
+      },
+      {
+        "en": "chemist",
+        "pos": "n.",
+        "zh": "化學師",
+        "ex": "A person who works with chemistry is called a chemist."
+      },
+      {
+        "en": "rewarding",
+        "pos": "adj.",
+        "zh": "有成就感的",
+        "ex": "Teaching is a very rewarding job."
+      },
+      {
+        "en": "arcade",
+        "pos": "n.",
+        "zh": "電玩遊樂場",
+        "ex": "After lunch, we went to an arcade to play games."
+      },
+      {
+        "en": "pick up (phrasal verb)",
+        "pos": "v.",
+        "zh": "接（某人）",
+        "ex": "I picked up my brother at 1 PM."
+      }
     ],
     "corrections": [
-      {"wrong": "I go to restaurant and have a lunch", "right": "I went to the restaurant and had lunch（過去式！）"},
-      {"wrong": "we went to play game", "right": "we played games at an arcade"},
-      {"wrong": "famous about renewable energy", "right": "famous for renewable energy"}
+      {
+        "wrong": "I go to restaurant and have a lunch",
+        "right": "I went to the restaurant and had lunch（過去式！）"
+      },
+      {
+        "wrong": "we went to play game",
+        "right": "we played games at an arcade"
+      },
+      {
+        "wrong": "an other math degree",
+        "right": "another master's degree"
+      },
+      {
+        "wrong": "famous about renewable energy",
+        "right": "famous for renewable energy"
+      }
     ]
   },
   {
-    "id": 9, "date": "2026/03/22", "topic": "眼睫毛、殖民歷史、歐洲旅遊建議（Kristina x3）",
-    "notes": "和 Kristina 的系列課程：討論台灣的殖民歷史（西班牙、日本、中國）、DNA測試。歐洲旅遊路線建議：倫敦→阿姆斯特丹→巴黎。\n💡 more better → just better（不要加 more）",
+    "id": 9,
+    "date": "2026/03/22",
+    "topic": "眼睫毛、殖民歷史、歐洲旅遊建議（Kristina x3）",
+    "notes": "和 Kristina 的系列課程：討論亞洲人天生深色睫毛、台灣的殖民歷史（西班牙、日本、中國）、DNA測試。歐洲旅遊路線建議：倫敦→阿姆斯特丹→巴黎。介紹 raclette、crepe（正確發音）。\n\n💡 more better → just better（不要加 more）\n💡 good→better→best / bad→worse→worst",
     "words": [
-      {"en": "colonisation", "pos": "n.", "zh": "殖民", "ex": "Taiwan has a history of colonisation by Spain and Japan."},
-      {"en": "ancestor", "pos": "n.", "zh": "祖先", "ex": "My higher nose might be from my indigenous ancestors."},
-      {"en": "hygiene", "pos": "n.", "zh": "衛生習慣", "ex": "Good hygiene is important for health."},
-      {"en": "bidet", "pos": "n.", "zh": "坐浴桶", "ex": "European countries commonly have bidets in bathrooms."},
-      {"en": "savory food", "pos": "n.", "zh": "鹹食", "ex": "Savory food is salty, as opposed to sweet food."},
-      {"en": "precarious", "pos": "adj.", "zh": "不穩定的", "ex": "Working without a contract can be precarious."},
-      {"en": "raclette", "pos": "n.", "zh": "瑞士起司烤盤料理", "ex": "Raclette is like cheese fondue but you grill the cheese yourself."},
-      {"en": "mille-feuille", "pos": "n.", "zh": "千層酥（法式甜點）", "ex": "Mille-feuille is a delicious French custard layered cake."},
-      {"en": "art therapy", "pos": "n.", "zh": "藝術治療", "ex": "Art therapy helps people express emotions through creativity."},
-      {"en": "integrated into the culture", "pos": "phrase", "zh": "融入文化", "ex": "Different cultures have been integrated into Taiwanese society."}
+      {
+        "en": "colonisation",
+        "pos": "n.",
+        "zh": "殖民",
+        "ex": "Taiwan has a history of colonisation by Spain and Japan."
+      },
+      {
+        "en": "integrated into the culture",
+        "pos": "phrase",
+        "zh": "融入文化",
+        "ex": "Different cultures have been integrated into Taiwanese society."
+      },
+      {
+        "en": "ancestor",
+        "pos": "n.",
+        "zh": "祖先",
+        "ex": "My higher nose might be from my indigenous ancestors."
+      },
+      {
+        "en": "test your DNA",
+        "pos": "phrase",
+        "zh": "做DNA測試",
+        "ex": "Some Taiwanese test their DNA to find out their ancestry."
+      },
+      {
+        "en": "HD brows",
+        "pos": "n.",
+        "zh": "高清眉毛（美容）",
+        "ex": "HD brows is a beauty treatment to enhance eyebrow shape."
+      },
+      {
+        "en": "hygiene",
+        "pos": "n.",
+        "zh": "衛生習慣",
+        "ex": "Good hygiene is important for health and social situations."
+      },
+      {
+        "en": "bidet",
+        "pos": "n.",
+        "zh": "坐浴桶",
+        "ex": "European countries commonly have bidets in bathrooms."
+      },
+      {
+        "en": "savory food",
+        "pos": "n.",
+        "zh": "鹹食",
+        "ex": "Savory food is salty, as opposed to sweet food."
+      },
+      {
+        "en": "precarious",
+        "pos": "adj.",
+        "zh": "不穩定的",
+        "ex": "Working without a contract can be precarious."
+      },
+      {
+        "en": "raclette",
+        "pos": "n.",
+        "zh": "瑞士起司烤盤料理",
+        "ex": "Raclette is like cheese fondue but you grill the cheese yourself."
+      },
+      {
+        "en": "crepe",
+        "pos": "n.",
+        "zh": "可麗餅（發音 /krɛp/）",
+        "ex": "In France, say \"crepe\" not \"crepe\"—French people will correct you."
+      },
+      {
+        "en": "mille-feuille",
+        "pos": "n.",
+        "zh": "千層酥（法式甜點）",
+        "ex": "Mille-feuille is a delicious French custard layered cake."
+      },
+      {
+        "en": "art therapy",
+        "pos": "n.",
+        "zh": "藝術治療",
+        "ex": "Art therapy helps people express emotions through creativity."
+      },
+      {
+        "en": "redundant",
+        "pos": "adj.",
+        "zh": "被取代的（AI）",
+        "ex": "AI might make some jobs redundant in the future."
+      },
+      {
+        "en": "rapidly collect data",
+        "pos": "phrase",
+        "zh": "快速收集資料",
+        "ex": "We need to rapidly collect data for our industry reports."
+      }
     ],
     "corrections": [
-      {"wrong": "more better", "right": "better（比較級不加 more）"},
-      {"wrong": "taste the DNA", "right": "test the DNA"},
-      {"wrong": "yesterday I go to other city", "right": "yesterday I went to another city"}
+      {
+        "wrong": "more better",
+        "right": "better（比較級不加 more）"
+      },
+      {
+        "wrong": "taste the DNA",
+        "right": "test the DNA"
+      },
+      {
+        "wrong": "I feel my skin will bright",
+        "right": "I feel my skin will brighten"
+      },
+      {
+        "wrong": "yesterday I go to other city",
+        "right": "yesterday I went to another city"
+      }
     ]
   },
   {
-    "id": 8, "date": "2026/03/07", "topic": "台灣食物、飲用水、政治話題（Craig）",
-    "notes": "在首爾旅遊（3月trip）。討論伊朗、美國、台灣地緣政治。討論軍工業、vaccine（疫苗）、drone（無人機）。",
+    "id": 8,
+    "date": "2026/03/07",
+    "topic": "台灣食物、飲用水、政治話題（Craig）",
+    "notes": "在首爾旅遊（3月trip）。討論伊朗、美國、台灣地緣政治。討論半島的角色、軍工業（military industrial complex）、vaccine（疫苗）、drone（無人機）。",
     "words": [
-      {"en": "military", "pos": "n.", "zh": "軍事、軍隊", "ex": "The military is the industry that makes weapons and defense tools."},
-      {"en": "drone", "pos": "n.", "zh": "無人機", "ex": "Drones are now used in both military and civilian settings."},
-      {"en": "vaccine", "pos": "n.", "zh": "疫苗", "ex": "The government bought vaccines for all Taiwanese citizens."},
-      {"en": "ferry boat", "pos": "n.", "zh": "渡船", "ex": "We took a ferry boat to Nami Island."},
-      {"en": "medical aesthetics", "pos": "n.", "zh": "醫療美容", "ex": "I went to Korea for some medical aesthetics treatment."},
-      {"en": "stressful", "pos": "adj.", "zh": "有壓力的", "ex": "Giving presentations to customers is stressful."},
-      {"en": "refreshing flavor", "pos": "phrase", "zh": "清爽的口味", "ex": "I like refreshing flavors, not heavy or thick ones."}
+      {
+        "en": "military",
+        "pos": "n.",
+        "zh": "軍事、軍隊",
+        "ex": "The military is the industry that makes weapons and defense tools."
+      },
+      {
+        "en": "drone",
+        "pos": "n.",
+        "zh": "無人機",
+        "ex": "Drones are now used in both military and civilian settings."
+      },
+      {
+        "en": "vaccine",
+        "pos": "n.",
+        "zh": "疫苗",
+        "ex": "The government bought vaccines for all Taiwanese citizens."
+      },
+      {
+        "en": "ferry boat",
+        "pos": "n.",
+        "zh": "渡船",
+        "ex": "We took a ferry boat to Nami Island."
+      },
+      {
+        "en": "medical aesthetics",
+        "pos": "n.",
+        "zh": "醫療美容",
+        "ex": "I went to Korea for some medical aesthetics treatment."
+      },
+      {
+        "en": "speech",
+        "pos": "n.",
+        "zh": "演講",
+        "ex": "I need to give a speech to our industry clients."
+      },
+      {
+        "en": "stressful",
+        "pos": "adj.",
+        "zh": "有壓力的",
+        "ex": "Giving presentations to customers is stressful."
+      },
+      {
+        "en": "refreshing flavor",
+        "pos": "phrase",
+        "zh": "清爽的口味",
+        "ex": "I like refreshing flavors, not heavy or thick ones."
+      }
     ],
     "corrections": [
-      {"wrong": "I bring my camera", "right": "I brought my camera（過去式）"},
-      {"wrong": "We just shopping", "right": "We went shopping"},
-      {"wrong": "I need to do many research", "right": "I need to do a lot of research"}
+      {
+        "wrong": "I bring my camera",
+        "right": "I brought my camera（過去式）"
+      },
+      {
+        "wrong": "We just shopping",
+        "right": "We went shopping"
+      },
+      {
+        "wrong": "I need to do many research",
+        "right": "I need to do a lot of research"
+      }
     ]
   },
   {
-    "id": 7, "date": "2026/02/22", "topic": "LOL 電競、初認識課程（Robin Lea + Palmaria + Vicki）",
-    "notes": "T1 在 LCK Cup 輸了，感到很難過。討論 T1、Faker、Doran。農曆新年剛結束。",
+    "id": 7,
+    "date": "2026/02/22",
+    "topic": "LOL 電競、初認識課程（Robin Lea + Palmaria + Vicki）",
+    "notes": "T1 在 LCK Cup 輸了，感到很難過。討論 T1、Faker、Doran。Palmaria 介紹 Thread（Meta app）。Vicki 討論 League of Legends Champions Korea。農曆新年剛結束。",
     "words": [
-      {"en": "characteristics", "pos": "n.", "zh": "特徵、特性", "ex": "The game has certain characteristics that make it unique."},
-      {"en": "former president", "pos": "n.", "zh": "前總統", "ex": "Our former president also uses Threads every day."},
-      {"en": "e-sports", "pos": "n.", "zh": "電競", "ex": "League of Legends is one of the biggest e-sports in the world."},
-      {"en": "traffic statistics", "pos": "n.", "zh": "流量統計", "ex": "Taiwan has the highest Threads usage according to Meta's statistics."}
+      {
+        "en": "characteristics",
+        "pos": "n.",
+        "zh": "特徵、特性",
+        "ex": "The game has certain characteristics that make it unique."
+      },
+      {
+        "en": "former president",
+        "pos": "n.",
+        "zh": "前總統",
+        "ex": "Our former president also uses Threads every day."
+      },
+      {
+        "en": "e-sports",
+        "pos": "n.",
+        "zh": "電競",
+        "ex": "League of Legends is one of the biggest e-sports in the world."
+      },
+      {
+        "en": "traffic statistics",
+        "pos": "n.",
+        "zh": "流量統計",
+        "ex": "Taiwan has the highest Threads usage according to Meta's statistics."
+      }
     ],
     "corrections": [
-      {"wrong": "So, one team have five people", "right": "So, one team has five people"},
-      {"wrong": "Korean competition, they just over the game", "right": "The Korean competition just ended"}
+      {
+        "wrong": "So, one team have five people",
+        "right": "So, one team has five people"
+      },
+      {
+        "wrong": "Korean competition, they just over the game",
+        "right": "The Korean competition just ended"
+      }
     ]
   },
   {
-    "id": 6, "date": "2026/02/15", "topic": "台灣食物、飲用水、健康話題（Lisa Marie + Charlene）",
-    "notes": "和 Lisa Marie 上課：討論飲用水習慣，在台灣過濾、煮沸水。和 Charlene 聊台灣、Hsinchu、旅遊經驗，學習 born and raised。",
+    "id": 6,
+    "date": "2026/02/15",
+    "topic": "台灣食物、飲用水、健康話題（Lisa Marie + Charlene）",
+    "notes": "和 Lisa Marie 上課：討論飲用水習慣，在台灣過濾、煮沸水，學習 hydrated、flush out、regulate 等單字。和 Charlene 聊台灣、Hsinchu、旅遊經驗，學習 born and raised。",
     "words": [
-      {"en": "jet lag", "pos": "n.", "zh": "時差感", "ex": "I had terrible jet lag after flying from Taiwan to the US."},
-      {"en": "hydrated", "pos": "adj.", "zh": "補充水分的", "ex": "Try to stay hydrated by drinking water throughout the day."},
-      {"en": "flush out", "pos": "v.", "zh": "排出（毒素）", "ex": "Drinking water helps flush out toxins from the body."},
-      {"en": "toxin", "pos": "n.", "zh": "毒素", "ex": "Water helps remove toxins from your body."},
-      {"en": "regulate", "pos": "v.", "zh": "調節", "ex": "Water helps regulate body temperature."},
-      {"en": "sip / mouthful", "pos": "n.", "zh": "小口喝／一口", "ex": "I took two mouthfuls of water after finishing each task."},
-      {"en": "born and raised", "pos": "phrase", "zh": "土生土長", "ex": "I'm Taiwanese, born and raised in Hsinchu."}
+      {
+        "en": "jet lag",
+        "pos": "n.",
+        "zh": "時差感",
+        "ex": "I had terrible jet lag after flying from Taiwan to the US."
+      },
+      {
+        "en": "hydrated",
+        "pos": "adj.",
+        "zh": "補充水分的",
+        "ex": "Try to stay hydrated by drinking water throughout the day."
+      },
+      {
+        "en": "flush out",
+        "pos": "v.",
+        "zh": "排出（毒素）",
+        "ex": "Drinking water helps flush out toxins from the body."
+      },
+      {
+        "en": "toxin",
+        "pos": "n.",
+        "zh": "毒素",
+        "ex": "Water helps remove toxins from your body."
+      },
+      {
+        "en": "regulate",
+        "pos": "v.",
+        "zh": "調節",
+        "ex": "Water helps regulate body temperature."
+      },
+      {
+        "en": "sip / mouthful",
+        "pos": "n.",
+        "zh": "小口喝／一口",
+        "ex": "I took two mouthfuls of water after finishing each task."
+      },
+      {
+        "en": "born and raised",
+        "pos": "phrase",
+        "zh": "土生土長",
+        "ex": "I'm Taiwanese, born and raised in Hsinchu."
+      }
     ],
     "corrections": [
-      {"wrong": "I got a business trip", "right": "I went on a business trip"},
-      {"wrong": "I always live in Taiwan and I'm born in Taiwan", "right": "I was born and raised in Taiwan"},
-      {"wrong": "I read book less than when I was a child", "right": "I read fewer books than when I was a child"}
+      {
+        "wrong": "I got a business trip",
+        "right": "I went on a business trip"
+      },
+      {
+        "wrong": "I always live in Taiwan and I'm born in Taiwan",
+        "right": "I was born and raised in Taiwan"
+      },
+      {
+        "wrong": "I read book less than when I was a child",
+        "right": "I read fewer books than when I was a child"
+      }
     ]
   },
   {
-    "id": 5, "date": "2026/02/08", "topic": "台灣地理、新竹、登山、電玩（Zoe Campbell x2）",
-    "notes": "討論台灣的多樣地形（terrain）：海洋、高山、平原、珊瑚礁。台灣有兩個板塊交會（continental plates），所以地震頻繁。介紹阿里山（Alishan）和新竹科技城。",
+    "id": 5,
+    "date": "2026/02/08",
+    "topic": "台灣地理、新竹、登山、電玩（Zoe Campbell x2）",
+    "notes": "討論台灣的多樣地形（terrain）：海洋、高山、平原、珊瑚礁。台灣有兩個板塊交會（continental plates），所以地震頻繁。介紹阿里山（Alishan）和新竹科技城的特性。",
     "words": [
-      {"en": "terrain", "pos": "n.", "zh": "地形", "ex": "Taiwan has diverse terrain—ocean, mountains, and plains."},
-      {"en": "geographical features", "pos": "n.", "zh": "地理特徵", "ex": "Taiwan has many different geographical features."},
-      {"en": "continental plates", "pos": "n.", "zh": "板塊", "ex": "Taiwan sits between two continental plates, causing earthquakes."},
-      {"en": "a variety of trees", "pos": "phrase", "zh": "各種樹木", "ex": "The mountains have a variety of trees due to the altitude."},
-      {"en": "ski resort", "pos": "n.", "zh": "滑雪場", "ex": "There's a famous ski resort called Zao in northeastern Japan."},
-      {"en": "intense competition", "pos": "n.", "zh": "激烈競爭", "ex": "There is intense competition for school spots in Hsinchu."}
+      {
+        "en": "terrain",
+        "pos": "n.",
+        "zh": "地形",
+        "ex": "Taiwan has diverse terrain—ocean, mountains, and plains."
+      },
+      {
+        "en": "geographical features",
+        "pos": "n.",
+        "zh": "地理特徵",
+        "ex": "Taiwan has many different geographical features."
+      },
+      {
+        "en": "continental plates",
+        "pos": "n.",
+        "zh": "板塊",
+        "ex": "Taiwan sits between two continental plates, causing earthquakes."
+      },
+      {
+        "en": "a variety of trees",
+        "pos": "phrase",
+        "zh": "各種樹木",
+        "ex": "The mountains have a variety of trees due to the altitude."
+      },
+      {
+        "en": "ski resort",
+        "pos": "n.",
+        "zh": "滑雪場",
+        "ex": "There's a famous ski resort called Zao in northeastern Japan."
+      },
+      {
+        "en": "intense competition",
+        "pos": "n.",
+        "zh": "激烈競爭",
+        "ex": "There is intense competition for school spots in Hsinchu."
+      }
     ],
     "corrections": [
-      {"wrong": "because Taiwan have many mountains", "right": "because Taiwan has many mountains"},
-      {"wrong": "we can drive car to go the Ali Mountain", "right": "we can drive to Alishan"},
-      {"wrong": "it's called a camping", "right": "it's called camping（不需要 a）"}
+      {
+        "wrong": "because Taiwan have many mountains",
+        "right": "because Taiwan has many mountains"
+      },
+      {
+        "wrong": "we can drive car to go the Ali Mountain",
+        "right": "we can drive to Alishan"
+      },
+      {
+        "wrong": "it's called a camping",
+        "right": "it's called camping（不需要 a）"
+      }
     ]
   },
   {
-    "id": 4, "date": "2026/01/29", "topic": "世界局勢、台灣半導體、克羅埃西亞（Sabina）",
-    "notes": "和住在薩格勒布（Zagreb, Croatia）的 Sabina 對談。討論台灣半導體產業（TSMC）在全球的重要性。",
+    "id": 4,
+    "date": "2026/01/29",
+    "topic": "世界局勢、台灣半導體、克羅埃西亞（Sabina）",
+    "notes": "和住在薩格勒布（Zagreb, Croatia）的 Sabina 對談。討論台灣半導體產業（TSMC）在全球的重要性。台灣與中國的複雜關係。探討中美緊張局勢對台灣的影響。",
     "words": [
-      {"en": "anchor", "pos": "n.", "zh": "錨點、核心支柱", "ex": "Taiwan is an anchor for global semiconductor production."},
-      {"en": "precarious", "pos": "adj.", "zh": "不穩定的", "ex": "The geopolitical situation in the Taiwan Strait is precarious."},
-      {"en": "highly educated people", "pos": "phrase", "zh": "高學歷人才", "ex": "Hsinchu has many highly educated engineers."},
-      {"en": "euthanasia", "pos": "n.", "zh": "安樂死", "ex": "Switzerland offers euthanasia legally, known as death tourism."}
+      {
+        "en": "anchor",
+        "pos": "n.",
+        "zh": "錨點、核心支柱",
+        "ex": "Taiwan is an anchor for global semiconductor production."
+      },
+      {
+        "en": "precarious",
+        "pos": "adj.",
+        "zh": "不穩定的",
+        "ex": "The geopolitical situation in the Taiwan Strait is precarious."
+      },
+      {
+        "en": "highly educated people",
+        "pos": "phrase",
+        "zh": "高學歷人才",
+        "ex": "Hsinchu has many highly educated engineers."
+      },
+      {
+        "en": "euthanasia",
+        "pos": "n.",
+        "zh": "安樂死",
+        "ex": "Switzerland offers euthanasia legally, known as death tourism."
+      }
     ],
     "corrections": [
-      {"wrong": "how did you go to this building?", "right": "how do you get to this building?"}
+      {
+        "wrong": "And Taiwanese will tell you that, hey, this street, how did you go to this building?",
+        "right": "how do you get to this building?"
+      }
     ]
   },
   {
-    "id": 3, "date": "2026/01/27", "topic": "夢境、台灣民間信仰、算命（Denisse）",
-    "notes": "剛起床，夢到了什麼但忘了。討論噩夢（nightmare）、夢境解析。介紹台灣廟宇文化：籤詩（Chinese fortune sticks）、拜拜、各路神明。",
+    "id": 3,
+    "date": "2026/01/27",
+    "topic": "夢境、台灣民間信仰、算命（Denisse）",
+    "notes": "剛起床，夢到了什麼但忘了。討論噩夢（nightmare）、夢境解析。介紹台灣廟宇文化：籤詩（Chinese fortune sticks）、拜拜、各路神明。比較道教、佛教與基督教。",
     "words": [
-      {"en": "nightmare", "pos": "n.", "zh": "惡夢", "ex": "I had a nightmare that my mom passed away."},
-      {"en": "vivid", "pos": "adj.", "zh": "生動逼真的", "ex": "The nightmare was so vivid it felt completely real."},
-      {"en": "Chinese fortune sticks", "pos": "n.", "zh": "籤詩", "ex": "In temples, people draw Chinese fortune sticks to get answers from gods."},
-      {"en": "folk belief / Taoism", "pos": "n.", "zh": "民間信仰／道教", "ex": "Going to the temple is part of Taiwanese folk beliefs."},
-      {"en": "euthanasia", "pos": "n.", "zh": "安樂死", "ex": "Switzerland allows euthanasia under certain conditions."}
+      {
+        "en": "nightmare",
+        "pos": "n.",
+        "zh": "惡夢",
+        "ex": "I had a nightmare that my mom passed away."
+      },
+      {
+        "en": "vivid",
+        "pos": "adj.",
+        "zh": "生動逼真的",
+        "ex": "The nightmare was so vivid it felt completely real."
+      },
+      {
+        "en": "Chinese fortune sticks",
+        "pos": "n.",
+        "zh": "籤詩",
+        "ex": "In temples, people draw Chinese fortune sticks to get answers from gods."
+      },
+      {
+        "en": "folk belief / Taoism",
+        "pos": "n.",
+        "zh": "民間信仰／道教",
+        "ex": "Going to the temple is part of Taiwanese folk beliefs combining Buddhism and Taoism."
+      },
+      {
+        "en": "euthanasia",
+        "pos": "n.",
+        "zh": "安樂死",
+        "ex": "Switzerland allows euthanasia under certain conditions."
+      }
     ],
     "corrections": [
-      {"wrong": "I just wake up", "right": "I just woke up"},
-      {"wrong": "I just get a little dream", "right": "I just had a dream"}
+      {
+        "wrong": "I just wake up",
+        "right": "I just woke up"
+      },
+      {
+        "wrong": "I just get a little dream",
+        "right": "I just had a dream"
+      }
     ]
   },
   {
-    "id": 2, "date": "2026/01/22", "topic": "歐洲留學計劃、工作面試話題（Sabina + Sarah）",
-    "notes": "討論想去荷蘭（the Netherlands）念再生能源相關碩士的計劃。老師建議：4-6個月後會看到明顯進步，每週練習2-3次。",
+    "id": 2,
+    "date": "2026/01/22",
+    "topic": "歐洲留學計劃、工作面試話題（Sabina + Sarah）",
+    "notes": "討論想去荷蘭（the Netherlands）念再生能源相關碩士的計劃。和 Sarah 介紹 Cambly 的使用方式、Engoo 平台、ESL Discussions 網站。老師建議：4-6個月後會看到明顯進步，每週練習2-3次。",
     "words": [
-      {"en": "the Netherlands", "pos": "n.", "zh": "荷蘭", "ex": "The Netherlands is famous for renewable energy."},
-      {"en": "renewable energy", "pos": "n.", "zh": "再生能源", "ex": "I want to get a master's degree in renewable energy."},
-      {"en": "considering my options", "pos": "phrase", "zh": "考慮我的選擇", "ex": "I'm still considering my options for studying abroad."},
-      {"en": "software developer", "pos": "n.", "zh": "軟體開發師", "ex": "My teacher used to be a software developer."},
-      {"en": "hallucination (AI)", "pos": "n.", "zh": "AI幻覺（錯誤答案）", "ex": "Sometimes AI gives hallucinations—wrong answers that sound confident."}
+      {
+        "en": "the Netherlands",
+        "pos": "n.",
+        "zh": "荷蘭",
+        "ex": "The Netherlands is famous for renewable energy."
+      },
+      {
+        "en": "renewable energy",
+        "pos": "n.",
+        "zh": "再生能源",
+        "ex": "I want to get a master's degree in renewable energy."
+      },
+      {
+        "en": "considering my options",
+        "pos": "phrase",
+        "zh": "考慮我的選擇",
+        "ex": "I'm still considering my options for studying abroad."
+      },
+      {
+        "en": "software developer",
+        "pos": "n.",
+        "zh": "軟體開發師",
+        "ex": "My teacher used to be a software developer."
+      },
+      {
+        "en": "hallucination (AI)",
+        "pos": "n.",
+        "zh": "AI幻覺（錯誤答案）",
+        "ex": "Sometimes AI gives hallucinations—wrong answers that sound confident."
+      }
     ],
     "corrections": [
-      {"wrong": "I applied to go at March", "right": "I applied to go in March"},
-      {"wrong": "speaking and write is more hard", "right": "speaking and writing are harder"}
+      {
+        "wrong": "I applied to go at March",
+        "right": "I applied to go in March"
+      },
+      {
+        "wrong": "speaking and write is more hard",
+        "right": "speaking and writing are harder"
+      },
+      {
+        "wrong": "I think is more hard for me",
+        "right": "I think it is harder for me"
+      }
     ]
   },
   {
-    "id": 1, "date": "2026/01/20", "topic": "初次上課，自我介紹、Universal Studios（Daniel + Jessie Mae + Mik）",
-    "notes": "第一次使用 Cambly！自我介紹：產業分析師、新竹、化學背景。去年9月第一次出亞洲（美國 Orlando 出差），去了 Universal Studios 三個主題樂園。今年1月去日本蔵王（Zao）滑雪板。\n💡 老師 TJ 提醒：注意過去式，特別是不規則動詞",
+    "id": 1,
+    "date": "2026/01/20",
+    "topic": "初次上課，自我介紹、Universal Studios（Daniel + Jessie Mae + Mik）",
+    "notes": "第一次使用 Cambly！自我介紹：產業分析師、新竹、化學背景。去年9月第一次出亞洲（美國 Orlando 出差），去了 Universal Studios 三個主題樂園，花了兩天。今年1月去日本蔵王（Zao）滑雪板。\n\n💡 老師 Mik 提醒：「snow」在台灣只有山頂才有，台灣人都覺得雪很美！\n💡 老師 TJ 提醒：注意過去式，特別是不規則動詞",
     "words": [
-      {"en": "industrial analyst", "pos": "n.", "zh": "產業分析師", "ex": "I'm an industrial analyst researching the chemical industry."},
-      {"en": "born and raised", "pos": "phrase", "zh": "土生土長", "ex": "I'm Taiwanese, born and raised in Hsinchu."},
-      {"en": "exhibition", "pos": "n.", "zh": "展覽", "ex": "I went to the US for a business trip to attend an exhibition."},
-      {"en": "ski resort", "pos": "n.", "zh": "滑雪場", "ex": "Zao is a famous ski resort in northeastern Japan."},
-      {"en": "I rode many rides", "pos": "phrase", "zh": "正確說法（不是 play）", "ex": "I rode many rides at Universal Studios. ✅"},
-      {"en": "fortune telling", "pos": "n.", "zh": "算命", "ex": "Fortune telling is a common practice in Taiwan."},
-      {"en": "ancestor", "pos": "n.", "zh": "祖先", "ex": "My indigenous ancestors may explain my higher nose."}
+      {
+        "en": "industrial analyst",
+        "pos": "n.",
+        "zh": "產業分析師",
+        "ex": "I'm an industrial analyst researching the chemical industry."
+      },
+      {
+        "en": "born and raised",
+        "pos": "phrase",
+        "zh": "土生土長",
+        "ex": "I'm Taiwanese, born and raised in Hsinchu."
+      },
+      {
+        "en": "exhibition",
+        "pos": "n.",
+        "zh": "展覽",
+        "ex": "I went to the US for a business trip to attend an exhibition."
+      },
+      {
+        "en": "ski resort",
+        "pos": "n.",
+        "zh": "滑雪場",
+        "ex": "Zao is a famous ski resort in northeastern Japan."
+      },
+      {
+        "en": "roller coaster / rides",
+        "pos": "n.",
+        "zh": "雲霄飛車／遊樂設施",
+        "ex": "I rode many rides at Universal Studios."
+      },
+      {
+        "en": "I rode many rides",
+        "pos": "phrase",
+        "zh": "正確說法（不是 play）",
+        "ex": "I rode many rides at Universal Studios. ✅"
+      },
+      {
+        "en": "fortune telling",
+        "pos": "n.",
+        "zh": "算命",
+        "ex": "Fortune telling is a common practice in Taiwan."
+      },
+      {
+        "en": "ancestor",
+        "pos": "n.",
+        "zh": "祖先",
+        "ex": "My indigenous ancestors may explain my higher nose."
+      }
     ],
     "corrections": [
-      {"wrong": "My job is I do the industrial analyst", "right": "I am an industrial analyst"},
-      {"wrong": "I just come back from Japan", "right": "I just came back from Japan"},
-      {"wrong": "I never go to Europe", "right": "I have never been to Europe"},
-      {"wrong": "I play many facilities at Universal", "right": "I rode many rides at Universal"}
+      {
+        "wrong": "My job is I do the industrial analyst",
+        "right": "I am an industrial analyst"
+      },
+      {
+        "wrong": "I just come back from Japan",
+        "right": "I just came back from Japan"
+      },
+      {
+        "wrong": "I bring my umbrella",
+        "right": "I brought my umbrella（past tense!）"
+      },
+      {
+        "wrong": "I never go to Europe",
+        "right": "I have never been to Europe"
+      },
+      {
+        "wrong": "I play many facilities at Universal",
+        "right": "I rode many rides at Universal"
+      }
     ]
   }
 ]
