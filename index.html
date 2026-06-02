@@ -541,7 +541,7 @@ async function translate(text){
 async function loadNews(){
   newsLoaded=true;
   const card=document.getElementById('news-card');
-  card.innerHTML='<div class="loading-pill"><div class="spinner"></div>載入並翻譯新聞中...</div>';
+  card.innerHTML='<div class="loading-pill"><div class="spinner"></div>載入並翻譯新聞中，約需 10 秒...</div>';
   const KEY='pub_9eaf82fc747e458b890ab8cdb3020d8d';
   const sources=[
     {label:'世界大事',cls:'nt-world',q:'world news today',lang:'en'},
@@ -549,34 +549,39 @@ async function loadNews(){
     {label:'投資趨勢',cls:'nt-invest',q:'stock market finance',lang:'en'},
   ];
   async function fetchAndTranslate(s){
-    const url=`https://newsdata.io/api/1/news?apikey=${KEY}&q=${encodeURIComponent(s.q)}&language=${s.lang}&size=1`;
-    const res=await fetch(url,{signal:AbortSignal.timeout(8000)});
+    const url=`https://newsdata.io/api/1/news?apikey=${KEY}&q=${encodeURIComponent(s.q)}&language=${s.lang}&size=3`;
+    const res=await fetch(url,{signal:AbortSignal.timeout(10000)});
     const data=await res.json();
-    if(!data.results||!data.results[0])throw new Error('no result');
-    const item=data.results[0];
-    const rawTitle=item.title||'';
-    const rawDesc=(item.description||'').replace(/<[^>]+>/g,'').slice(0,200);
-    const [title,summary]=await Promise.all([translate(rawTitle),translate(rawDesc)]);
-    return{label:s.label,cls:s.cls,title:title.slice(0,80),summary:summary.slice(0,120),link:item.link||''};
+    if(!data.results||!data.results.length)throw new Error('no result');
+    const items=await Promise.all(data.results.slice(0,3).map(async item=>{
+      const rawTitle=item.title||'';
+      const rawDesc=(item.description||'').replace(/<[^>]+>/g,'').slice(0,200);
+      const [title,summary]=await Promise.all([translate(rawTitle),translate(rawDesc)]);
+      return{title:title.slice(0,80),summary:summary.slice(0,120),link:item.link||''};
+    }));
+    return{label:s.label,cls:s.cls,items};
   }
   const results=await Promise.allSettled(sources.map(fetchAndTranslate));
   let html='';
   results.forEach((r,i)=>{
     const s=sources[i];
+    html+=`<div style="margin-bottom:${i<2?'16px':'0'};">
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+        <span class="ntag ${s.cls}" style="margin-bottom:0;">${s.label}</span>
+      </div>`;
     if(r.status==='fulfilled'){
-      const n=r.value;
-      html+=`<div class="news-item" onclick="openLink('${n.link}')" style="cursor:pointer;">
-        <div class="ntag ${n.cls}">${n.label}</div>
-        <div class="news-hl">${n.title}</div>
-        <div class="news-sm">${n.summary}</div>
-        <div style="font-size:11px;color:var(--info);margin-top:4px;">點擊閱讀全文 →</div>
-      </div>`;
+      r.value.items.forEach((n,j)=>{
+        html+=`<div class="news-item" onclick="openLink('${n.link}')" style="cursor:pointer;padding-left:4px;">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:2px;">${j+1}</div>
+          <div class="news-hl">${n.title}</div>
+          <div class="news-sm">${n.summary}</div>
+          <div style="font-size:11px;color:var(--info);margin-top:3px;">閱讀全文 →</div>
+        </div>`;
+      });
     } else {
-      html+=`<div class="news-item">
-        <div class="ntag ${s.cls}">${s.label}</div>
-        <div class="news-hl" style="color:var(--text3);">暫時無法載入</div>
-      </div>`;
+      html+=`<div style="font-size:14px;color:var(--text3);padding:8px 0;">暫時無法載入</div>`;
     }
+    html+='</div>';
   });
   card.innerHTML=html||'<div style="font-size:14px;color:var(--text2);">無法載入新聞，請稍後再試。</div>';
 }
