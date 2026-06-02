@@ -533,32 +533,37 @@ let newsLoaded=false;
 async function loadNews(){
   newsLoaded=true;
   const card=document.getElementById('news-card');
+  card.innerHTML='<div class="loading-pill"><div class="spinner"></div>載入最新新聞中...</div>';
+  const API='https://api.rss2json.com/v1/api.json?rss_url=';
+  const sources=[
+    {tag:'world',label:'世界大事',cls:'nt-world',url:'https://feeds.bbci.co.uk/news/world/rss.xml'},
+    {tag:'chem',label:'化工新技術',cls:'nt-chem',url:'http://feeds.feedburner.com/cen_latestnews'},
+    {tag:'invest',label:'投資趨勢',cls:'nt-invest',url:'https://finance.yahoo.com/news/rssindex'},
+  ];
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',max_tokens:1000,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
-        system:`你是每日新聞彙整助理。搜尋今日最新新聞後只回傳 JSON，不要任何說明或 markdown。格式：{"news":[{"tag":"world","headline":"...","summary":"..."},{"tag":"chem","headline":"...","summary":"..."},{"tag":"invest","headline":"...","summary":"..."}]}。每類一則，headline 最多20字，summary 最多45字，全部繁體中文。`,
-        messages:[{role:'user',content:'今天是'+todayStr+'，請搜尋今日重要新聞。'}]
-      })
-    });
-    const data=await res.json();
-    let txt=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-    txt=txt.replace(/```json|```/g,'').trim();
-    const p=JSON.parse(txt);
-    const tm={world:'nt-world',chem:'nt-chem',invest:'nt-invest'};
-    const tl={world:'世界大事',chem:'化工新技術',invest:'投資趨勢'};
-    card.innerHTML=p.news.map(n=>`
-      <div class="news-item">
-        <div class="ntag ${tm[n.tag]}">${tl[n.tag]}</div>
+    const results=await Promise.all(sources.map(async s=>{
+      const res=await fetch(API+encodeURIComponent(s.url)+'&count=1');
+      const data=await res.json();
+      const item=data.items&&data.items[0];
+      if(!item)return null;
+      const headline=item.title?item.title.slice(0,60):'';
+      const raw=item.description||item.content||'';
+      const summary=raw.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim().slice(0,100);
+      const link=item.link||'';
+      return{...s,headline,summary,link};
+    }));
+    card.innerHTML=results.filter(Boolean).map(n=>`
+      <div class="news-item" onclick="openLink('${n.link}')" style="cursor:pointer;">
+        <div class="ntag ${n.cls}">${n.label}</div>
         <div class="news-hl">${n.headline}</div>
         <div class="news-sm">${n.summary}</div>
+        <div style="font-size:11px;color:var(--info);margin-top:4px;">點擊閱讀全文 →</div>
       </div>`).join('');
   }catch(e){
-    card.innerHTML=`<div style="font-size:14px;color:var(--text2);">無法載入，請稍後再試。</div>`;
+    card.innerHTML=`<div style="font-size:14px;color:var(--text2);">無法載入新聞，請確認網路連線後再試。</div>`;
   }
 }
+function openLink(url){if(url)window.open(url,'_blank');}
 
 async function askAI(){
   const inp=document.getElementById('ask-input');
