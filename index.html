@@ -530,30 +530,36 @@ function filterExp(f,btn){
 }
 
 let newsLoaded=false;
+async function translate(text){
+  if(!text)return'';
+  try{
+    const res=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(text.slice(0,500))+'&langpair=en|zh-TW',{signal:AbortSignal.timeout(6000)});
+    const data=await res.json();
+    return data.responseData?.translatedText||text;
+  }catch(e){return text;}
+}
 async function loadNews(){
   newsLoaded=true;
   const card=document.getElementById('news-card');
-  card.innerHTML='<div class="loading-pill"><div class="spinner"></div>載入最新新聞中...</div>';
+  card.innerHTML='<div class="loading-pill"><div class="spinner"></div>載入並翻譯新聞中...</div>';
   const KEY='pub_9eaf82fc747e458b890ab8cdb3020d8d';
   const sources=[
-    {label:'世界大事',cls:'nt-world',q:'world',lang:'en'},
-    {label:'化工新技術',cls:'nt-chem',q:'chemical engineering',lang:'en'},
+    {label:'世界大事',cls:'nt-world',q:'world news today',lang:'en'},
+    {label:'化工新技術',cls:'nt-chem',q:'chemical engineering technology',lang:'en'},
     {label:'投資趨勢',cls:'nt-invest',q:'stock market finance',lang:'en'},
   ];
-  async function fetchNews(s){
+  async function fetchAndTranslate(s){
     const url=`https://newsdata.io/api/1/news?apikey=${KEY}&q=${encodeURIComponent(s.q)}&language=${s.lang}&size=1`;
     const res=await fetch(url,{signal:AbortSignal.timeout(8000)});
     const data=await res.json();
     if(!data.results||!data.results[0])throw new Error('no result');
     const item=data.results[0];
-    return{
-      label:s.label,cls:s.cls,
-      title:(item.title||'').slice(0,80),
-      summary:(item.description||'').replace(/<[^>]+>/g,'').slice(0,120),
-      link:item.link||''
-    };
+    const rawTitle=item.title||'';
+    const rawDesc=(item.description||'').replace(/<[^>]+>/g,'').slice(0,200);
+    const [title,summary]=await Promise.all([translate(rawTitle),translate(rawDesc)]);
+    return{label:s.label,cls:s.cls,title:title.slice(0,80),summary:summary.slice(0,120),link:item.link||''};
   }
-  const results=await Promise.allSettled(sources.map(fetchNews));
+  const results=await Promise.allSettled(sources.map(fetchAndTranslate));
   let html='';
   results.forEach((r,i)=>{
     const s=sources[i];
