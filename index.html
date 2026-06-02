@@ -311,6 +311,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
       <div style="font-size:15px;font-weight:600;margin-bottom:8px;">所有單字 CSV</div>
       <button onclick="cbCopyCSV()" style="padding:10px 16px;font-size:13px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">📊 複製 CSV</button>
     </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;margin-bottom:6px;">備份完整課程資料</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px;">下載最新的 lessons.json，上傳到 GitHub 覆蓋舊檔案，換手機或清除瀏覽器後資料不會消失。</div>
+      <div style="background:var(--info-bg);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--info);line-height:1.6;margin-bottom:12px;">
+        📱 建議每次上完 Cambly 課後就下載一次備份
+      </div>
+      <button onclick="cbExportJSON()" style="width:100%;padding:12px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--info);color:#fff;cursor:pointer;">⬇️ 下載 lessons.json</button>
+    </div>
   </div>
 </div>
 
@@ -341,8 +349,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   <div class="card" style="font-size:14px;color:var(--text2);line-height:1.8;">Safari → 分享 → 加入主畫面</div>
   <div class="sec-label">資料管理</div>
   <div class="card">
-    <button class="action-btn" onclick="clearToday()" style="width:100%;margin-bottom:10px;">重置今日打勾</button>
-    <button class="action-btn" onclick="clearAll()" style="width:100%;color:var(--danger);">清除所有資料</button>
+    <div style="font-size:15px;font-weight:600;margin-bottom:6px;">備份所有資料</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px;">下載 backup.json，包含打卡紀錄、思考題筆記、體驗清單、自訂任務等所有資料。</div>
+    <button onclick="exportBackup()" style="width:100%;padding:12px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--success);color:#fff;cursor:pointer;margin-bottom:10px;">⬇️ 下載 backup.json</button>
+    <div style="font-size:15px;font-weight:600;margin-bottom:6px;margin-top:4px;">還原備份</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;">選擇之前下載的 backup.json 檔案來還原資料。</div>
+    <label for="import-file" style="display:block;width:100%;padding:12px;font-size:14px;font-weight:600;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;text-align:center;margin-bottom:12px;">⬆️ 選擇 backup.json 匯入</label>
+    <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importBackup(this)"/>
+    <div style="border-top:.5px solid var(--border);padding-top:12px;">
+      <button class="action-btn" onclick="clearToday()" style="width:100%;margin-bottom:8px;">重置今日打勾</button>
+      <button class="action-btn" onclick="clearAll()" style="width:100%;color:var(--danger);">清除所有資料</button>
+    </div>
   </div>
 </div>
 
@@ -769,7 +786,51 @@ function scheduleNotif(){
     }
   },60000);
 }
-function clearToday(){db.history[todayStr]={};save(db);renderTasks();showToast('今日紀錄已重置');}
+function exportBackup(){
+  const backup={
+    version:1,
+    exportedAt:new Date().toISOString(),
+    mainData:db,
+    expList:experiences,
+    expKey:localStorage.getItem(EXP_KEY)||'',
+  };
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='backup_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('備份已下載！');
+}
+
+function importBackup(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const backup=JSON.parse(e.target.result);
+      if(!backup.version||!backup.mainData){
+        showToast('檔案格式不正確');return;
+      }
+      if(!confirm('確定要還原備份嗎？目前的資料會被覆蓋。')){
+        input.value='';return;
+      }
+      // Restore main data
+      localStorage.setItem(SK,JSON.stringify(backup.mainData));
+      // Restore exp list
+      if(backup.expKey)localStorage.setItem(EXP_KEY,backup.expKey);
+      input.value='';
+      showToast('備份還原成功！重新載入中...');
+      setTimeout(()=>location.reload(),1200);
+    }catch(err){
+      showToast('還原失敗，請確認檔案正確');
+      input.value='';
+    }
+  };
+  reader.readAsText(file);
+}
 function clearAll(){if(confirm('確定要清除所有資料嗎？')){localStorage.removeItem(SK);localStorage.removeItem(CB_KEY);location.reload();}}
 
 function sw(tab,btn){
@@ -968,6 +1029,17 @@ function cbCopyNotion(){
   const text=document.getElementById('cb-notion-preview').textContent;
   if(text.includes('請先儲存')){showToast('請先儲存課程');return;}
   navigator.clipboard.writeText(text).then(()=>showToast('已複製！貼到 Notion 即可'));
+}
+function cbExportJSON(){
+  const data=JSON.stringify(cbLessons,null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='lessons.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('lessons.json 已下載！記得上傳到 GitHub');
 }
 function cbCopyCSV(){
   const allW=cbLessons.flatMap(l=>l.words);
