@@ -205,6 +205,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     <div class="heart-prog-bar"><div class="heart-prog-fill" id="heart-prog"></div></div>
   </div>
 
+  <div class="sec-label" style="margin-top:12px;">👀 觀察記錄</div>
+  <div class="card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:8px;line-height:1.6;">隨時記錄你觀察到關於學哥的事，他說的話、某個反應、讓你印象深刻的小細節⋯</div>
+    <textarea id="obs-input" placeholder="今天發現⋯" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;min-height:80px;resize:none;line-height:1.7;font-family:inherit;"></textarea>
+    <button onclick="saveObservation()" style="width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 記錄下來</button>
+    <div id="obs-list" style="margin-top:12px;"></div>
+  </div>
+
 </div>
 
 <!-- 體驗 -->
@@ -262,6 +270,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   <div style="display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:var(--radius);margin-bottom:12px;">
     <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:var(--bg);color:var(--text);cursor:pointer;border-radius:8px;font-weight:600;border:.5px solid var(--border);" onclick="cbTab('record',this)" id="cbt-record">記錄</button>
     <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('review',this)" id="cbt-review">複習</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('diary',this)" id="cbt-diary">日記</button>
     <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('history',this)" id="cbt-history">歷史</button>
     <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('export',this)" id="cbt-export">匯出</button>
   </div>
@@ -320,7 +329,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     <div class="card"><div class="sec-label" style="margin-bottom:8px;">所有單字</div><div id="cb-all-words"></div></div>
   </div>
   <div id="cbp-history" style="display:none;"><div id="cb-history-list"></div></div>
-  <div id="cbp-export" style="display:none;">
+  <div id="cbp-diary" style="display:none;">
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">📔 今日英文日記</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:12px;">用英文寫下今天發生的事，3 句以上就很好！</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:6px;" id="diary-date-label"></div>
+      <textarea id="diary-input" placeholder="Today, I..." style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;min-height:120px;resize:vertical;line-height:1.7;font-family:inherit;" oninput="saveDiaryDraft()"></textarea>
+      <button onclick="saveDiaryEntry()" style="width:100%;margin-top:10px;padding:12px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 儲存今日日記</button>
+    </div>
+    <div class="sec-label" style="margin-top:4px;">過去的日記</div>
+    <div id="diary-history-list"></div>
+  </div>
     <div class="card" style="background:var(--warn-bg);border:.5px solid var(--warn);font-size:13px;color:var(--text2);line-height:1.7;">在 Notion 建立 Database → 點「複製內容」→ 貼到 Notion 新頁面</div>
     <div class="card">
       <div style="font-size:15px;font-weight:600;margin-bottom:8px;">最新課程 Notion 格式</div>
@@ -885,6 +904,7 @@ function exportBackup(){
     mainData:db,
     expKey:localStorage.getItem(EXP_KEY)||'',
     weeklyKey:localStorage.getItem(WK_KEY)||'',
+    diaryKey:localStorage.getItem(DIARY_KEY)||'',
   };
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -908,6 +928,7 @@ function importBackup(input){
       localStorage.setItem(SK,JSON.stringify(backup.mainData));
       if(backup.expKey)localStorage.setItem(EXP_KEY,backup.expKey);
       if(backup.weeklyKey)localStorage.setItem(WK_KEY,backup.weeklyKey);
+      if(backup.diaryKey)localStorage.setItem(DIARY_KEY,backup.diaryKey);
       input.value='';
       showToast('備份還原成功！重新載入中...');
       setTimeout(()=>location.reload(),1200);
@@ -927,7 +948,7 @@ function sw(tab,btn){
   btn.classList.add('active');
   if(tab==='more'){renderStats();renderReflectHistory();}
   if(tab==='news'&&!newsLoaded)loadNews();
-  if(tab==='heart'){renderQ();renderDaily();renderLoveQuote();renderReflect();}
+  if(tab==='heart'){renderQ();renderDaily();renderLoveQuote();renderReflect();renderObservations();}
   if(tab==='exp')renderExp();
   if(tab==='cambly')cbTab('record',document.getElementById('cbt-record'));
 }
@@ -1076,6 +1097,97 @@ function unlockNextDEStage(){
   save(db);renderDERoadmap();
   showToast('🎉 解鎖第'+(db.deStage+1)+'階段！');
 }
+
+// ── 英文日記 ──
+const DIARY_KEY='eng_diary_v1';
+function loadDiary(){try{const s=localStorage.getItem(DIARY_KEY);return s?JSON.parse(s):[];}catch(e){return[];}}
+function saveDiary(entries){localStorage.setItem(DIARY_KEY,JSON.stringify(entries));}
+let diaryEntries=loadDiary();
+
+function cbDiaryInit(){
+  document.getElementById('diary-date-label').textContent='📅 '+todayStr;
+  const today=diaryEntries.find(e=>e.date===todayStr);
+  document.getElementById('diary-input').value=today?today.text:'';
+  renderDiaryHistory();
+}
+
+function saveDiaryDraft(){
+  const text=document.getElementById('diary-input').value;
+  const idx=diaryEntries.findIndex(e=>e.date===todayStr);
+  if(idx>-1)diaryEntries[idx].text=text;
+  else if(text.trim())diaryEntries.unshift({date:todayStr,text});
+  saveDiary(diaryEntries);
+}
+
+function saveDiaryEntry(){
+  const text=document.getElementById('diary-input').value.trim();
+  if(!text){showToast('請先寫下今天的日記');return;}
+  const idx=diaryEntries.findIndex(e=>e.date===todayStr);
+  if(idx>-1)diaryEntries[idx]={date:todayStr,text};
+  else diaryEntries.unshift({date:todayStr,text});
+  saveDiary(diaryEntries);
+  renderDiaryHistory();
+  showToast('日記已儲存 ✓');
+}
+
+function renderDiaryHistory(){
+  const el=document.getElementById('diary-history-list');
+  if(!el)return;
+  const past=diaryEntries.filter(e=>e.date!==todayStr).slice(0,20);
+  if(!past.length){el.innerHTML='';return;}
+  el.innerHTML=past.map(e=>`
+    <div class="card" style="margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <div style="font-size:12px;color:var(--text3);">📅 ${e.date}</div>
+        <button onclick="deleteDiaryEntry('${e.date}')" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;">🗑</button>
+      </div>
+      <div style="font-size:14px;color:var(--text);line-height:1.7;white-space:pre-wrap;">${e.text}</div>
+    </div>`).join('');
+}
+
+function deleteDiaryEntry(date){
+  if(!confirm('確定刪除這篇日記？'))return;
+  diaryEntries=diaryEntries.filter(e=>e.date!==date);
+  saveDiary(diaryEntries);renderDiaryHistory();showToast('已刪除');
+}
+
+// ── 學哥觀察記錄 ──
+function saveObservation(){
+  const text=document.getElementById('obs-input').value.trim();
+  if(!text){showToast('請先輸入觀察內容');return;}
+  if(!db.observations)db.observations=[];
+  db.observations.unshift({
+    date:todayStr,
+    time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}),
+    text
+  });
+  if(db.observations.length>100)db.observations=db.observations.slice(0,100);
+  save(db);
+  document.getElementById('obs-input').value='';
+  renderObservations();
+  showToast('已記錄 ✓');
+}
+
+function renderObservations(){
+  const el=document.getElementById('obs-list');
+  if(!el)return;
+  const list=db.observations||[];
+  if(!list.length){el.innerHTML='';return;}
+  el.innerHTML=list.slice(0,15).map((o,i)=>`
+    <div style="padding:8px 0;border-top:.5px solid var(--border);display:flex;gap:10px;align-items:flex-start;">
+      <div style="flex:1;">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:3px;">${o.date} ${o.time}</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.6;">${o.text}</div>
+      </div>
+      <button onclick="deleteObservation(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;">×</button>
+    </div>`).join('');
+}
+
+function deleteObservation(idx){
+  db.observations.splice(idx,1);
+  save(db);renderObservations();showToast('已刪除');
+}
+
 const CB_KEY='cambly_lessons_v1';
 let cbLessons=[];
 let cbCurWords=[],cbCurCorr=[],cbFcWords=[],cbFcIdx=0,cbFcFlipped=false;
@@ -1096,7 +1208,7 @@ async function cbLoadLessons(){
 }
 
 function cbTab(name,btn){
-  ['record','review','history','export'].forEach(n=>{
+  ['record','review','diary','history','export'].forEach(n=>{
     document.getElementById('cbp-'+n).style.display=n===name?'block':'none';
     const b=document.getElementById('cbt-'+n);
     b.style.background=n===name?'var(--bg)':'none';
@@ -1105,6 +1217,7 @@ function cbTab(name,btn){
     b.style.border=n===name?'.5px solid var(--border)':'none';
   });
   if(name==='review')cbInitReview();
+  if(name==='diary')cbDiaryInit();
   if(name==='history')cbRenderHistory();
   if(name==='export')cbRenderExport();
 }
