@@ -351,18 +351,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   </div>
   <div class="sec-label">最近 7 天</div>
   <div class="card" id="hist-list2"></div>
-  <div class="sec-label" style="margin-top:12px;">推播通知</div>
-  <div class="card">
-    <div class="notif-row">
-      <div class="notif-status" id="notif-status">載入中...</div>
-      <button class="action-btn" id="notif-btn" onclick="toggleNotif()">-</button>
-    </div>
-    <div class="time-row"><label>早上提醒</label><input type="time" id="t-morning" value="08:00" onchange="saveNotifTime()"/></div>
-    <div class="time-row"><label>晚上提醒</label><input type="time" id="t-evening" value="21:00" onchange="saveNotifTime()"/></div>
-    <div style="margin-top:12px;padding-top:12px;border-top:.5px solid var(--border);">
-      <button class="action-btn" onclick="testNotif()" style="width:100%;">發送測試通知</button>
-    </div>
-  </div>
   <div class="sec-label">加入手機主畫面</div>
   <div class="card" style="font-size:14px;color:var(--text2);line-height:1.8;">Safari → 分享 → 加入主畫面</div>
   <div class="sec-label">資料管理</div>
@@ -401,7 +389,6 @@ function save(d){localStorage.setItem(SK,JSON.stringify(d));}
 let db=load();
 if(!db.history)db.history={};
 if(!db.custom)db.custom=[];
-if(!db.notifTime)db.notifTime={morning:'08:00',evening:'21:00'};
 if(!db.streak)db.streak={current:0,best:0};
 if(!db.totalDone)db.totalDone=0;
 if(!db.qIndex)db.qIndex=0;
@@ -787,50 +774,13 @@ function askAI(){
 }
 document.getElementById('ask-input').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
-function renderNotif(){
-  const s=document.getElementById('notif-status');
-  const b=document.getElementById('notif-btn');
-  if(!('Notification'in window)){s.textContent='此瀏覽器不支援通知';b.style.display='none';return;}
-  if(Notification.permission==='granted'){s.textContent='通知已開啟 ✓';b.textContent='已開啟';}
-  else if(Notification.permission==='denied'){s.textContent='通知已被封鎖（請至設定開啟）';b.style.display='none';}
-  else{s.textContent='尚未開啟通知';b.textContent='開啟通知';}
-  document.getElementById('t-morning').value=db.notifTime.morning;
-  document.getElementById('t-evening').value=db.notifTime.evening;
-}
-function toggleNotif(){
-  if(Notification.permission==='granted'){showToast('可調整下方時間設定');return;}
-  Notification.requestPermission().then(p=>{renderNotif();if(p==='granted'){showToast('通知已開啟！');scheduleNotif();}});
-}
-function saveNotifTime(){
-  db.notifTime.morning=document.getElementById('t-morning').value;
-  db.notifTime.evening=document.getElementById('t-evening').value;
-  save(db);showToast('提醒時間已儲存');scheduleNotif();
-}
-function testNotif(){
-  if(Notification.permission!=='granted'){showToast('請先開啟通知權限');return;}
-  new Notification('每日提醒',{body:'今天的任務準備好了！英文和德文加油 🌟'});
-  showToast('測試通知已發送');
-}
-function scheduleNotif(){
-  if(Notification.permission!=='granted')return;
-  if(window._ni)clearInterval(window._ni);
-  window._ni=setInterval(()=>{
-    const n=new Date();
-    const hm=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
-    if(hm===db.notifTime.morning)new Notification('早安！今日任務',{body:'記得完成英文和德文學習 🌟'});
-    if(hm===db.notifTime.evening){
-      const rem=allTasks().filter(t=>!db.history[todayStr][t.id]).length;
-      new Notification('晚間提醒',{body:rem>0?`還有 ${rem} 項任務未完成，加油！`:'今天所有任務完成了 🎉'});
-    }
-  },60000);
-}
 function exportBackup(){
   const backup={
-    version:1,
+    version:2,
     exportedAt:new Date().toISOString(),
     mainData:db,
-    expList:experiences,
     expKey:localStorage.getItem(EXP_KEY)||'',
+    weeklyKey:localStorage.getItem(WK_KEY)||'',
   };
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -849,16 +799,11 @@ function importBackup(input){
   reader.onload=function(e){
     try{
       const backup=JSON.parse(e.target.result);
-      if(!backup.version||!backup.mainData){
-        showToast('檔案格式不正確');return;
-      }
-      if(!confirm('確定要還原備份嗎？目前的資料會被覆蓋。')){
-        input.value='';return;
-      }
-      // Restore main data
+      if(!backup.version||!backup.mainData){showToast('檔案格式不正確');return;}
+      if(!confirm('確定要還原備份嗎？目前的資料會被覆蓋。')){input.value='';return;}
       localStorage.setItem(SK,JSON.stringify(backup.mainData));
-      // Restore exp list
       if(backup.expKey)localStorage.setItem(EXP_KEY,backup.expKey);
+      if(backup.weeklyKey)localStorage.setItem(WK_KEY,backup.weeklyKey);
       input.value='';
       showToast('備份還原成功！重新載入中...');
       setTimeout(()=>location.reload(),1200);
@@ -876,7 +821,7 @@ function sw(tab,btn){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   btn.classList.add('active');
-  if(tab==='more'){renderStats();renderNotif();}
+  if(tab==='more'){renderStats();}
   if(tab==='news'&&!newsLoaded)loadNews();
   if(tab==='heart'){renderQ();renderDaily();renderLoveQuote();renderReflect();}
   if(tab==='exp')renderExp();
@@ -1224,7 +1169,7 @@ function cbCopyCSV(){
   navigator.clipboard.writeText(csv).then(()=>showToast('CSV 已複製！'));
 }
 
-renderTasks();renderWeekly();renderDERoadmap();updateStreak();scheduleNotif();
+renderTasks();renderWeekly();renderDERoadmap();updateStreak();
 cbLoadLessons();
 </script>
 </body>
