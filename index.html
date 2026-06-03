@@ -136,7 +136,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 
 <!-- 今日 -->
 <div id="tab-today" class="panel active">
-  <div class="sec-label" style="margin-top:8px;">今日學習任務</div>
+  <div class="sec-label" style="margin-top:8px;">📅 每日任務</div>
   <div class="card">
     <div id="task-list"></div>
     <div class="add-row">
@@ -145,11 +145,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     </div>
   </div>
   <div class="prog-bar"><div class="prog-fill" id="task-prog"></div></div>
-  <div class="sec-label" style="margin-top:16px;">問 AI 助理</div>
+
+  <div class="sec-label" style="margin-top:16px;">📆 本週任務</div>
+  <div class="card">
+    <div id="weekly-list"></div>
+    <div class="prog-bar" style="margin-top:8px;"><div class="prog-fill" id="weekly-prog" style="background:var(--info);"></div></div>
+    <div class="add-row">
+      <input type="text" id="new-weekly" placeholder="新增本週任務..." maxlength="30"/>
+      <button onclick="addWeeklyTask()">新增</button>
+    </div>
+  </div>
+
+  <div class="sec-label" style="margin-top:16px;">🇩🇪 德文學習路線</div>
+  <div class="card" id="de-roadmap"></div>
+
+  <div class="sec-label" style="margin-top:16px;">🔮 今日錦囊</div>
   <div class="card">
     <div class="ask-bar">
-      <input type="text" id="ask-input" placeholder="例如：今天德文複習什麼？"/>
-      <button onclick="askAI()">送出</button>
+      <input type="text" id="ask-input" placeholder="例如：英文、德文、股票、學哥..."/>
+      <button onclick="askAI()">查詢</button>
     </div>
     <div id="ai-area"></div>
   </div>
@@ -174,16 +188,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     </div>
     <textarea class="textarea" id="q-note" rows="3" placeholder="寫下你的想法..." oninput="saveQNote()"></textarea>
   </div>
-  <div class="quote-box">「為什麼他愛我，是因為他需要我這樣的人，所以他會為了我付出他可以付出的愛。」</div>
+
+  <div id="love-quote-box" style="border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:12px;font-size:13px;line-height:1.8;font-style:italic;"></div>
+
   <div class="sec-label">每天對學哥做的小事</div>
   <div class="card">
     <div id="daily-list"></div>
     <div class="heart-prog-bar"><div class="heart-prog-fill" id="heart-prog"></div></div>
   </div>
-  <div class="sec-label">關係平衡筆記</div>
+
+  <div class="sec-label" style="margin-top:.5rem;">關係覺察</div>
   <div class="card">
-    <div style="font-size:13px;color:var(--text2);margin-bottom:6px;">開銷、個性互補、牡羊火象⋯ 想到什麼記在這裡</div>
+    <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:8px;" id="reflect-q"></div>
     <textarea class="textarea" id="balance-note" rows="3" placeholder="今天的想法..." oninput="saveBalance()" style="margin-top:0;"></textarea>
+    <button onclick="nextReflect()" style="margin-top:8px;padding:6px 12px;font-size:12px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text2);cursor:pointer;">換一題</button>
   </div>
 </div>
 
@@ -375,6 +393,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 </div>
 <div class="toast" id="toast"></div>
 
+<script src="config.js"></script>
 <script>
 const SK='fulldash_v3';
 function load(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
@@ -403,10 +422,10 @@ document.getElementById('greeting').textContent=hr<12?'早安！':hr<18?'午安�
 document.getElementById('subdate').textContent=now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate()+' 週'+DAYS[dow];
 
 const baseWeekday=[
-  {id:'en1',time:'morning',label:'早上',title:'Engoo 文章默讀',meta:'Cambly Daily Lesson・5 分鐘',fixed:true},
-  {id:'en2',time:'noon',label:'午休',title:'ESL Podcast 聆聽',meta:'6 Minute English / All Ears English・10-15 分鐘',fixed:true},
-  {id:'en3',time:'night',label:'睡前',title:'英文日記 3 句',meta:'用英文描述今天發生的事・5 分鐘',fixed:true},
-  {id:'de1',time:'noon',label:'每日',title:'德文詞彙複習',meta:'Anki 單字複習・15 分鐘',fixed:true},
+  {id:'en1',time:'morning',label:'早上',title:'Engoo 文章默讀',meta:'Cambly Daily Lesson・5 分鐘',fixed:true,link:'https://engoo.com/app/daily-news'},
+  {id:'en2',time:'noon',label:'午休',title:'ESL Podcast 聆聽',meta:'6 Minute English・10-15 分鐘',fixed:true,link:'https://www.bbc.co.uk/learningenglish/english/features/6-minute-english'},
+  {id:'en3',time:'night',label:'睡前',title:'英文日記 3 句',meta:'用英文描述今天發生的事・5 分鐘',fixed:true,link:'mobilenotes://'},
+  {id:'de1',time:'noon',label:'每日',title:'德文詞彙複習',meta:'Anki 單字複習・15 分鐘',fixed:true,link:'anki://'},
 ];
 const baseWeekend=[
   {id:'en4',time:'weekend',label:'週末',title:'Cambly 課程',meta:'30 分鐘，效果比平日好 3 倍',fixed:true},
@@ -425,7 +444,9 @@ function renderTasks(){
     return`<div class="task-item">
       <div class="chk ${done?'done':''}" onclick="toggleTask('${t.id}')"></div>
       <div class="task-body">
-        <div class="task-title ${done?'done':''}">${t.title}</div>
+        <div class="task-title ${done?'done':''}" ${t.link?`style="cursor:pointer;" onclick="openLink('${t.link}')"`:''}>
+          ${t.title}${t.link?` <span style="color:var(--info);font-size:11px;">↗</span>`:''}
+        </div>
         <div class="task-meta"><span class="ttag t-${t.time}">${t.label}</span>${t.meta||''}</div>
       </div>
       ${!t.fixed?`<button class="del-btn" onclick="delTask('${t.id}')">×</button>`:''}
@@ -494,16 +515,7 @@ function renderStats(){
   document.getElementById('hist-list2').innerHTML=rows;
 }
 
-const questions=[
-  {tag:'relation',label:'關係思考',text:'要怎麼表達「我愛你」這件事？怎麼讓我愛的人知道我愛他？',hint:'不只是說出口，行動、眼神、習慣，都是表達的方式。'},
-  {tag:'self',label:'認識自己',text:'我是一個什麼樣的人？我需要什麼樣的人？',hint:'學哥說他愛你，是因為他需要你這樣的人。那你需要什麼樣的人呢？'},
-  {tag:'life',label:'人生方向',text:'有一件事，如果要做可以做一輩子，那會是什麼？',hint:'從家庭、社交、健康、信仰、個人發展五個維度想想看。'},
-  {tag:'relation',label:'關係思考',text:'什麼是愛？我現在是喜歡他，但怎麼樣去愛一個人？',hint:'喜歡和愛的差別，對你來說是什麼？'},
-  {tag:'relation',label:'關係思考',text:'我要怎麼平衡我們兩個的開銷？',hint:'不只是金錢，還有付出感和心理上的平衡。'},
-  {tag:'self',label:'認識自己',text:'要和牡羊座的火象個性相處，我需要具備什麼？',hint:'不是去改變他，而是怎麼和這樣的能量互補共存。'},
-  {tag:'life',label:'人生方向',text:'家庭、社交、健康、信仰、個人發展，現在最需要投入哪個維度？',hint:'不用全部都強，但要清楚現在最重要的是哪個。'},
-  {tag:'relation',label:'日常行動',text:'這個月學哥有什麼還沒完成的事？我可以怎麼幫他或督促他？',hint:'愛不只是陪伴，也包括幫對方成為更好的自己。'},
-];
+const questions=CONFIG.questions;
 let curQ=db.qIndex%questions.length;
 function renderQ(){
   const q=questions[curQ];
@@ -523,13 +535,46 @@ function toggleSaved(){
 function saveQNote(){db.notes['q'+curQ]=document.getElementById('q-note').value;save(db);}
 function saveBalance(){db.balanceNote=document.getElementById('balance-note').value;save(db);}
 
-const dailyActions=[
-  {id:'d1',text:'打電話確認學哥到家了沒'},
-  {id:'d2',text:'今天有沒有機會幫他買晚餐？'},
-  {id:'d3',text:'他最近有喜歡什麼東西，可以幫他買或做嗎？'},
-  {id:'d4',text:'這個月他有什麼還沒完成的事？'},
-];
+const loveQuotes=CONFIG.loveQuotes;
+
+const dailyActions=CONFIG.dailyActions;
+
+const reflectQs=CONFIG.reflectQs;
+
 if(!db.dailyDone[todayStr])db.dailyDone[todayStr]={};
+if(!db.reflectIdx)db.reflectIdx=0;
+
+function renderLoveQuote(){
+  const idx=new Date().getDate()%loveQuotes.length;
+  const q=loveQuotes[idx];
+  const el=document.getElementById('love-quote-box');
+  if(!el)return;
+  el.style.background=q.color;
+  el.style.borderLeft=`3px solid ${q.border}`;
+  el.style.borderRadius=`0 var(--radius) var(--radius) 0`;
+  el.style.padding='12px 14px';
+  el.style.marginBottom='12px';
+  el.style.fontSize='13px';
+  el.style.lineHeight='1.8';
+  el.style.fontStyle='italic';
+  el.style.color='var(--text2)';
+  el.textContent='「'+q.text+'」';
+}
+
+function renderReflect(){
+  const idx=(db.reflectIdx||0)%reflectQs.length;
+  const el=document.getElementById('reflect-q');
+  if(el)el.textContent=reflectQs[idx];
+  document.getElementById('balance-note').value=db.balanceNote||'';
+}
+
+function nextReflect(){
+  db.reflectIdx=((db.reflectIdx||0)+1)%reflectQs.length;
+  db.balanceNote='';
+  save(db);
+  renderReflect();
+}
+
 function renderDaily(){
   document.getElementById('daily-list').innerHTML=dailyActions.map(a=>{
     const done=!!db.dailyDone[todayStr][a.id];
@@ -540,31 +585,11 @@ function renderDaily(){
   }).join('');
   const dc=dailyActions.filter(a=>db.dailyDone[todayStr][a.id]).length;
   document.getElementById('heart-prog').style.width=Math.round(dc/dailyActions.length*100)+'%';
-  document.getElementById('balance-note').value=db.balanceNote||'';
 }
 function toggleDaily(id){db.dailyDone[todayStr][id]=!db.dailyDone[todayStr][id];save(db);renderDaily();}
 
 const CAT_LABEL={food:'美食',outdoor:'戶外',culture:'文化',travel:'旅遊',craft:'手作',sport:'運動'};
-const DEFAULT_EXPERIENCES=[
-  {id:'x1',cat:'food',title:'一起做一道從沒做過的料理',sub:'選一個完全陌生的食譜，一起下廚'},
-  {id:'x2',cat:'outdoor',title:'第一次一起爬山',sub:'台北大屯山、象山、七星山都適合'},
-  {id:'x3',cat:'culture',title:'一起看一場現場音樂表演',sub:'爵士、古典、獨立樂團都算'},
-  {id:'x4',cat:'travel',title:'第一次一起出遊過夜',sub:'不論遠近，重點是第一次'},
-  {id:'x5',cat:'food',title:'一起去吃一家排隊名店',sub:'提前研究、一起等待、一起評價'},
-  {id:'x6',cat:'culture',title:'一起去看展覽',sub:'美術館、設計展、攝影展'},
-  {id:'x7',cat:'outdoor',title:'第一次一起騎腳踏車',sub:'租 YouBike 環河或找一條路線'},
-  {id:'x8',cat:'craft',title:'一起做一個手作小物',sub:'陶藝、皮革、蠟燭、香氛都可以'},
-  {id:'x9',cat:'outdoor',title:'一起看日出或日落',sub:'找一個好地點，記錄這個時刻'},
-  {id:'x10',cat:'culture',title:'一起看一部從沒看過類型的電影',sub:'一人選一部不熟悉的類型互換看'},
-  {id:'x11',cat:'food',title:'第一次一起吃某種沒吃過的料理',sub:'選一個兩個人都沒吃過的異國料理'},
-  {id:'x12',cat:'sport',title:'一起嘗試一項新運動',sub:'攀岩、桌球、羽毛球、衝浪都算'},
-  {id:'x13',cat:'travel',title:'第一次一起坐夜車或長途旅程',sub:'過程本身就是體驗'},
-  {id:'x14',cat:'craft',title:'一起拍一組正式的紀念照',sub:'租服裝或找一個有意義的地點'},
-  {id:'x15',cat:'outdoor',title:'一起去夜市吃遍所有想吃的',sub:'不設限，吃到不想動為止'},
-  {id:'x16',cat:'culture',title:'一起去對方的家鄉',sub:'讓對方帶你認識他長大的地方'},
-  {id:'x17',cat:'sport',title:'一起去游泳或玩水',sub:'海邊、游泳池或水上樂園'},
-  {id:'x18',cat:'travel',title:'一起去一個完全陌生的城市',sub:'沒有計畫，當天決定要去哪裡'},
-];
+const DEFAULT_EXPERIENCES=CONFIG.experiences;
 const EXP_KEY='exp_list_v1';
 function loadExperiences(){
   try{const s=localStorage.getItem(EXP_KEY);return s?JSON.parse(s):[...DEFAULT_EXPERIENCES];}
@@ -736,71 +761,7 @@ function askAI(){
   if(!q)return;
   inp.value='';
 
-  const responses=[
-    // 英文學習
-    {keys:['英文','english','engoo','cambly','podcast','esl'],
-     reply:`📚 <b>英文學習建議</b><br>
-     • 早上默讀 Engoo 文章讓大腦熱身<br>
-     • 午休聽 6 Minute English，不懂的詞記下來<br>
-     • 睡前用英文寫 3 句今天發生的事<br>
-     • 週末的 Cambly 課效果會因為平日輸入而提升 3 倍 💪`},
-    // 德文學習
-    {keys:['德文','german','deutsch','anki','單字'],
-     reply:`🇩🇪 <b>德文學習建議</b><br>
-     • 每天用 Anki 複習詞彙 15 分鐘<br>
-     • 週末安排正規課程 60-90 分鐘<br>
-     • 聽德語 Podcast 或 YouTube 頻道<br>
-     • 嘗試寫德文日記或找語言交換夥伴`},
-    // 投資股票
-    {keys:['股票','投資','market','finance','趨勢','財經'],
-     reply:`📈 <b>投資思考提示</b><br>
-     • 今天的新聞分頁有最新投資趨勢可以看<br>
-     • 記得關注化工產業動態，結合本業分析更有優勢<br>
-     • 長期趨勢比短期波動更重要<br>
-     • 有想法可以記在今日分頁的自訂任務裡`},
-    // 化工產業
-    {keys:['化工','化學','產業','分析','chemical'],
-     reply:`🧪 <b>化工產業學習</b><br>
-     • 新聞分頁有每日化工新技術更新<br>
-     • 建議每天花 5 分鐘閱讀一則產業新聞<br>
-     • 把重要的技術趨勢記錄在自訂任務或筆記裡<br>
-     • 結合英文學習閱讀英文產業報告效果更好`},
-    // 學哥相關
-    {keys:['學哥','男友','男朋友','關係','愛','感情'],
-     reply:`💕 <b>關係提醒</b><br>
-     • 記得打電話確認學哥到家了沒<br>
-     • 學哥分頁有今日思考題，花 5 分鐘想一想<br>
-     • 有沒有想和學哥一起做的新體驗？去體驗分頁看看！<br>
-     • 愛是行動，今天有沒有做一件讓他感受到你在乎的事？`},
-    // 體驗清單
-    {keys:['體驗','第一次','約會','活動','旅遊','出遊'],
-     reply:`🗺️ <b>體驗清單提醒</b><br>
-     • 去「體驗」分頁看看有哪些還沒完成的！<br>
-     • 可以標記「想去」的項目，下次規劃時參考<br>
-     • 記得也可以新增你們自己的體驗點子<br>
-     • 完成後記得標記，累積你們的回憶 🎬`},
-    // 今日任務
-    {keys:['任務','今天','今日','打卡','計畫','schedule'],
-     reply:`✅ <b>今日任務提示</b><br>
-     • 記得完成今日的英文和德文學習任務<br>
-     • 每天累積一點點，一個月後就會看到明顯進步<br>
-     • 有沒有要加入的自訂任務？在任務欄位新增吧！<br>
-     • 連續打卡天數在「更多」分頁可以查看 🔥`},
-    // 新聞
-    {keys:['新聞','news','時事','世界'],
-     reply:`📰 <b>新聞提示</b><br>
-     • 點「新聞」分頁查看今日彙整<br>
-     • 包含世界大事、化工新技術、投資趨勢三類<br>
-     • 每天花 5 分鐘閱讀，累積產業分析的資本<br>
-     • 看到重要新聞可以記在自訂任務裡追蹤`},
-    // 備份
-    {keys:['備份','backup','資料','儲存','更新'],
-     reply:`💾 <b>資料備份提醒</b><br>
-     • 上完 Cambly 課後記得去「英文→匯出」下載 lessons.json<br>
-     • 每週去「更多」下載 backup.json 備份所有資料<br>
-     • 把檔案上傳到 GitHub 就能永久保存<br>
-     • 換手機前一定要先備份！`},
-  ];
+  const responses=CONFIG.lockboxResponses;
 
   // Find matching response
   let reply = null;
@@ -917,7 +878,7 @@ function sw(tab,btn){
   btn.classList.add('active');
   if(tab==='more'){renderStats();renderNotif();}
   if(tab==='news'&&!newsLoaded)loadNews();
-  if(tab==='heart'){renderQ();renderDaily();}
+  if(tab==='heart'){renderQ();renderDaily();renderLoveQuote();renderReflect();}
   if(tab==='exp')renderExp();
   if(tab==='cambly')cbTab('record',document.getElementById('cbt-record'));
 }
@@ -928,7 +889,144 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),2200);
 }
 
-// ── Cambly 筆記（資料從 lessons.json 讀取）──
+// ── 本週任務 ──
+const DEFAULT_WEEKLY=CONFIG.weeklyTasks;
+const WK_KEY='weekly_tasks_v1';
+function loadWeeklyTasks(){
+  try{const s=localStorage.getItem(WK_KEY);return s?JSON.parse(s):[...DEFAULT_WEEKLY];}
+  catch(e){return[...DEFAULT_WEEKLY];}
+}
+function saveWeeklyTasks(){localStorage.setItem(WK_KEY,JSON.stringify(weeklyTasks));}
+let weeklyTasks=loadWeeklyTasks();
+
+function getWeekStr(){
+  const d=new Date();
+  const day=d.getDay();
+  const diff=d.getDate()-day+(day===0?-6:1);
+  const mon=new Date(d.setDate(diff));
+  return mon.toISOString().slice(0,10);
+}
+
+const weekStr=getWeekStr();
+if(!db.weeklyDone)db.weeklyDone={};
+if(!db.weeklyDone[weekStr])db.weeklyDone[weekStr]={};
+
+function renderWeekly(){
+  const list=document.getElementById('weekly-list');
+  list.innerHTML=weeklyTasks.map(t=>{
+    const done=!!db.weeklyDone[weekStr][t.id];
+    const isCustom=t.id.startsWith('wc_');
+    return`<div class="task-item">
+      <div class="chk ${done?'done':''}" onclick="toggleWeekly('${t.id}')"></div>
+      <div class="task-body" style="cursor:${t.link?'pointer':'default'}" ${t.link?`onclick="openLink('${t.link}')"`:''}>
+        <div class="task-title ${done?'done':''}">${t.icon||'📌'} ${t.title}${t.link?` <span style="color:var(--info);font-size:11px;">↗</span>`:''}</div>
+        ${t.meta?`<div class="task-meta">${t.meta}</div>`:''}
+      </div>
+      ${isCustom?`<button class="del-btn" onclick="deleteWeeklyTask('${t.id}')">×</button>`:''}
+    </div>`;
+  }).join('');
+  const dc=weeklyTasks.filter(t=>db.weeklyDone[weekStr][t.id]).length;
+  document.getElementById('weekly-prog').style.width=Math.round(dc/weeklyTasks.length*100)+'%';
+}
+
+function toggleWeekly(id){
+  db.weeklyDone[weekStr][id]=!db.weeklyDone[weekStr][id];
+  save(db);renderWeekly();
+}
+
+function addWeeklyTask(){
+  const inp=document.getElementById('new-weekly');
+  const v=inp.value.trim();
+  if(!v)return;
+  weeklyTasks.push({id:'wc_'+Date.now(),title:v,meta:'',icon:'📌'});
+  saveWeeklyTasks();
+  inp.value='';
+  renderWeekly();
+  showToast('已新增：'+v);
+}
+
+function deleteWeeklyTask(id){
+  weeklyTasks=weeklyTasks.filter(t=>t.id!==id);
+  delete db.weeklyDone[weekStr][id];
+  save(db);saveWeeklyTasks();renderWeekly();showToast('已刪除');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('new-weekly');
+  if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')addWeeklyTask();});
+});
+
+// ── 德文學習路線 ──
+const DE_STAGES=CONFIG.deStages;
+
+function renderDERoadmap(){
+  if(!db.deStage)db.deStage=0;
+  const el=document.getElementById('de-roadmap');
+  const cur=db.deStage;
+  let html='';
+
+  // Progress bar
+  html+=`<div style="display:flex;gap:4px;margin-bottom:12px;">`;
+  DE_STAGES.forEach((s,i)=>{
+    const active=i===cur;
+    const done=i<cur;
+    html+=`<div style="flex:1;height:4px;border-radius:2px;background:${done?'var(--success)':active?'var(--info)':'var(--border)'};transition:all .3s;"></div>`;
+  });
+  html+=`</div>`;
+
+  // Current stage
+  const stage=DE_STAGES[cur];
+  html+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    <span style="font-size:20px;">${stage.emoji}</span>
+    <div>
+      <div style="font-size:15px;font-weight:600;color:var(--text);">${stage.title}</div>
+      <div style="font-size:12px;color:var(--info);">現在進行中</div>
+    </div>
+  </div>`;
+
+  // Tasks
+  html+=stage.tasks.map((t,i)=>{
+    const key=`de_${cur}_${i}`;
+    const done=!!db.deTasks&&!!db.deTasks[key];
+    return`<div class="task-item" style="padding:7px 0;">
+      <div class="chk ${done?'done':''}" onclick="toggleDETask('${key}')"></div>
+      <div class="task-body"><div class="task-title ${done?'done':''}" style="font-size:14px;">${t}</div></div>
+    </div>`;
+  }).join('');
+
+  // Tip
+  html+=`<div style="background:var(--info-bg);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--info);line-height:1.6;margin-top:10px;">
+    💡 ${stage.tip}
+  </div>`;
+
+  // Unlock next stage button
+  const allDone=stage.tasks.every((_,i)=>db.deTasks&&db.deTasks[`de_${cur}_${i}`]);
+  if(cur<DE_STAGES.length-1){
+    html+=`<button onclick="unlockNextDEStage()" style="width:100%;margin-top:12px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:${allDone?'var(--success)':'var(--bg2)'};color:${allDone?'#fff':'var(--text3)'};cursor:${allDone?'pointer':'default'};">
+      ${allDone?'🎉 解鎖下一階段！':'完成所有項目後解鎖下一階段'}
+    </button>`;
+  } else {
+    html+=`<div style="text-align:center;padding:12px;font-size:14px;color:var(--success);font-weight:600;">🏆 你已完成所有德文學習階段！</div>`;
+  }
+
+  el.innerHTML=html;
+}
+
+function toggleDETask(key){
+  if(!db.deTasks)db.deTasks={};
+  db.deTasks[key]=!db.deTasks[key];
+  save(db);renderDERoadmap();
+}
+
+function unlockNextDEStage(){
+  const cur=db.deStage||0;
+  const stage=DE_STAGES[cur];
+  const allDone=stage.tasks.every((_,i)=>db.deTasks&&db.deTasks[`de_${cur}_${i}`]);
+  if(!allDone){showToast('請先完成所有項目！');return;}
+  db.deStage=(db.deStage||0)+1;
+  save(db);renderDERoadmap();
+  showToast('🎉 解鎖第'+(db.deStage+1)+'階段！');
+}
 const CB_KEY='cambly_lessons_v1';
 let cbLessons=[];
 let cbCurWords=[],cbCurCorr=[],cbFcWords=[],cbFcIdx=0,cbFcFlipped=false;
@@ -1126,7 +1224,7 @@ function cbCopyCSV(){
   navigator.clipboard.writeText(csv).then(()=>showToast('CSV 已複製！'));
 }
 
-renderTasks();updateStreak();scheduleNotif();
+renderTasks();renderWeekly();renderDERoadmap();updateStreak();scheduleNotif();
 cbLoadLessons();
 </script>
 </body>
