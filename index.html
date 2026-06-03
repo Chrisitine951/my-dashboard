@@ -177,32 +177,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 
 <!-- 學哥 -->
 <div id="tab-heart" class="panel">
-  <div class="sec-label" style="margin-top:8px;">今日思考題</div>
-  <div class="q-card">
-    <div class="qtag" id="qtag"></div>
-    <div class="q-text" id="qtext"></div>
-    <div class="q-hint" id="qhint"></div>
-    <div class="btn-row">
-      <button class="btn" onclick="nextQ()">換一題</button>
-      <button class="btn" id="save-btn" onclick="toggleSaved()">⭐ 收藏</button>
+
+  <div id="love-quote-box" style="border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:12px;font-size:13px;line-height:1.8;font-style:italic;margin-top:8px;"></div>
+
+  <div class="sec-label">💭 今日思考題</div>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <div class="qtag" id="qtag"></div>
+      <div style="font-size:11px;color:var(--text3);" id="q-date-label"></div>
     </div>
+    <div class="q-text" id="qtext"></div>
+    <div class="q-hint" id="qhint" style="font-size:13px;color:var(--text2);line-height:1.6;margin-top:6px;"></div>
     <textarea class="textarea" id="q-note" rows="3" placeholder="寫下你的想法..." oninput="saveQNote()"></textarea>
+    <button onclick="saveQAnswer()" style="width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 儲存回答</button>
   </div>
 
-  <div id="love-quote-box" style="border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:12px;font-size:13px;line-height:1.8;font-style:italic;"></div>
+  <div class="sec-label" style="margin-top:12px;">🔍 關係覺察</div>
+  <div class="card">
+    <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:8px;line-height:1.5;" id="reflect-q"></div>
+    <textarea class="textarea" id="balance-note" rows="3" placeholder="今天的想法..." oninput="saveBalance()" style="margin-top:0;"></textarea>
+    <button onclick="saveReflectAnswer()" style="width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 儲存回答</button>
+  </div>
 
-  <div class="sec-label">每天對學哥做的小事</div>
+  <div class="sec-label" style="margin-top:12px;">✅ 每天對學哥做的小事</div>
   <div class="card">
     <div id="daily-list"></div>
     <div class="heart-prog-bar"><div class="heart-prog-fill" id="heart-prog"></div></div>
   </div>
 
-  <div class="sec-label" style="margin-top:.5rem;">關係覺察</div>
-  <div class="card">
-    <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:8px;" id="reflect-q"></div>
-    <textarea class="textarea" id="balance-note" rows="3" placeholder="今天的想法..." oninput="saveBalance()" style="margin-top:0;"></textarea>
-    <button onclick="nextReflect()" style="margin-top:8px;padding:6px 12px;font-size:12px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text2);cursor:pointer;">換一題</button>
-  </div>
 </div>
 
 <!-- 體驗 -->
@@ -351,7 +353,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   </div>
   <div class="sec-label">最近 7 天</div>
   <div class="card" id="hist-list2"></div>
-  <div class="sec-label">加入手機主畫面</div>
+  <div class="sec-label" style="margin-top:12px;">關係覺察回顧</div>
+  <div class="card" id="reflect-history-card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.6;">最近的回答記錄，每次回顧可以複製這些內容給 Claude。</div>
+    <div id="reflect-history-list"></div>
+    <button onclick="copyReflectHistory()" style="width:100%;margin-top:12px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--info);color:#fff;cursor:pointer;">📋 複製所有回答（用於週期回顧）</button>
+  </div>
+  <div class="sec-label" style="margin-top:12px;">加入手機主畫面</div>
   <div class="card" style="font-size:14px;color:var(--text2);line-height:1.8;">Safari → 分享 → 加入主畫面</div>
   <div class="sec-label">資料管理</div>
   <div class="card">
@@ -501,36 +509,6 @@ function renderStats(){
   }
   document.getElementById('hist-list2').innerHTML=rows;
 }
-
-const questions=CONFIG.questions;
-let curQ=db.qIndex%questions.length;
-function renderQ(){
-  const q=questions[curQ];
-  document.getElementById('qtag').textContent=q.label;
-  document.getElementById('qtag').className='qtag qt-'+q.tag;
-  document.getElementById('qtext').textContent=q.text;
-  document.getElementById('qhint').textContent=q.hint;
-  document.getElementById('q-note').value=db.notes['q'+curQ]||'';
-  document.getElementById('save-btn').textContent=db.saved.includes(curQ)?'⭐ 已收藏':'⭐ 收藏';
-}
-function nextQ(){curQ=(curQ+1)%questions.length;db.qIndex=curQ;save(db);renderQ();}
-function toggleSaved(){
-  const i=db.saved.indexOf(curQ);
-  if(i>-1)db.saved.splice(i,1);else db.saved.push(curQ);
-  save(db);renderQ();showToast(i>-1?'已取消收藏':'已收藏');
-}
-function saveQNote(){db.notes['q'+curQ]=document.getElementById('q-note').value;save(db);}
-function saveBalance(){db.balanceNote=document.getElementById('balance-note').value;save(db);}
-
-const loveQuotes=CONFIG.loveQuotes;
-
-const dailyActions=CONFIG.dailyActions;
-
-const reflectQs=CONFIG.reflectQs;
-
-if(!db.dailyDone[todayStr])db.dailyDone[todayStr]={};
-if(!db.reflectIdx)db.reflectIdx=0;
-
 function renderLoveQuote(){
   const idx=new Date().getDate()%loveQuotes.length;
   const q=loveQuotes[idx];
@@ -548,18 +526,144 @@ function renderLoveQuote(){
   el.textContent='「'+q.text+'」';
 }
 
-function renderReflect(){
-  const idx=(db.reflectIdx||0)%reflectQs.length;
-  const el=document.getElementById('reflect-q');
-  if(el)el.textContent=reflectQs[idx];
-  document.getElementById('balance-note').value=db.balanceNote||'';
+function renderReflectHistory(){
+  const reflectHist=db.reflectHistory||[];
+  const qHist=db.qHistory||[];
+  // 合併兩種回答，按日期排序
+  const all=[
+    ...reflectHist.map(r=>({...r,type:'reflect'})),
+    ...qHist.map(r=>({...r,type:'think'}))
+  ].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30);
+
+  const el=document.getElementById('reflect-history-list');
+  if(!all.length){
+    el.innerHTML='<div style="font-size:13px;color:var(--text3);padding:8px 0;">還沒有回答記錄，去學哥分頁開始回答吧！</div>';
+    return;
+  }
+  el.innerHTML=all.map((r,i)=>`
+    <div style="padding:10px 0;border-bottom:.5px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;padding:1px 7px;border-radius:6px;background:${r.type==='think'?'var(--info-bg)':'var(--danger-bg)'};color:${r.type==='think'?'var(--info)':'var(--danger)'};">${r.type==='think'?'💭 思考題':'🔍 覺察'}</span>
+          <span style="font-size:11px;color:var(--text3);">${r.date}</span>
+        </div>
+        <button onclick="deleteHistoryItem('${r.type}','${r.date}')" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;">×</button>
+      </div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:4px;">Q: ${r.question}</div>
+      <div style="font-size:14px;color:var(--text);line-height:1.6;">${r.answer}</div>
+    </div>`).join('');
 }
 
-function nextReflect(){
-  db.reflectIdx=((db.reflectIdx||0)+1)%reflectQs.length;
-  db.balanceNote='';
+function deleteHistoryItem(type,date){
+  if(type==='reflect'){
+    db.reflectHistory=(db.reflectHistory||[]).filter(r=>r.date!==date);
+  } else {
+    db.qHistory=(db.qHistory||[]).filter(r=>r.date!==date);
+  }
+  save(db);renderReflectHistory();showToast('已刪除');
+}
+
+function copyReflectHistory(){
+  const reflectHist=db.reflectHistory||[];
+  const qHist=db.qHistory||[];
+  const all=[
+    ...reflectHist.map(r=>({...r,type:'reflect'})),
+    ...qHist.map(r=>({...r,type:'think'}))
+  ].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30);
+  if(!all.length){showToast('還沒有回答記錄');return;}
+  let text='【學哥分頁回顧 — 近期回答】\n\n';
+  all.forEach(r=>{
+    text+=`📅 ${r.date} ${r.type==='think'?'💭 思考題':'🔍 關係覺察'}\nQ: ${r.question}\nA: ${r.answer}\n\n`;
+  });
+  navigator.clipboard.writeText(text).then(()=>showToast('已複製！貼給 Claude 做週期回顧'));
+}
+
+const questions=CONFIG.questions;
+const reflectQs=CONFIG.reflectQs;
+const loveQuotes=CONFIG.loveQuotes;
+const dailyActions=CONFIG.dailyActions;
+
+if(!db.dailyDone[todayStr])db.dailyDone[todayStr]={};
+
+// 根據今天是第幾天算出題目 index（每天自動換）
+function getDayIndex(arr){
+  const start=new Date('2026-06-01');
+  const today=new Date(todayStr);
+  const diff=Math.floor((today-start)/(1000*60*60*24));
+  return((diff%arr.length)+arr.length)%arr.length;
+}
+
+function renderQ(){
+  const idx=getDayIndex(questions);
+  const q=questions[idx];
+  document.getElementById('qtag').textContent=q.label;
+  document.getElementById('qtag').className='qtag qt-'+q.tag;
+  document.getElementById('qtext').textContent=q.text;
+  document.getElementById('qhint').textContent=q.hint;
+  document.getElementById('q-date-label').textContent=todayStr;
+  // 載入今天已存的回答
+  const saved=db.qAnswers&&db.qAnswers[todayStr];
+  document.getElementById('q-note').value=saved||'';
+}
+
+function saveQNote(){
+  if(!db.qAnswers)db.qAnswers={};
+  db.qAnswers[todayStr]=document.getElementById('q-note').value;
   save(db);
-  renderReflect();
+}
+
+function saveQAnswer(){
+  const answer=document.getElementById('q-note').value.trim();
+  if(!answer){showToast('請先寫下你的想法');return;}
+  const idx=getDayIndex(questions);
+  const q=questions[idx];
+  if(!db.qHistory)db.qHistory=[];
+  const existing=db.qHistory.findIndex(r=>r.date===todayStr&&r.type==='think');
+  if(existing>-1){
+    db.qHistory[existing].answer=answer;
+  } else {
+    db.qHistory.unshift({type:'think',date:todayStr,question:q.text,answer});
+  }
+  if(db.qHistory.length>90)db.qHistory=db.qHistory.slice(0,90);
+  if(!db.qAnswers)db.qAnswers={};
+  db.qAnswers[todayStr]=answer;
+  save(db);
+  showToast('思考題回答已儲存 ✓');
+}
+
+function renderReflect(){
+  const idx=getDayIndex(reflectQs);
+  const el=document.getElementById('reflect-q');
+  if(el)el.textContent=reflectQs[idx];
+  // 載入今天已存的關係覺察回答
+  const saved=db.reflectAnswers&&db.reflectAnswers[todayStr];
+  document.getElementById('balance-note').value=saved||'';
+}
+
+function saveBalance(){
+  if(!db.reflectAnswers)db.reflectAnswers={};
+  db.reflectAnswers[todayStr]=document.getElementById('balance-note').value;
+  save(db);
+}
+
+function saveReflectAnswer(){
+  const answer=document.getElementById('balance-note').value.trim();
+  if(!answer){showToast('請先寫下你的想法');return;}
+  const idx=getDayIndex(reflectQs);
+  const question=reflectQs[idx];
+  if(!db.reflectHistory)db.reflectHistory=[];
+  const existing=db.reflectHistory.findIndex(r=>r.date===todayStr);
+  if(existing>-1){
+    db.reflectHistory[existing].answer=answer;
+    db.reflectHistory[existing].question=question;
+  } else {
+    db.reflectHistory.unshift({date:todayStr,question,answer});
+  }
+  if(db.reflectHistory.length>90)db.reflectHistory=db.reflectHistory.slice(0,90);
+  if(!db.reflectAnswers)db.reflectAnswers={};
+  db.reflectAnswers[todayStr]=answer;
+  save(db);
+  showToast('關係覺察回答已儲存 ✓');
 }
 
 function renderDaily(){
@@ -776,7 +880,7 @@ document.getElementById('ask-input').addEventListener('keydown',e=>{if(e.key==='
 
 function exportBackup(){
   const backup={
-    version:2,
+    version:3,
     exportedAt:new Date().toISOString(),
     mainData:db,
     expKey:localStorage.getItem(EXP_KEY)||'',
@@ -821,7 +925,7 @@ function sw(tab,btn){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   btn.classList.add('active');
-  if(tab==='more'){renderStats();}
+  if(tab==='more'){renderStats();renderReflectHistory();}
   if(tab==='news'&&!newsLoaded)loadNews();
   if(tab==='heart'){renderQ();renderDaily();renderLoveQuote();renderReflect();}
   if(tab==='exp')renderExp();
