@@ -729,21 +729,100 @@ async function loadNews(){
 }
 function openLink(url){if(url)window.open(url,'_blank');}
 
-async function askAI(){
+function askAI(){
   const inp=document.getElementById('ask-input');
   const area=document.getElementById('ai-area');
-  const q=inp.value.trim();if(!q)return;
-  area.innerHTML='<div class="ai-resp"><div class="loading-pill"><div class="spinner"></div>思考中...</div></div>';
+  const q=inp.value.trim().toLowerCase();
+  if(!q)return;
   inp.value='';
-  try{
-    const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCFwTcK9MCJaowR_cvZlGlQmwstm21GJY4',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{parts:[{text:'你是貼心的個人助理，幫助用戶管理英文德文學習、新聞、股票投資和日常提醒。用繁體中文回答，簡潔有重點，不超過150字。\n\n用戶問：'+q}]}]})
-    });
-    const data=await res.json();
-    const text=data.candidates?.[0]?.content?.parts?.[0]?.text||'無法取得回應';
-    area.innerHTML=`<div class="ai-resp">${text}</div>`;
-  }catch(e){area.innerHTML=`<div class="ai-resp">出了點問題，請再試一次。</div>`;}
+
+  const responses=[
+    // 英文學習
+    {keys:['英文','english','engoo','cambly','podcast','esl'],
+     reply:`📚 <b>英文學習建議</b><br>
+     • 早上默讀 Engoo 文章讓大腦熱身<br>
+     • 午休聽 6 Minute English，不懂的詞記下來<br>
+     • 睡前用英文寫 3 句今天發生的事<br>
+     • 週末的 Cambly 課效果會因為平日輸入而提升 3 倍 💪`},
+    // 德文學習
+    {keys:['德文','german','deutsch','anki','單字'],
+     reply:`🇩🇪 <b>德文學習建議</b><br>
+     • 每天用 Anki 複習詞彙 15 分鐘<br>
+     • 週末安排正規課程 60-90 分鐘<br>
+     • 聽德語 Podcast 或 YouTube 頻道<br>
+     • 嘗試寫德文日記或找語言交換夥伴`},
+    // 投資股票
+    {keys:['股票','投資','market','finance','趨勢','財經'],
+     reply:`📈 <b>投資思考提示</b><br>
+     • 今天的新聞分頁有最新投資趨勢可以看<br>
+     • 記得關注化工產業動態，結合本業分析更有優勢<br>
+     • 長期趨勢比短期波動更重要<br>
+     • 有想法可以記在今日分頁的自訂任務裡`},
+    // 化工產業
+    {keys:['化工','化學','產業','分析','chemical'],
+     reply:`🧪 <b>化工產業學習</b><br>
+     • 新聞分頁有每日化工新技術更新<br>
+     • 建議每天花 5 分鐘閱讀一則產業新聞<br>
+     • 把重要的技術趨勢記錄在自訂任務或筆記裡<br>
+     • 結合英文學習閱讀英文產業報告效果更好`},
+    // 學哥相關
+    {keys:['學哥','男友','男朋友','關係','愛','感情'],
+     reply:`💕 <b>關係提醒</b><br>
+     • 記得打電話確認學哥到家了沒<br>
+     • 學哥分頁有今日思考題，花 5 分鐘想一想<br>
+     • 有沒有想和學哥一起做的新體驗？去體驗分頁看看！<br>
+     • 愛是行動，今天有沒有做一件讓他感受到你在乎的事？`},
+    // 體驗清單
+    {keys:['體驗','第一次','約會','活動','旅遊','出遊'],
+     reply:`🗺️ <b>體驗清單提醒</b><br>
+     • 去「體驗」分頁看看有哪些還沒完成的！<br>
+     • 可以標記「想去」的項目，下次規劃時參考<br>
+     • 記得也可以新增你們自己的體驗點子<br>
+     • 完成後記得標記，累積你們的回憶 🎬`},
+    // 今日任務
+    {keys:['任務','今天','今日','打卡','計畫','schedule'],
+     reply:`✅ <b>今日任務提示</b><br>
+     • 記得完成今日的英文和德文學習任務<br>
+     • 每天累積一點點，一個月後就會看到明顯進步<br>
+     • 有沒有要加入的自訂任務？在任務欄位新增吧！<br>
+     • 連續打卡天數在「更多」分頁可以查看 🔥`},
+    // 新聞
+    {keys:['新聞','news','時事','世界'],
+     reply:`📰 <b>新聞提示</b><br>
+     • 點「新聞」分頁查看今日彙整<br>
+     • 包含世界大事、化工新技術、投資趨勢三類<br>
+     • 每天花 5 分鐘閱讀，累積產業分析的資本<br>
+     • 看到重要新聞可以記在自訂任務裡追蹤`},
+    // 備份
+    {keys:['備份','backup','資料','儲存','更新'],
+     reply:`💾 <b>資料備份提醒</b><br>
+     • 上完 Cambly 課後記得去「英文→匯出」下載 lessons.json<br>
+     • 每週去「更多」下載 backup.json 備份所有資料<br>
+     • 把檔案上傳到 GitHub 就能永久保存<br>
+     • 換手機前一定要先備份！`},
+  ];
+
+  // Find matching response
+  let reply = null;
+  for(const r of responses){
+    if(r.keys.some(k => q.includes(k))){
+      reply = r.reply;
+      break;
+    }
+  }
+
+  // Default response
+  if(!reply){
+    const defaults=[
+      `💡 你可以問我關於：<b>英文學習、德文、股票投資、化工產業、學哥、體驗清單、今日任務、新聞、備份</b>等話題！`,
+      `🌟 今天的小提醒：持續每天做，每次不超過 20 分鐘，分散在生活中。這就是你進步的秘訣！`,
+      `📖 學習提示：平日的英文輸入（閱讀+聽力+寫作）會讓週末的 Cambly 課效果提升 3 倍哦！`,
+      `🎯 記得今天的德文詞彙複習了嗎？Anki 15 分鐘，每天一點點累積！`,
+    ];
+    reply = defaults[Math.floor(Math.random() * defaults.length)];
+  }
+
+  area.innerHTML=`<div class="ai-resp">${reply}</div>`;
 }
 document.getElementById('ask-input').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
