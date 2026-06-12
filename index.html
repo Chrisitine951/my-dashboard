@@ -177,7 +177,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 
 <!-- 學哥 -->
 <div id="tab-heart" class="panel">
-
   <div id="love-quote-box" style="border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:12px;font-size:13px;line-height:1.8;font-style:italic;margin-top:8px;"></div>
 
   <div class="sec-label">💭 今日思考題</div>
@@ -212,7 +211,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     <button onclick="saveObservation()" style="width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 記錄下來</button>
     <div id="obs-list" style="margin-top:12px;"></div>
   </div>
-
 </div>
 
 <!-- 體驗 -->
@@ -234,7 +232,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     <button class="fbtn" onclick="filterExp('sport',this)">運動</button>
   </div>
   <div class="card" id="exp-list"></div>
-  <!-- 新增／編輯表單 -->
   <div class="card" id="exp-form" style="display:none;border:.5px solid var(--info);">
     <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;" id="exp-form-title">新增體驗</div>
     <input type="text" id="exp-input-title" placeholder="體驗名稱，例：第一次一起看棒球" maxlength="40"
@@ -261,19 +258,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   </button>
 </div>
 
-<!-- 英文筆記 -->
+<!-- 語言筆記 -->
 <div id="tab-cambly" class="panel">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;margin-top:8px;">
-    <div class="sec-label" style="margin:0;">Cambly 學習筆記</div>
+    <div class="sec-label" style="margin:0;">語言學習筆記</div>
     <div style="background:var(--info-bg);color:var(--info);font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;" id="cb-lesson-count">載入中...</div>
   </div>
-  <div style="display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:var(--radius);margin-bottom:12px;">
-    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:var(--bg);color:var(--text);cursor:pointer;border-radius:8px;font-weight:600;border:.5px solid var(--border);" onclick="cbTab('record',this)" id="cbt-record">記錄</button>
-    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('review',this)" id="cbt-review">複習</button>
-    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('diary',this)" id="cbt-diary">日記</button>
-    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('history',this)" id="cbt-history">歷史</button>
-    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;" onclick="cbTab('export',this)" id="cbt-export">匯出</button>
+  <div style="display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:var(--radius);margin-bottom:12px;overflow-x:auto;">
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:var(--bg);color:var(--text);cursor:pointer;border-radius:8px;font-weight:600;border:.5px solid var(--border);white-space:nowrap;" onclick="cbTab('record',this)" id="cbt-record">記錄</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;white-space:nowrap;" onclick="cbTab('review',this)" id="cbt-review">複習</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;white-space:nowrap;" onclick="cbTab('diary',this)" id="cbt-diary">日記</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;white-space:nowrap;" onclick="cbTab('history',this)" id="cbt-history">歷史</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;white-space:nowrap;" onclick="cbTab('export',this)" id="cbt-export">匯出</button>
+    <button style="flex:1;padding:6px 4px;font-size:12px;text-align:center;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:8px;font-weight:500;white-space:nowrap;" onclick="cbTab('de',this)" id="cbt-de">🇩🇪 德文</button>
   </div>
+
+  <!-- 記錄 -->
   <div id="cbp-record">
     <div class="card">
       <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;">本次課程</div>
@@ -303,6 +303,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     </div>
     <button onclick="cbSaveLesson()" style="width:100%;padding:14px;font-size:15px;font-weight:600;border:none;border-radius:var(--radius-lg);background:var(--text);color:var(--bg);cursor:pointer;margin-bottom:12px;">💾 儲存本次課程</button>
   </div>
+
+  <!-- 複習 -->
   <div id="cbp-review" style="display:none;">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
       <div class="stat-card"><div class="stat-lbl">單字</div><div class="stat-val" id="cb-stat-words">0</div></div>
@@ -328,7 +330,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     </div>
     <div class="card"><div class="sec-label" style="margin-bottom:8px;">所有單字</div><div id="cb-all-words"></div></div>
   </div>
+
+  <!-- 歷史 -->
   <div id="cbp-history" style="display:none;"><div id="cb-history-list"></div></div>
+
+  <!-- 日記 -->
   <div id="cbp-diary" style="display:none;">
     <div class="card">
       <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">📔 今日英文日記</div>
@@ -340,6 +346,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     <div class="sec-label" style="margin-top:4px;">過去的日記</div>
     <div id="diary-history-list"></div>
   </div>
+
+  <!-- 匯出 -->
   <div id="cbp-export" style="display:none;">
     <div class="card" style="background:var(--warn-bg);border:.5px solid var(--warn);font-size:13px;color:var(--text2);line-height:1.7;">在 Notion 建立 Database → 點「複製內容」→ 貼到 Notion 新頁面</div>
     <div class="card">
@@ -358,6 +366,62 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
         📱 建議每次上完 Cambly 課後就下載一次備份
       </div>
       <button onclick="cbExportJSON()" style="width:100%;padding:12px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--info);color:#fff;cursor:pointer;">⬇️ 下載 lessons.json</button>
+    </div>
+  </div>
+
+  <!-- 德文 -->
+  <div id="cbp-de" style="display:none;">
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;">
+      <div class="stat-card"><div class="stat-lbl">單字數</div><div class="stat-val" id="de-stat-words">0</div></div>
+      <div class="stat-card"><div class="stat-lbl">文法筆記</div><div class="stat-val" id="de-stat-grammar">0</div></div>
+    </div>
+
+    <!-- 新增單字 -->
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;">新增德文單字</div>
+      <input type="text" id="de-word-de" placeholder="德文單字，例：schön" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <select id="de-word-pos" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;">
+          <option>adj.</option><option>n.</option><option>v.</option><option>adv.</option><option>phrase</option>
+        </select>
+        <input type="text" id="de-word-zh" placeholder="中文意思" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;"/>
+      </div>
+      <input type="text" id="de-word-ex" placeholder="例句（可選）" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <button onclick="deAddWord()" style="padding:8px 14px;font-size:13px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;font-weight:500;">＋ 新增單字</button>
+    </div>
+
+    <!-- 閃卡 -->
+    <div class="card" id="de-flashcard" onclick="deFlip()" style="min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;">
+      <div id="defc-front">
+        <div style="font-size:28px;font-weight:600;color:var(--text);" id="defc-word">點擊開始</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px;" id="defc-pos"></div>
+      </div>
+      <div id="defc-back" style="display:none;width:100%;">
+        <div style="font-size:20px;font-weight:600;color:var(--text);margin-bottom:8px;" id="defc-zh"></div>
+        <div style="font-size:13px;color:var(--text2);font-style:italic;line-height:1.5;" id="defc-ex"></div>
+      </div>
+      <div style="font-size:12px;color:var(--text3);margin-top:16px;" id="defc-hint">點擊翻牌</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px;">
+      <button onclick="dePrev()" style="padding:8px 16px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">←</button>
+      <span style="font-size:13px;color:var(--text2);min-width:60px;text-align:center;" id="defc-prog">0/0</span>
+      <button onclick="deNext()" style="padding:8px 16px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">→</button>
+      <button onclick="deShuffle()" style="padding:8px 16px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">⇄</button>
+    </div>
+
+    <!-- 所有單字 -->
+    <div class="card">
+      <div class="sec-label" style="margin-bottom:8px;">所有單字</div>
+      <div id="de-all-words"></div>
+    </div>
+
+    <!-- 文法筆記 -->
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;">文法筆記</div>
+      <input type="text" id="de-grammar-title" placeholder="筆記標題，例：動詞變化" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+      <textarea id="de-grammar-content" placeholder="內容..." rows="3" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;resize:none;line-height:1.6;font-family:inherit;margin-bottom:8px;"></textarea>
+      <button onclick="deAddGrammar()" style="padding:8px 14px;font-size:13px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;font-weight:500;">＋ 新增筆記</button>
+      <div id="de-grammar-list" style="margin-top:12px;"></div>
     </div>
   </div>
 </div>
@@ -403,7 +467,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   <button class="nav-item" onclick="sw('news',this)"><i class="ti ti-news"></i><span>新聞</span></button>
   <button class="nav-item" onclick="sw('heart',this)"><i class="ti ti-heart"></i><span>學哥</span></button>
   <button class="nav-item" onclick="sw('exp',this)"><i class="ti ti-map-2"></i><span>體驗</span></button>
-  <button class="nav-item" onclick="sw('cambly',this)"><i class="ti ti-book"></i><span>英文</span></button>
+  <button class="nav-item" onclick="sw('cambly',this)"><i class="ti ti-book"></i><span>語言</span></button>
   <button class="nav-item" onclick="sw('more',this)"><i class="ti ti-dots"></i><span>更多</span></button>
 </div>
 </div>
@@ -549,12 +613,10 @@ function renderLoveQuote(){
 function renderReflectHistory(){
   const reflectHist=db.reflectHistory||[];
   const qHist=db.qHistory||[];
-  // 合併兩種回答，按日期排序
   const all=[
     ...reflectHist.map(r=>({...r,type:'reflect'})),
     ...qHist.map(r=>({...r,type:'think'}))
   ].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30);
-
   const el=document.getElementById('reflect-history-list');
   if(!all.length){
     el.innerHTML='<div style="font-size:13px;color:var(--text3);padding:8px 0;">還沒有回答記錄，去學哥分頁開始回答吧！</div>';
@@ -605,7 +667,6 @@ const dailyActions=CONFIG.dailyActions;
 
 if(!db.dailyDone[todayStr])db.dailyDone[todayStr]={};
 
-// 根據今天是第幾天算出題目 index（每天自動換）
 function getDayIndex(arr){
   const start=new Date('2026-06-01');
   const today=new Date(todayStr);
@@ -621,7 +682,6 @@ function renderQ(){
   document.getElementById('qtext').textContent=q.text;
   document.getElementById('qhint').textContent=q.hint;
   document.getElementById('q-date-label').textContent=todayStr;
-  // 載入今天已存的回答
   const saved=db.qAnswers&&db.qAnswers[todayStr];
   document.getElementById('q-note').value=saved||'';
 }
@@ -655,7 +715,6 @@ function renderReflect(){
   const idx=getDayIndex(reflectQs);
   const el=document.getElementById('reflect-q');
   if(el)el.textContent=reflectQs[idx];
-  // 載入今天已存的關係覺察回答
   const saved=db.reflectAnswers&&db.reflectAnswers[todayStr];
   document.getElementById('balance-note').value=saved||'';
 }
@@ -871,19 +930,11 @@ function askAI(){
   const q=inp.value.trim().toLowerCase();
   if(!q)return;
   inp.value='';
-
   const responses=CONFIG.lockboxResponses;
-
-  // Find matching response
-  let reply = null;
+  let reply=null;
   for(const r of responses){
-    if(r.keys.some(k => q.includes(k))){
-      reply = r.reply;
-      break;
-    }
+    if(r.keys.some(k=>q.includes(k))){reply=r.reply;break;}
   }
-
-  // Default response
   if(!reply){
     const defaults=[
       `💡 你可以問我關於：<b>英文學習、德文、股票投資、化工產業、學哥、體驗清單、今日任務、新聞、備份</b>等話題！`,
@@ -891,9 +942,8 @@ function askAI(){
       `📖 學習提示：平日的英文輸入（閱讀+聽力+寫作）會讓週末的 Cambly 課效果提升 3 倍哦！`,
       `🎯 記得今天的德文詞彙複習了嗎？Anki 15 分鐘，每天一點點累積！`,
     ];
-    reply = defaults[Math.floor(Math.random() * defaults.length)];
+    reply=defaults[Math.floor(Math.random()*defaults.length)];
   }
-
   area.innerHTML=`<div class="ai-resp">${reply}</div>`;
 }
 document.getElementById('ask-input').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
@@ -952,10 +1002,10 @@ function sw(tab,btn){
   if(tab==='heart'){renderQ();renderDaily();renderLoveQuote();renderReflect();renderObservations();}
   if(tab==='exp')renderExp();
   if(tab==='cambly'){
-  cbLoadLessons().then(()=>{
-    cbTab('record',document.getElementById('cbt-record'));
-  });
-}
+    cbLoadLessons().then(()=>{
+      cbTab('record',document.getElementById('cbt-record'));
+    });
+  }
 }
 
 function showToast(msg){
@@ -1039,8 +1089,6 @@ function renderDERoadmap(){
   const el=document.getElementById('de-roadmap');
   const cur=db.deStage;
   let html='';
-
-  // Progress bar
   html+=`<div style="display:flex;gap:4px;margin-bottom:12px;">`;
   DE_STAGES.forEach((s,i)=>{
     const active=i===cur;
@@ -1048,8 +1096,6 @@ function renderDERoadmap(){
     html+=`<div style="flex:1;height:4px;border-radius:2px;background:${done?'var(--success)':active?'var(--info)':'var(--border)'};transition:all .3s;"></div>`;
   });
   html+=`</div>`;
-
-  // Current stage
   const stage=DE_STAGES[cur];
   html+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
     <span style="font-size:20px;">${stage.emoji}</span>
@@ -1058,8 +1104,6 @@ function renderDERoadmap(){
       <div style="font-size:12px;color:var(--info);">現在進行中</div>
     </div>
   </div>`;
-
-  // Tasks
   html+=stage.tasks.map((t,i)=>{
     const key=`de_${cur}_${i}`;
     const done=!!db.deTasks&&!!db.deTasks[key];
@@ -1068,13 +1112,9 @@ function renderDERoadmap(){
       <div class="task-body"><div class="task-title ${done?'done':''}" style="font-size:14px;">${t}</div></div>
     </div>`;
   }).join('');
-
-  // Tip
   html+=`<div style="background:var(--info-bg);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--info);line-height:1.6;margin-top:10px;">
     💡 ${stage.tip}
   </div>`;
-
-  // Unlock next stage button
   const allDone=stage.tasks.every((_,i)=>db.deTasks&&db.deTasks[`de_${cur}_${i}`]);
   if(cur<DE_STAGES.length-1){
     html+=`<button onclick="unlockNextDEStage()" style="width:100%;margin-top:12px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:${allDone?'var(--success)':'var(--bg2)'};color:${allDone?'#fff':'var(--text3)'};cursor:${allDone?'pointer':'default'};">
@@ -1083,7 +1123,6 @@ function renderDERoadmap(){
   } else {
     html+=`<div style="text-align:center;padding:12px;font-size:14px;color:var(--success);font-weight:600;">🏆 你已完成所有德文學習階段！</div>`;
   }
-
   el.innerHTML=html;
 }
 
@@ -1193,6 +1232,7 @@ function deleteObservation(idx){
   save(db);renderObservations();showToast('已刪除');
 }
 
+// ── Cambly 英文 ──
 const CB_KEY='cambly_lessons_v1';
 let cbLessons=[];
 let cbCurWords=[],cbCurCorr=[],cbFcWords=[],cbFcIdx=0,cbFcFlipped=false;
@@ -1213,18 +1253,22 @@ async function cbLoadLessons(){
 }
 
 function cbTab(name,btn){
-  ['record','review','diary','history','export'].forEach(n=>{
-    document.getElementById('cbp-'+n).style.display=n===name?'block':'none';
+  ['record','review','diary','history','export','de'].forEach(n=>{
+    const panel=document.getElementById('cbp-'+n);
+    if(panel)panel.style.display=n===name?'block':'none';
     const b=document.getElementById('cbt-'+n);
-    b.style.background=n===name?'var(--bg)':'none';
-    b.style.color=n===name?'var(--text)':'var(--text3)';
-    b.style.fontWeight=n===name?'600':'500';
-    b.style.border=n===name?'.5px solid var(--border)':'none';
+    if(b){
+      b.style.background=n===name?'var(--bg)':'none';
+      b.style.color=n===name?'var(--text)':'var(--text3)';
+      b.style.fontWeight=n===name?'600':'500';
+      b.style.border=n===name?'.5px solid var(--border)':'none';
+    }
   });
   if(name==='review')cbInitReview();
   if(name==='diary')cbDiaryInit();
   if(name==='history')cbRenderHistory();
   if(name==='export')cbRenderExport();
+  if(name==='de')deInit();
 }
 
 function cbAddWord(){
@@ -1389,6 +1433,128 @@ function cbCopyCSV(){
   let csv='單字,詞性,中文,例句\n';
   allW.forEach(w=>{csv+=`"${w.en}","${w.pos}","${w.zh}","${w.ex||''}"\n`;});
   navigator.clipboard.writeText(csv).then(()=>showToast('CSV 已複製！'));
+}
+
+// ── 德文單字 ──
+const DE_KEY='de_vocab_v1';
+const DE_GRAMMAR_KEY='de_grammar_v1';
+let deWords=[];
+let deGrammar=[];
+let deFcWords=[],deFcIdx=0,deFcFlipped=false;
+
+function deLoad(){
+  try{deWords=JSON.parse(localStorage.getItem(DE_KEY)||'[]');}catch(e){deWords=[];}
+  try{deGrammar=JSON.parse(localStorage.getItem(DE_GRAMMAR_KEY)||'[]');}catch(e){deGrammar=[];}
+}
+function deSave(){
+  localStorage.setItem(DE_KEY,JSON.stringify(deWords));
+  localStorage.setItem(DE_GRAMMAR_KEY,JSON.stringify(deGrammar));
+}
+
+function deInit(){
+  deLoad();
+  document.getElementById('de-stat-words').textContent=deWords.length;
+  document.getElementById('de-stat-grammar').textContent=deGrammar.length;
+  deFcWords=[...deWords];deFcIdx=0;deFcFlipped=false;
+  if(deFcWords.length){deShowCard();}
+  else{
+    document.getElementById('defc-word').textContent='尚無單字';
+    document.getElementById('defc-hint').textContent='請先新增單字';
+    document.getElementById('defc-pos').textContent='';
+    document.getElementById('defc-prog').textContent='0/0';
+  }
+  deRenderWords();
+  deRenderGrammar();
+}
+
+function deAddWord(){
+  const de=document.getElementById('de-word-de').value.trim();
+  const zh=document.getElementById('de-word-zh').value.trim();
+  const ex=document.getElementById('de-word-ex').value.trim();
+  const pos=document.getElementById('de-word-pos').value;
+  if(!de||!zh){showToast('請填入德文和中文');return;}
+  deWords.unshift({id:'dv_'+Date.now(),de,zh,ex,pos});
+  deSave();
+  ['de-word-de','de-word-zh','de-word-ex'].forEach(id=>document.getElementById(id).value='');
+  deInit();
+  showToast('單字已新增 ✓');
+}
+
+function deRenderWords(){
+  const el=document.getElementById('de-all-words');
+  if(!deWords.length){el.innerHTML='<div style="font-size:14px;color:var(--text3);padding:8px 0;">尚無單字，新增第一個吧！</div>';return;}
+  el.innerHTML=deWords.map((w,i)=>`
+    <div style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:.5px solid var(--border);">
+      <div style="flex:1;">
+        <span style="font-weight:600;font-size:14px;">${w.de}</span>
+        <span style="font-size:11px;background:var(--success-bg);color:var(--success);padding:1px 6px;border-radius:6px;margin-left:6px;">${w.pos}</span>
+        <div style="font-size:13px;color:var(--text2);margin-top:2px;">${w.zh}</div>
+        ${w.ex?`<div style="font-size:12px;color:var(--text3);font-style:italic;">${w.ex}</div>`:''}
+      </div>
+      <button onclick="deDeleteWord(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;">×</button>
+    </div>`).join('');
+}
+
+function deDeleteWord(i){
+  deWords.splice(i,1);deSave();deInit();showToast('已刪除');
+}
+
+function deShowCard(){
+  if(!deFcWords.length)return;
+  const w=deFcWords[deFcIdx];
+  document.getElementById('defc-word').textContent=w.de;
+  document.getElementById('defc-pos').textContent=w.pos;
+  document.getElementById('defc-zh').textContent=w.zh;
+  document.getElementById('defc-ex').textContent=w.ex||'';
+  document.getElementById('defc-front').style.display='block';
+  document.getElementById('defc-back').style.display='none';
+  document.getElementById('defc-prog').textContent=`${deFcIdx+1}/${deFcWords.length}`;
+  document.getElementById('defc-hint').textContent='點擊翻牌';
+  deFcFlipped=false;
+}
+function deFlip(){
+  if(!deFcWords.length)return;
+  deFcFlipped=!deFcFlipped;
+  document.getElementById('defc-front').style.display=deFcFlipped?'none':'block';
+  document.getElementById('defc-back').style.display=deFcFlipped?'block':'none';
+}
+function deNext(){if(!deFcWords.length)return;deFcIdx=(deFcIdx+1)%deFcWords.length;deShowCard();}
+function dePrev(){if(!deFcWords.length)return;deFcIdx=(deFcIdx-1+deFcWords.length)%deFcWords.length;deShowCard();}
+function deShuffle(){
+  for(let i=deFcWords.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deFcWords[i],deFcWords[j]]=[deFcWords[j],deFcWords[i]];}
+  deFcIdx=0;deShowCard();showToast('已隨機排列 ⇄');
+}
+
+function deAddGrammar(){
+  const title=document.getElementById('de-grammar-title').value.trim();
+  const content=document.getElementById('de-grammar-content').value.trim();
+  if(!title||!content){showToast('請填入標題和內容');return;}
+  deGrammar.unshift({id:'dg_'+Date.now(),title,content});
+  deSave();
+  document.getElementById('de-grammar-title').value='';
+  document.getElementById('de-grammar-content').value='';
+  deRenderGrammar();
+  document.getElementById('de-stat-grammar').textContent=deGrammar.length;
+  showToast('筆記已新增 ✓');
+}
+
+function deRenderGrammar(){
+  const el=document.getElementById('de-grammar-list');
+  if(!deGrammar.length){el.innerHTML='<div style="font-size:14px;color:var(--text3);padding:8px 0;">尚無文法筆記</div>';return;}
+  el.innerHTML=deGrammar.map((g,i)=>`
+    <div style="padding:10px 0;border-bottom:.5px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div style="font-size:14px;font-weight:600;color:var(--text);">${g.title}</div>
+        <button onclick="deDeleteGrammar(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;">×</button>
+      </div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-wrap;">${g.content}</div>
+    </div>`).join('');
+}
+
+function deDeleteGrammar(i){
+  deGrammar.splice(i,1);deSave();deRenderGrammar();
+  document.getElementById('de-stat-grammar').textContent=deGrammar.length;
+  showToast('已刪除');
 }
 
 renderTasks();renderWeekly();renderDERoadmap();updateStreak();
