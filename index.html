@@ -950,7 +950,11 @@ function sw(tab,btn){
   if(tab==='news'&&!newsLoaded)loadNews();
   if(tab==='heart'){renderQ();renderDaily();renderLoveQuote();renderReflect();renderObservations();}
   if(tab==='exp')renderExp();
-  if(tab==='cambly')cbTab('record',document.getElementById('cbt-record'));
+  if(tab==='cambly'){
+  cbLoadLessons().then(()=>{
+    cbTab('record',document.getElementById('cbt-record'));
+  });
+}
 }
 
 function showToast(msg){
