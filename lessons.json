@@ -1,5 +1,215 @@
 [
   {
+    "id": 23,
+    "date": "2026/06/07",
+    "topic": "化工產業介紹、碳捕捉技術、MOF 材料、週末溫泉旅遊（Uzma）",
+    "notes": "自我介紹職業：化工產業分析師（chemical industry analyst），解釋研究院性質（非營利、財團法人）。\n討論碳捕捉（carbon capture）技術，介紹 MOF（Metal-Organic Framework）材料—去年獲諾貝爾獎，可用於過濾碳、淨水等多種用途。\n分享週末溫泉之旅：租 Airbnb、搭接駁車到山上餐廳欣賞夜景（night view），山谷（valley）中的村莊。\n\n💡 老師 Uzma 提示：in the car（不是 on）、present perfect 用法",
+    "words": [
+      {
+        "en": "emission",
+        "pos": "n.",
+        "zh": "排放（廢氣）",
+        "ex": "The factory has high carbon emission levels."
+      },
+      {
+        "en": "carbon dioxide",
+        "pos": "n.",
+        "zh": "二氧化碳",
+        "ex": "Heavy industries emit large amounts of carbon dioxide."
+      },
+      {
+        "en": "carbon capture",
+        "pos": "n.",
+        "zh": "碳捕捉",
+        "ex": "Carbon capture technology is used to reduce CO2 emissions."
+      },
+      {
+        "en": "metal-organic framework",
+        "pos": "n.",
+        "zh": "金屬有機框架（MOF）",
+        "ex": "Metal-organic frameworks won the Nobel Prize last year."
+      },
+      {
+        "en": "non-profit organization",
+        "pos": "n.",
+        "zh": "非營利組織",
+        "ex": "Our company is a non-profit research organization."
+      },
+      {
+        "en": "consortium",
+        "pos": "n.",
+        "zh": "財團法人",
+        "ex": "We are a consortium that bridges industry and government."
+      },
+      {
+        "en": "heavy industry",
+        "pos": "n.",
+        "zh": "重工業",
+        "ex": "Cement and steel are considered heavy industries."
+      },
+      {
+        "en": "filter",
+        "pos": "n./v.",
+        "zh": "過濾器／過濾",
+        "ex": "This material can act as a filter to purify water."
+      },
+      {
+        "en": "valley",
+        "pos": "n.",
+        "zh": "山谷",
+        "ex": "The village is located in a valley surrounded by mountains."
+      },
+      {
+        "en": "night view",
+        "pos": "n.",
+        "zh": "夜景",
+        "ex": "We went up the mountain to see the beautiful night view."
+      },
+      {
+        "en": "shuttle bus",
+        "pos": "n.",
+        "zh": "接駁車",
+        "ex": "You have to take a shuttle bus to reach the mountain restaurant."
+      },
+      {
+        "en": "tourist attraction",
+        "pos": "n.",
+        "zh": "觀光景點",
+        "ex": "That hot spring village is a popular tourist attraction."
+      }
+    ],
+    "corrections": [
+      {
+        "wrong": "Right now, it's on the car.",
+        "right": "Right now, I'm in the car."
+      },
+      {
+        "wrong": "I'm the industry analyst about chemical industry.",
+        "right": "I'm an industry analyst in the chemical industry."
+      },
+      {
+        "wrong": "I already do this work past two years.",
+        "right": "I've been doing this work for the past two years."
+      },
+      {
+        "wrong": "it's very different to right now's work.",
+        "right": "It's very different from my work right now."
+      },
+      {
+        "wrong": "Do many experience.",
+        "right": "Gain many experiences."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "date": "2026/06/07",
+    "topic": "3D 列印火箭（Terran 1）閱讀討論、複合材料與航太應用（Jen）",
+    "notes": "閱讀 Engoo 文章：A 3D-printed rocket fails to reach orbit（Relativity Space 的 Terran 1）。\n討論 3D 列印優點：輕量化、快速原型製作、降低成本、易於客製化。\n延伸聊到複合材料（composite）= 碳纖維（carbon fiber）+ 高分子聚合物（polymer），已應用於部分電動車車體。\n老師 Jen 曾在台灣鹿港教英文一年（Neuro Link English）。\n\n💡 call off = 取消（片語動詞）\n💡 startup 是名詞，不是動詞",
+    "words": [
+      {
+        "en": "orbit",
+        "pos": "n.",
+        "zh": "軌道",
+        "ex": "The rocket failed to reach orbit and crashed into the ocean."
+      },
+      {
+        "en": "launch",
+        "pos": "v./n.",
+        "zh": "發射／發射活動",
+        "ex": "They are going to launch their spacecraft into space."
+      },
+      {
+        "en": "startup",
+        "pos": "n.",
+        "zh": "新創公司",
+        "ex": "Relativity Space is a startup founded by two young engineers."
+      },
+      {
+        "en": "ignite",
+        "pos": "v.",
+        "zh": "點燃、引燃",
+        "ex": "Oxygen can ignite a fire."
+      },
+      {
+        "en": "call off",
+        "pos": "phrasal v.",
+        "zh": "取消",
+        "ex": "They called off the launch attempt due to technical issues."
+      },
+      {
+        "en": "cost-effective",
+        "pos": "adj.",
+        "zh": "符合成本效益的",
+        "ex": "3D printing is cost-effective compared to traditional manufacturing."
+      },
+      {
+        "en": "substitute",
+        "pos": "v./n.",
+        "zh": "替代／替代品",
+        "ex": "3D printed parts can substitute traditional metal components."
+      },
+      {
+        "en": "fuel",
+        "pos": "n.",
+        "zh": "燃料",
+        "ex": "Lighter materials reduce the amount of fuel an aircraft needs."
+      },
+      {
+        "en": "composite",
+        "pos": "n.",
+        "zh": "複合材料",
+        "ex": "A composite of carbon fiber and polymer is lighter than metal."
+      },
+      {
+        "en": "carbon fiber",
+        "pos": "n.",
+        "zh": "碳纖維",
+        "ex": "Carbon fiber is strong but much lighter than steel."
+      },
+      {
+        "en": "polymer",
+        "pos": "n.",
+        "zh": "高分子聚合物",
+        "ex": "Polymers are combined with carbon fiber to make composites."
+      },
+      {
+        "en": "prototype",
+        "pos": "n.",
+        "zh": "原型",
+        "ex": "Rapid prototyping is one advantage of 3D printing."
+      },
+      {
+        "en": "separate",
+        "pos": "v.",
+        "zh": "分離",
+        "ex": "The first stage separated from the rocket as planned."
+      }
+    ],
+    "corrections": [
+      {
+        "wrong": "In Brazil is me.",
+        "right": "I am from Brazil. / I am in Brazil."
+      },
+      {
+        "wrong": "Hsinchu is stay in the North of Taiwan.",
+        "right": "Hsinchu is in the north of Taiwan."
+      },
+      {
+        "wrong": "I have last chance to use English.",
+        "right": "I have the last chance to use English."
+      },
+      {
+        "wrong": "Some of they are working the chemical industry.",
+        "right": "Some of them are working in the chemical industry."
+      },
+      {
+        "wrong": "Some electric car already used.",
+        "right": "Some electric cars have already been used."
+      }
+    ]
+  },
+  {
     "id": 22,
     "date": "2026/06/01",
     "topic": "歐洲熱門旅遊國家 + 詞性複習（TJ）",
