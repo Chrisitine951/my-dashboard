@@ -1,34 +1,18 @@
 const CONFIG = {
   weeklyTasks: [
   {id:'w1',title:'Cambly 課程',meta:'本週目標 60 分鐘',icon:'📞'},
-  {id:'w2',title:'德文家教課',meta:'每週 1-2 堂・每次 1 小時',icon:'👨‍🏫'},
+  {id:'w2',title:'德文課',meta:'每週四・1 小時',icon:'👨‍🏫'},
   {id:'w3',title:'德文作業完成',meta:'老師出的作業全部完成',icon:'📝'},
   {id:'w4',title:'DW 德文自學練習',meta:'learngerman.dw.com',icon:'🌐',link:'https://learngerman.dw.com/'},
-  {id:'w5',title:'Cambly 課前準備',meta:'複習上週單字和糾正',icon:'✏️'},
   {id:'w6',title:'幫學哥找吉他譜',meta:'fingerstyle 風格・可搜尋 fingerstyle tabs',icon:'🎸',link:'https://www.youtube.com/results?search_query=fingerstyle+guitar+tabs'},
-  {id:'w7',title:'吉他社練習',meta:'本週吉他社練習完成',icon:'🎵'},
 ],
-  deStages: [
-  {
-    id:0,title:'第一階段：發音基礎',emoji:'🔤',
-    tasks:['記熟 26 個字母發音','學會數字 1-100 發音','練習母音變音 ä ö ü','基礎子音組合（ch、sch、st）'],
-    tip:'每天花 10 分鐘跟著 YouTube 練習發音，不需要記意思，只要唸出來！'
-  },
-  {
-    id:1,title:'第二階段：基礎單字',emoji:'📖',
-    tasks:['每天 Anki 複習 10 個新單字','開始德文家教課程','完成老師出的作業','學會 100 個最常用德文單字'],
-    tip:'單字配合發音一起記，用 Anki 圖片聯想法效果更好！'
-  },
-  {
-    id:2,title:'第三階段：基礎句型',emoji:'💬',
-    tasks:['學會自我介紹（Ich heiße...）','日常問候語 20 句','DW 德文課程 A1 級別','嘗試每天寫一句德文日記'],
-    tip:'開口說比看更重要，跟著 DW 的音檔大聲唸！'
-  },
-  {
-    id:3,title:'第四階段：聽力輸入',emoji:'🎧',
-    tasks:['每天聽 5 分鐘德語 Podcast','看 YouTube 德語頻道（慢速）','參加語言交換或對話練習','A2 級別課程'],
-    tip:'到了這個階段就可以開始聽 DW 的慢速德語新聞了！'
-  },
+  dailyTasks: [
+  {id:'dt1',title:'Duolingo 德文學習',meta:'每天保持連續打卡',icon:'🦉'},
+  {id:'dt2',title:'英文日記',meta:'用英文寫下今天發生的事',icon:'📔'},
+  {id:'dt3',title:'複習英文單字及片語文法',meta:'Cambly 課程筆記、片語、文法糾正',icon:'📚'},
+  {id:'dt4',title:'複習德文單字及發音規則',meta:'家教課內容、單字複習',icon:'🔤'},
+  {id:'dt5',title:'紀錄跟學哥的相處點滴',meta:'可以寫在學哥分頁的觀察記錄',icon:'💬'},
+  {id:'dt6',title:'讀一篇 Engoo 文章',meta:'5 分鐘默讀',icon:'📰',link:'https://engoo.com/app/daily-news'},
 ],
   questions: [
   {tag:'relation',label:'關係思考',text:'要怎麼表達「我愛你」這件事？怎麼讓我愛的人知道我愛他？',hint:'不只是說出口，行動、眼神、習慣，都是表達的方式。'},
@@ -120,17 +104,17 @@ const CONFIG = {
     // 英文學習
     {keys:['英文','english','engoo','cambly','podcast','esl'],
      reply:`📚 <b>英文學習建議</b><br>
-     • 早上默讀 Engoo 文章讓大腦熱身<br>
-     • 午休聽 6 Minute English，不懂的詞記下來<br>
-     • 睡前用英文寫 3 句今天發生的事<br>
-     • 週末的 Cambly 課效果會因為平日輸入而提升 3 倍 💪`},
+     • 讀一篇 Engoo 文章，默讀讓大腦熱身<br>
+     • 複習英文單字、片語和文法糾正<br>
+     • 睡前寫英文日記，記錄今天發生的事<br>
+     • 平日累積的輸入，會讓 Cambly 課效果更好 💪`},
     // 德文學習
     {keys:['德文','german','deutsch','anki','單字'],
      reply:`🇩🇪 <b>德文學習建議</b><br>
-     • 每天用 Duolingo 和 DW 保持打卡習慣<br>
-     • 週末安排家教課 60-90 分鐘<br>
-     • 26 個字母已經背起來了，下一步是數字和母音變音 ä ö ü<br>
-     • 嘗試每天用德文寫一句話！`},
+     • 每天用 Duolingo 保持打卡習慣<br>
+     • 複習德文單字和發音規則，搭配家教課內容效果最好<br>
+     • 週四的德文課記得提前預習、課後複習<br>
+     • 老師出的作業盡量當週完成，避免累積`},
     // 投資股票
     {keys:['股票','投資','market','finance','趨勢','財經'],
      reply:`📈 <b>投資思考提示</b><br>
