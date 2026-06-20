@@ -40,8 +40,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 .prog-bar{height:4px;background:var(--border);border-radius:2px;margin-top:10px}
 .prog-fill{height:100%;border-radius:2px;background:var(--success);transition:width .4s}
 .add-row{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:.5px solid var(--border)}
-.add-row input,.ask-bar input{flex:1;padding:10px 12px;font-size:15px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none}
-.add-row button,.ask-bar button,.action-btn{padding:10px 14px;font-size:14px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;white-space:nowrap;font-weight:500}
+.add-row input{flex:1;padding:10px 12px;font-size:15px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none}
+.add-row button,.action-btn{padding:10px 14px;font-size:14px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;white-space:nowrap;font-weight:500}
 .news-item{padding:10px 0;border-bottom:.5px solid var(--border)}
 .news-item:last-child{border-bottom:none}
 .ntag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;margin-bottom:5px}
@@ -107,8 +107,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 .filter-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
 .fbtn{padding:5px 11px;font-size:12px;border:.5px solid var(--border2);border-radius:20px;background:none;color:var(--text2);cursor:pointer;font-weight:500}
 .fbtn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
-.ask-bar{display:flex;gap:8px}
-.ai-resp{background:var(--bg2);border-radius:var(--radius);padding:12px;font-size:14px;color:var(--text);line-height:1.6;margin-top:10px}
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);border-radius:20px;padding:9px 18px;font-size:13px;color:#fff;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;z-index:200}
 .toast.show{opacity:1}
 .quote-box{background:var(--danger-bg);border-left:3px solid var(--danger);border-radius:0 var(--radius) var(--radius) 0;padding:12px 14px;margin-bottom:12px;font-size:13px;color:var(--text2);line-height:1.7;font-style:italic}
@@ -143,15 +141,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
       <input type="text" id="new-weekly" placeholder="新增本週任務..." maxlength="30"/>
       <button onclick="addWeeklyTask()">新增</button>
     </div>
-  </div>
-
-  <div class="sec-label" style="margin-top:16px;">🔮 今日錦囊</div>
-  <div class="card">
-    <div class="ask-bar">
-      <input type="text" id="ask-input" placeholder="例如：英文、德文、股票、學哥..."/>
-      <button onclick="askAI()">查詢</button>
-    </div>
-    <div id="ai-area"></div>
   </div>
 </div>
 
@@ -738,30 +727,6 @@ async function loadNews(){
   card.innerHTML=html||'<div style="font-size:14px;color:var(--text2);">無法載入新聞，請稍後再試。</div>';
 }
 function openLink(url){if(url)window.open(url,'_blank');}
-
-function askAI(){
-  const inp=document.getElementById('ask-input');
-  const area=document.getElementById('ai-area');
-  const q=inp.value.trim().toLowerCase();
-  if(!q)return;
-  inp.value='';
-  const responses=CONFIG.lockboxResponses;
-  let reply=null;
-  for(const r of responses){
-    if(r.keys.some(k=>q.includes(k))){reply=r.reply;break;}
-  }
-  if(!reply){
-    const defaults=[
-      `💡 你可以問我關於：<b>英文學習、德文、股票投資、化工產業、學哥、體驗清單、今日任務、新聞、備份</b>等話題！`,
-      `🌟 今天的小提醒：持續每天做，每次不超過 20 分鐘，分散在生活中。這就是你進步的秘訣！`,
-      `📖 學習提示：平日的英文輸入（閱讀+聽力+寫作）會讓週末的 Cambly 課效果提升 3 倍哦！`,
-      `🎯 記得今天的德文詞彙複習了嗎？Anki 15 分鐘，每天一點點累積！`,
-    ];
-    reply=defaults[Math.floor(Math.random()*defaults.length)];
-  }
-  area.innerHTML=`<div class="ai-resp">${reply}</div>`;
-}
-document.getElementById('ask-input').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
 // ── 備份 version 5（新增 dailyKey，移除德文路線資料）──
 const WK_KEY='weekly_tasks_v1';
