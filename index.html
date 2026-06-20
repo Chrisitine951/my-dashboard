@@ -37,12 +37,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 .task-title.done{text-decoration:line-through;color:var(--text3)}
 .task-meta{font-size:12px;color:var(--text2);margin-top:3px}
 .del-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:4px;font-size:18px;flex-shrink:0}
-.ttag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:6px;margin-right:4px}
-.t-morning{background:var(--warn-bg);color:var(--warn)}
-.t-noon{background:var(--info-bg);color:var(--info)}
-.t-night{background:var(--bg2);color:var(--text2)}
-.t-weekend{background:var(--success-bg);color:var(--success)}
-.t-custom{background:var(--bg2);color:var(--text2)}
 .prog-bar{height:4px;background:var(--border);border-radius:2px;margin-top:10px}
 .prog-fill{height:100%;border-radius:2px;background:var(--success);transition:width .4s}
 .add-row{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:.5px solid var(--border)}
@@ -150,9 +144,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
       <button onclick="addWeeklyTask()">新增</button>
     </div>
   </div>
-
-  <div class="sec-label" style="margin-top:16px;">🇩🇪 德文學習路線</div>
-  <div class="card" id="de-roadmap"></div>
 
   <div class="sec-label" style="margin-top:16px;">🔮 今日錦囊</div>
   <div class="card">
@@ -320,45 +311,42 @@ const DAYS=['日','一','二','三','四','五','六'];
 const now=new Date();
 const todayStr=now.toISOString().slice(0,10);
 const dow=now.getDay();
-const isWE=dow===0||dow===6;
 const hr=now.getHours();
 
 document.getElementById('greeting').textContent=hr<12?'早安！':hr<18?'午安！':'晚安！';
 document.getElementById('subdate').textContent=now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate()+' 週'+DAYS[dow];
 
-const baseWeekday=[
-  {id:'en1',time:'morning',label:'早上',title:'Engoo 文章默讀',meta:'Cambly Daily Lesson・5 分鐘',fixed:true,link:'https://engoo.com/app/daily-news'},
-  {id:'en2',time:'noon',label:'午休',title:'ESL Podcast 聆聽',meta:'6 Minute English・10-15 分鐘',fixed:true,link:'https://www.bbc.co.uk/learningenglish/english/features/6-minute-english'},
-  {id:'en3',time:'night',label:'睡前',title:'英文日記 3 句',meta:'用英文描述今天發生的事・5 分鐘',fixed:true,link:'mobilenotes://'},
-  {id:'de1',time:'noon',label:'每日',title:'德文詞彙複習',meta:'Anki 單字複習・15 分鐘',fixed:true,link:'anki://'},
-];
-const baseWeekend=[
-  {id:'en4',time:'weekend',label:'週末',title:'Cambly 課程',meta:'30 分鐘，效果比平日好 3 倍',fixed:true},
-  {id:'de2',time:'weekend',label:'週末',title:'德文正規課程',meta:'補習班 / 線上課自學・60-90 分鐘',fixed:true},
-  {id:'de3',time:'noon',label:'本週',title:'德文聽力練習',meta:'YouTube 德語頻道 / Podcast・30 分鐘',fixed:true},
-  {id:'de4',time:'noon',label:'本週',title:'德文口說或寫作',meta:'語言交換或寫日記・30 分鐘',fixed:true},
-];
-const baseTasks=isWE?baseWeekend:baseWeekday;
 if(!db.history[todayStr])db.history[todayStr]={};
-function allTasks(){return[...baseTasks,...db.custom.map(t=>({...t,time:'custom',label:'自訂',fixed:false}))];}
+
+const DAILY_KEY='daily_tasks_v1';
+function loadDailyTasks(){
+  try{
+    const s=localStorage.getItem(DAILY_KEY);
+    if(s)return JSON.parse(s);
+  }catch(e){}
+  // 首次升級：把舊版自訂任務(db.custom)一併搬過來，避免資料遺失
+  return [...CONFIG.dailyTasks,...(db.custom||[]).map(t=>({id:t.id,title:t.title,meta:t.meta||'',icon:'📌'}))];
+}
+function saveDailyTasks(){localStorage.setItem(DAILY_KEY,JSON.stringify(dailyTasks));}
+let dailyTasks=loadDailyTasks();
+if(!localStorage.getItem(DAILY_KEY)){saveDailyTasks();db.custom=[];save(db);}
 
 function renderTasks(){
-  const all=allTasks();
-  document.getElementById('task-list').innerHTML=all.map(t=>{
+  document.getElementById('task-list').innerHTML=dailyTasks.map(t=>{
     const done=!!db.history[todayStr][t.id];
     return`<div class="task-item">
       <div class="chk ${done?'done':''}" onclick="toggleTask('${t.id}')"></div>
       <div class="task-body">
         <div class="task-title ${done?'done':''}" ${t.link?`style="cursor:pointer;" onclick="openLink('${t.link}')"`:''}>
-          ${t.title}${t.link?` <span style="color:var(--info);font-size:11px;">↗</span>`:''}
+          ${t.icon?t.icon+' ':''}${t.title}${t.link?` <span style="color:var(--info);font-size:11px;">↗</span>`:''}
         </div>
-        <div class="task-meta"><span class="ttag t-${t.time}">${t.label}</span>${t.meta||''}</div>
+        ${t.meta?`<div class="task-meta">${t.meta}</div>`:''}
       </div>
-      ${!t.fixed?`<button class="del-btn" onclick="delTask('${t.id}')">×</button>`:''}
+      <button class="del-btn" onclick="deleteDailyTask('${t.id}')">×</button>
     </div>`;
   }).join('');
-  const dc=all.filter(t=>db.history[todayStr][t.id]).length;
-  document.getElementById('task-prog').style.width=(all.length?Math.round(dc/all.length*100):0)+'%';
+  const dc=dailyTasks.filter(t=>db.history[todayStr][t.id]).length;
+  document.getElementById('task-prog').style.width=(dailyTasks.length?Math.round(dc/dailyTasks.length*100):0)+'%';
 }
 function toggleTask(id){
   const prev=!!db.history[todayStr][id];
@@ -370,13 +358,14 @@ function toggleTask(id){
 function addTask(){
   const inp=document.getElementById('new-task');
   const v=inp.value.trim();if(!v)return;
-  db.custom.push({id:'c_'+Date.now(),title:v,meta:'',fixed:false});
-  save(db);inp.value='';renderTasks();showToast('已新增：'+v);
+  dailyTasks.push({id:'dc_'+Date.now(),title:v,meta:'',icon:'📌'});
+  saveDailyTasks();inp.value='';renderTasks();showToast('已新增：'+v);
 }
-function delTask(id){
-  db.custom=db.custom.filter(t=>t.id!==id);
+function deleteDailyTask(id){
+  if(!confirm('確定刪除這個每日任務嗎？'))return;
+  dailyTasks=dailyTasks.filter(t=>t.id!==id);
   delete db.history[todayStr][id];
-  save(db);renderTasks();showToast('已刪除');
+  save(db);saveDailyTasks();renderTasks();showToast('已刪除');
 }
 document.getElementById('new-task').addEventListener('keydown',e=>{if(e.key==='Enter')addTask();});
 
@@ -407,7 +396,7 @@ function renderStats(){
   document.getElementById('s-best').textContent=db.streak.best||0;
   document.getElementById('s-rate').textContent=calcWeekRate();
   document.getElementById('s-total').textContent=db.totalDone||0;
-  const all=allTasks();
+  const all=dailyTasks;
   let rows='';
   for(let i=0;i<7;i++){
     const d=new Date(now);d.setDate(d.getDate()-i);
@@ -774,16 +763,17 @@ function askAI(){
 }
 document.getElementById('ask-input').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
-// ── 備份 version 4（移除 diaryKey / cambly）──
+// ── 備份 version 5（新增 dailyKey，移除德文路線資料）──
 const WK_KEY='weekly_tasks_v1';
 
 function exportBackup(){
   const backup={
-    version:4,
+    version:5,
     exportedAt:new Date().toISOString(),
     mainData:db,
     expKey:localStorage.getItem(EXP_KEY)||'',
     weeklyKey:localStorage.getItem(WK_KEY)||'',
+    dailyKey:localStorage.getItem(DAILY_KEY)||'',
   };
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -807,7 +797,8 @@ function importBackup(input){
       localStorage.setItem(SK,JSON.stringify(backup.mainData));
       if(backup.expKey)localStorage.setItem(EXP_KEY,backup.expKey);
       if(backup.weeklyKey)localStorage.setItem(WK_KEY,backup.weeklyKey);
-      // 相容舊版 v3（若有 diaryKey 就忽略，不寫入）
+      if(backup.dailyKey)localStorage.setItem(DAILY_KEY,backup.dailyKey);
+      // 舊版備份（v4 以前）沒有 dailyKey，還原後每日任務會自動套用目前的預設清單
       input.value='';
       showToast('備份還原成功！重新載入中...');
       setTimeout(()=>location.reload(),1200);
@@ -829,6 +820,7 @@ function clearAll(){
     localStorage.removeItem(SK);
     localStorage.removeItem(EXP_KEY);
     localStorage.removeItem(WK_KEY);
+    localStorage.removeItem(DAILY_KEY);
     location.reload();
   }
 }
@@ -875,14 +867,13 @@ function renderWeekly(){
   const list=document.getElementById('weekly-list');
   list.innerHTML=weeklyTasks.map(t=>{
     const done=!!db.weeklyDone[weekStr][t.id];
-    const isCustom=t.id.startsWith('wc_');
     return`<div class="task-item">
       <div class="chk ${done?'done':''}" onclick="toggleWeekly('${t.id}')"></div>
       <div class="task-body" style="cursor:${t.link?'pointer':'default'}" ${t.link?`onclick="openLink('${t.link}')"`:''}>
         <div class="task-title ${done?'done':''}">${t.icon||'📌'} ${t.title}${t.link?` <span style="color:var(--info);font-size:11px;">↗</span>`:''}</div>
         ${t.meta?`<div class="task-meta">${t.meta}</div>`:''}
       </div>
-      ${isCustom?`<button class="del-btn" onclick="deleteWeeklyTask('${t.id}')">×</button>`:''}
+      <button class="del-btn" onclick="deleteWeeklyTask('${t.id}')">×</button>
     </div>`;
   }).join('');
   const dc=weeklyTasks.filter(t=>db.weeklyDone[weekStr][t.id]).length;
@@ -906,6 +897,7 @@ function addWeeklyTask(){
 }
 
 function deleteWeeklyTask(id){
+  if(!confirm('確定刪除這個本週任務嗎？'))return;
   weeklyTasks=weeklyTasks.filter(t=>t.id!==id);
   delete db.weeklyDone[weekStr][id];
   save(db);saveWeeklyTasks();renderWeekly();showToast('已刪除');
@@ -916,66 +908,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')addWeeklyTask();});
 });
 
-// ── 德文學習路線 ──
-const DE_STAGES=CONFIG.deStages;
-
-function renderDERoadmap(){
-  if(!db.deStage)db.deStage=0;
-  const el=document.getElementById('de-roadmap');
-  const cur=db.deStage;
-  let html='';
-  html+=`<div style="display:flex;gap:4px;margin-bottom:12px;">`;
-  DE_STAGES.forEach((s,i)=>{
-    const active=i===cur;
-    const done=i<cur;
-    html+=`<div style="flex:1;height:4px;border-radius:2px;background:${done?'var(--success)':active?'var(--info)':'var(--border)'};transition:all .3s;"></div>`;
-  });
-  html+=`</div>`;
-  const stage=DE_STAGES[cur];
-  html+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-    <span style="font-size:20px;">${stage.emoji}</span>
-    <div>
-      <div style="font-size:15px;font-weight:600;color:var(--text);">${stage.title}</div>
-      <div style="font-size:12px;color:var(--info);">現在進行中</div>
-    </div>
-  </div>`;
-  html+=stage.tasks.map((t,i)=>{
-    const key=`de_${cur}_${i}`;
-    const done=!!db.deTasks&&!!db.deTasks[key];
-    return`<div class="task-item" style="padding:7px 0;">
-      <div class="chk ${done?'done':''}" onclick="toggleDETask('${key}')"></div>
-      <div class="task-body"><div class="task-title ${done?'done':''}" style="font-size:14px;">${t}</div></div>
-    </div>`;
-  }).join('');
-  html+=`<div style="background:var(--info-bg);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--info);line-height:1.6;margin-top:10px;">
-    💡 ${stage.tip}
-  </div>`;
-  const allDone=stage.tasks.every((_,i)=>db.deTasks&&db.deTasks[`de_${cur}_${i}`]);
-  if(cur<DE_STAGES.length-1){
-    html+=`<button onclick="unlockNextDEStage()" style="width:100%;margin-top:12px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:${allDone?'var(--success)':'var(--bg2)'};color:${allDone?'#fff':'var(--text3)'};cursor:${allDone?'pointer':'default'};">
-      ${allDone?'🎉 解鎖下一階段！':'完成所有項目後解鎖下一階段'}
-    </button>`;
-  } else {
-    html+=`<div style="text-align:center;padding:12px;font-size:14px;color:var(--success);font-weight:600;">🏆 你已完成所有德文學習階段！</div>`;
-  }
-  el.innerHTML=html;
-}
-
-function toggleDETask(key){
-  if(!db.deTasks)db.deTasks={};
-  db.deTasks[key]=!db.deTasks[key];
-  save(db);renderDERoadmap();
-}
-
-function unlockNextDEStage(){
-  const cur=db.deStage||0;
-  const stage=DE_STAGES[cur];
-  const allDone=stage.tasks.every((_,i)=>db.deTasks&&db.deTasks[`de_${cur}_${i}`]);
-  if(!allDone){showToast('請先完成所有項目！');return;}
-  db.deStage=(db.deStage||0)+1;
-  save(db);renderDERoadmap();
-  showToast('🎉 解鎖第'+(db.deStage+1)+'階段！');
-}
 
 // ── 學哥觀察記錄 ──
 function saveObservation(){
@@ -1017,7 +949,6 @@ function deleteObservation(idx){
 // ── 初始化 ──
 renderTasks();
 renderWeekly();
-renderDERoadmap();
 updateStreak();
 </script>
 </body>
