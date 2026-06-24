@@ -235,7 +235,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 
 <!-- 更多 -->
 <div id="tab-more" class="panel">
-  <div class="sec-label" style="margin-top:8px;">學習打卡紀錄</div>
+  <div class="sec-label" style="margin-top:8px;">🫠 我怎麼這樣</div>
+  <div class="card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:8px;line-height:1.6;">反省、蠢事、下次不要再犯的事——都可以寫在這裡。</div>
+    <textarea id="dumb-input" placeholder="今天又發生了什麼事..." style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;min-height:80px;resize:none;line-height:1.7;font-family:inherit;"></textarea>
+    <button onclick="saveDumbNote()" style="width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 記下來</button>
+  </div>
+  <div class="sec-label" style="margin-top:4px;">學習打卡紀錄</div>
   <div class="stat-grid">
     <div class="stat-card"><div class="stat-lbl">連續打卡</div><div class="stat-val" id="s-streak">-</div><div class="stat-sub">天</div></div>
     <div class="stat-card"><div class="stat-lbl">本週完成率</div><div class="stat-val" id="s-rate">-</div><div class="stat-sub">%</div></div>
@@ -249,6 +255,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
     <div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.6;">最近的回答記錄，每次回顧可以複製這些內容給 Claude。</div>
     <div id="reflect-history-list"></div>
     <button onclick="copyReflectHistory()" style="width:100%;margin-top:12px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--info);color:#fff;cursor:pointer;">📋 複製所有回答（用於週期回顧）</button>
+  </div>
+  <div class="sec-label" style="margin-top:12px;">🫠 我怎麼這樣（記錄）</div>
+  <div class="card" id="dumb-list-card">
+    <div id="dumb-list"><div style="font-size:13px;color:var(--text3);padding:4px 0;">還沒有記錄，去上面寫第一筆吧！</div></div>
   </div>
   <div class="sec-label" style="margin-top:12px;">加入手機主畫面</div>
   <div class="card" style="font-size:14px;color:var(--text2);line-height:1.8;">Safari → 分享 → 加入主畫面</div>
@@ -728,17 +738,19 @@ async function loadNews(){
 }
 function openLink(url){if(url)window.open(url,'_blank');}
 
-// ── 備份 version 5（新增 dailyKey，移除德文路線資料）──
+// ── 備份 version 6（新增 dumbKey）──
 const WK_KEY='weekly_tasks_v1';
+const DUMB_KEY='dumb_notes_v1';
 
 function exportBackup(){
   const backup={
-    version:5,
+    version:6,
     exportedAt:new Date().toISOString(),
     mainData:db,
     expKey:localStorage.getItem(EXP_KEY)||'',
     weeklyKey:localStorage.getItem(WK_KEY)||'',
     dailyKey:localStorage.getItem(DAILY_KEY)||'',
+    dumbKey:localStorage.getItem(DUMB_KEY)||'',
   };
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -763,7 +775,7 @@ function importBackup(input){
       if(backup.expKey)localStorage.setItem(EXP_KEY,backup.expKey);
       if(backup.weeklyKey)localStorage.setItem(WK_KEY,backup.weeklyKey);
       if(backup.dailyKey)localStorage.setItem(DAILY_KEY,backup.dailyKey);
-      // 舊版備份（v4 以前）沒有 dailyKey，還原後每日任務會自動套用目前的預設清單
+      if(backup.dumbKey)localStorage.setItem(DUMB_KEY,backup.dumbKey);
       input.value='';
       showToast('備份還原成功！重新載入中...');
       setTimeout(()=>location.reload(),1200);
@@ -786,6 +798,7 @@ function clearAll(){
     localStorage.removeItem(EXP_KEY);
     localStorage.removeItem(WK_KEY);
     localStorage.removeItem(DAILY_KEY);
+    localStorage.removeItem(DUMB_KEY);
     location.reload();
   }
 }
@@ -795,7 +808,7 @@ function sw(tab,btn){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   btn.classList.add('active');
-  if(tab==='more'){renderStats();renderReflectHistory();}
+  if(tab==='more'){renderStats();renderReflectHistory();renderDumbNotes();}
   if(tab==='news'&&!newsLoaded)loadNews();
   if(tab==='heart'){renderQ();renderDaily();renderLoveQuote();renderReflect();renderObservations();}
   if(tab==='exp')renderExp();
@@ -911,10 +924,72 @@ function deleteObservation(idx){
   save(db);renderObservations();showToast('已刪除');
 }
 
+// ── 我怎麼這樣 ──
+function loadDumbNotes(){
+  try{const s=localStorage.getItem(DUMB_KEY);return s?JSON.parse(s):[];}
+  catch(e){return[];}
+}
+function saveDumbNotes(list){localStorage.setItem(DUMB_KEY,JSON.stringify(list));}
+
+function saveDumbNote(){
+  const text=document.getElementById('dumb-input').value.trim();
+  if(!text){showToast('請先輸入內容');return;}
+  const list=loadDumbNotes();
+  list.unshift({
+    date:todayStr,
+    time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}),
+    text
+  });
+  if(list.length>50)list.splice(50);
+  saveDumbNotes(list);
+  document.getElementById('dumb-input').value='';
+  renderDumbNotes();
+  showToast('已記下來 🫠');
+}
+
+function renderDumbNotes(){
+  const el=document.getElementById('dumb-list');
+  if(!el)return;
+  const list=loadDumbNotes();
+  if(!list.length){
+    el.innerHTML='<div style="font-size:13px;color:var(--text3);padding:4px 0;">還沒有記錄，去上面寫第一筆吧！</div>';
+    return;
+  }
+  el.innerHTML=list.slice(0,20).map((o,i)=>`
+    <div style="padding:10px 0;border-top:.5px solid var(--border);display:flex;gap:10px;align-items:flex-start;">
+      <div style="flex:1;">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:3px;">${o.date} ${o.time}</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.6;">${o.text}</div>
+      </div>
+      <button onclick="deleteDumbNote(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;flex-shrink:0;">×</button>
+    </div>`).join('');
+}
+
+function deleteDumbNote(idx){
+  const list=loadDumbNotes();
+  list.splice(idx,1);
+  saveDumbNotes(list);
+  renderDumbNotes();
+  showToast('已刪除');
+}
+
+// ── 相機提醒 Banner ──
+function closeCameraBanner(){
+  localStorage.setItem('camera_banner_closed', new Date().toDateString());
+  document.getElementById('camera-banner').style.display='none';
+}
+function initCameraBanner(){
+  const closed=localStorage.getItem('camera_banner_closed');
+  if(closed===new Date().toDateString()){
+    document.getElementById('camera-banner').style.display='none';
+  }
+}
+
 // ── 初始化 ──
 renderTasks();
 renderWeekly();
 updateStreak();
+initCameraBanner();
 </script>
 </body>
 </html>
