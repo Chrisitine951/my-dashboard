@@ -123,6 +123,1155 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 
 <!-- 今日 -->
 <div id="tab-today" class="panel active">
+  <div class="sec-label" style="margin-top:8px;">💭 今日一題</div>
+  <div class="card" id="dq-today"></div>
+
+  <div class="sec-label" style="margin-top:16px;">📅 每日任務</div>
+  <div class="card">
+    <div id="task-list"></div>
+    <div class="add-row">
+      <input type="text" id="new-task" placeholder="新增自訂任務..." maxlength="40"/>
+      <button onclick="addTask()">新增</button>
+    </div>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="task-prog"></div></div>
+
+  <div class="sec-label" style="margin-top:16px;">📆 本週任務</div>
+  <div class="card">
+    <div id="weekly-list"></div>
+    <div class="prog-bar" style="margin-top:8px;"><div class="prog-fill" id="weekly-prog" style="background:var(--info);"></div></div>
+    <div class="add-row">
+      <input type="text" id="new-weekly" placeholder="新增本週任務..." maxlength="30"/>
+      <button onclick="addWeeklyTask()">新增</button>
+    </div>
+  </div>
+</div>
+
+<!-- 新聞 -->
+<div id="tab-news" class="panel">
+  <div class="sec-label" style="margin-top:8px;">今日新聞彙整</div>
+  <div class="card" id="news-card"><div class="loading-pill"><div class="spinner"></div>AI 搜尋最新資訊中...</div></div>
+</div>
+
+<!-- 學哥 -->
+<div id="tab-heart" class="panel">
+  <div id="love-quote-box" style="border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:12px;font-size:13px;line-height:1.8;font-style:italic;margin-top:8px;"></div>
+
+  <div class="sec-label">💭 今日一題</div>
+  <div class="card" id="dq-heart"></div>
+
+  <div class="sec-label" style="margin-top:12px;">✅ 每天對學哥做的小事</div>
+  <div class="card">
+    <div id="daily-list"></div>
+    <div class="heart-prog-bar"><div class="heart-prog-fill" id="heart-prog"></div></div>
+  </div>
+
+  <div class="sec-label" style="margin-top:12px;">👀 觀察記錄</div>
+  <div class="card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:8px;line-height:1.6;">隨時記錄你觀察到關於學哥的事，他說的話、某個反應、讓你印象深刻的小細節⋯</div>
+    <textarea id="obs-input" placeholder="今天發現⋯" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;min-height:80px;resize:none;line-height:1.7;font-family:inherit;"></textarea>
+    <button onclick="saveObservation()" style="width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 記錄下來</button>
+    <div id="obs-list" style="margin-top:12px;"></div>
+  </div>
+
+  <div class="sec-label" style="margin-top:12px;">🧭 諮詢學哥顧問</div>
+  <div class="card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:8px;line-height:1.6;">遇到「他為什麼會這樣想／這樣做？」的困惑時寫在這裡。按複製後，系統會自動附上學哥檔案＋最近的觀察記錄，貼到 Claude 的「學哥」專案就能直接開始分析。</div>
+    <textarea id="consult-input" placeholder="例：今天他突然說⋯我不太懂他為什麼⋯" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;min-height:80px;resize:none;line-height:1.7;font-family:inherit;"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button onclick="copyConsultPack()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--info);color:#fff;cursor:pointer;">📋 複製諮詢包</button>
+      <button onclick="openLink('https://claude.ai')" style="padding:10px 14px;font-size:13px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">Claude ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- 體驗 -->
+<div id="tab-exp" class="panel">
+  <div class="counter-row" style="margin-top:8px;">
+    <div class="counter"><div class="cnt-num" id="cnt-want">0</div><div class="cnt-lbl">想去</div></div>
+    <div class="counter"><div class="cnt-num" id="cnt-done">0</div><div class="cnt-lbl">完成</div></div>
+    <div class="counter"><div class="cnt-num" id="cnt-left">0</div><div class="cnt-lbl">待探索</div></div>
+  </div>
+  <div class="filter-row">
+    <button class="fbtn active" onclick="filterExp('all',this)">全部</button>
+    <button class="fbtn" onclick="filterExp('want',this)">想去</button>
+    <button class="fbtn" onclick="filterExp('done',this)">完成</button>
+    <button class="fbtn" onclick="filterExp('food',this)">美食</button>
+    <button class="fbtn" onclick="filterExp('outdoor',this)">戶外</button>
+    <button class="fbtn" onclick="filterExp('culture',this)">文化</button>
+    <button class="fbtn" onclick="filterExp('travel',this)">旅遊</button>
+    <button class="fbtn" onclick="filterExp('craft',this)">手作</button>
+    <button class="fbtn" onclick="filterExp('sport',this)">運動</button>
+  </div>
+  <div class="card" id="exp-list"></div>
+  <div class="card" id="exp-form" style="display:none;border:.5px solid var(--info);">
+    <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;" id="exp-form-title">新增體驗</div>
+    <input type="text" id="exp-input-title" placeholder="體驗名稱，例：第一次一起看棒球" maxlength="40"
+      style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+    <input type="text" id="exp-input-sub" placeholder="補充說明（可選）" maxlength="60"
+      style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+    <select id="exp-input-cat"
+      style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:12px;">
+      <option value="food">美食</option>
+      <option value="outdoor">戶外</option>
+      <option value="culture">文化</option>
+      <option value="travel">旅遊</option>
+      <option value="craft">手作</option>
+      <option value="sport">運動</option>
+    </select>
+    <div style="display:flex;gap:8px;">
+      <button onclick="expFormSave()" style="flex:1;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">儲存</button>
+      <button onclick="expFormCancel()" style="padding:11px 16px;font-size:14px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">取消</button>
+    </div>
+  </div>
+  <button onclick="expFormOpen()" id="exp-add-btn"
+    style="width:100%;padding:12px;font-size:14px;font-weight:500;border:.5px solid var(--border2);border-radius:var(--radius-lg);background:var(--bg);color:var(--text);cursor:pointer;margin-top:4px;">
+    ＋ 新增體驗
+  </button>
+</div>
+
+<!-- 更多 -->
+<div id="tab-more" class="panel">
+  <div class="sec-label" style="margin-top:8px;">🫠 我怎麼這樣</div>
+  <div class="card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:8px;line-height:1.6;">反省、蠢事、下次不要再犯的事——都可以寫在這裡。</div>
+    <textarea id="dumb-input" placeholder="今天又發生了什麼事..." style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;min-height:80px;resize:none;line-height:1.7;font-family:inherit;"></textarea>
+    <button onclick="saveDumbNote()" style="width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 記下來</button>
+  </div>
+  <div class="sec-label" style="margin-top:4px;">學習打卡紀錄</div>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-lbl">連續打卡</div><div class="stat-val" id="s-streak">-</div><div class="stat-sub">天</div></div>
+    <div class="stat-card"><div class="stat-lbl">本週完成率</div><div class="stat-val" id="s-rate">-</div><div class="stat-sub">%</div></div>
+    <div class="stat-card"><div class="stat-lbl">累計完成</div><div class="stat-val" id="s-total">-</div><div class="stat-sub">項任務</div></div>
+    <div class="stat-card"><div class="stat-lbl">最長連續</div><div class="stat-val" id="s-best">-</div><div class="stat-sub">天</div></div>
+  </div>
+  <div class="sec-label">最近 7 天</div>
+  <div class="card" id="hist-list2"></div>
+  <div class="sec-label" style="margin-top:12px;">📦 每週回顧包</div>
+  <div class="card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.6;">一鍵打包過去 7 天的所有記錄（今日一題、觀察、我怎麼這樣、打卡統計），複製後貼到 Claude 的「學哥」專案開新對話，就能直接做週日回顧。</div>
+    <button onclick="copyWeeklyPack()" style="width:100%;padding:11px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--success);color:#fff;cursor:pointer;">📦 產生並複製本週回顧包</button>
+  </div>
+  <div class="sec-label" style="margin-top:12px;">關係覺察回顧</div>
+  <div class="card" id="reflect-history-card">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.6;">最近的回答記錄，每次回顧可以複製這些內容給 Claude。</div>
+    <div id="reflect-history-list"></div>
+    <button onclick="copyReflectHistory()" style="width:100%;margin-top:12px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--info);color:#fff;cursor:pointer;">📋 複製所有回答（用於週期回顧）</button>
+  </div>
+  <div class="sec-label" style="margin-top:12px;">🫠 我怎麼這樣（記錄）</div>
+  <div class="card" id="dumb-list-card">
+    <div id="dumb-list"><div style="font-size:13px;color:var(--text3);padding:4px 0;">還沒有記錄，去上面寫第一筆吧！</div></div>
+  </div>
+  <div class="sec-label" style="margin-top:12px;">加入手機主畫面</div>
+  <div class="card" style="font-size:14px;color:var(--text2);line-height:1.8;">Safari → 分享 → 加入主畫面</div>
+  <div class="sec-label" style="margin-top:12px;">☁️ GitHub 自動同步</div>
+  <div class="card">
+    <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;">設定 Token 後，每次儲存「今日一題／觀察記錄／我怎麼這樣」會自動同步到 repo 的 <b>notes.json</b>。Token 只存在這台裝置的瀏覽器裡，<b>不會</b>包含在 backup.json。</div>
+    <input type="password" id="gh-token-input" placeholder="貼上 github_pat_ 開頭的 Token" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
+    <div style="display:flex;gap:8px;margin-bottom:10px;">
+      <button onclick="saveGhToken()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">儲存 Token</button>
+      <button onclick="clearGhToken()" style="padding:10px 14px;font-size:13px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--danger);cursor:pointer;">清除</button>
+    </div>
+    <div id="gh-sync-status" style="font-size:12px;color:var(--text3);margin-bottom:10px;">尚未設定 Token</div>
+    <button onclick="syncToGitHub(false)" style="width:100%;padding:11px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--info);color:#fff;cursor:pointer;">☁️ 立即同步到 GitHub</button>
+  </div>
+  <div class="sec-label">資料管理</div>
+  <div class="card">
+    <div style="font-size:15px;font-weight:600;margin-bottom:6px;">備份所有資料</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px;">下載 backup.json，包含打卡紀錄、思考題筆記、體驗清單、自訂任務等所有資料。</div>
+    <button onclick="exportBackup()" style="width:100%;padding:12px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--success);color:#fff;cursor:pointer;margin-bottom:10px;">⬇️ 下載 backup.json</button>
+    <div style="font-size:15px;font-weight:600;margin-bottom:6px;margin-top:4px;">還原備份</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;">選擇之前下載的 backup.json 檔案來還原資料。</div>
+    <label for="import-file" style="display:block;width:100%;padding:12px;font-size:14px;font-weight:600;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;text-align:center;margin-bottom:12px;">⬆️ 選擇 backup.json 匯入</label>
+    <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importBackup(this)"/>
+    <div style="border-top:.5px solid var(--border);padding-top:12px;">
+      <button class="action-btn" onclick="clearToday()" style="width:100%;margin-bottom:8px;">重置今日打勾</button>
+      <button class="action-btn" onclick="clearAll()" style="width:100%;color:var(--danger);">清除所有資料</button>
+    </div>
+  </div>
+</div>
+
+<!-- 底部導覽（5個）-->
+<div class="bottom-nav">
+  <button class="nav-item active" onclick="sw('today',this)"><i class="ti ti-home"></i><span>今日</span></button>
+  <button class="nav-item" onclick="sw('news',this)"><i class="ti ti-news"></i><span>新聞</span></button>
+  <button class="nav-item" onclick="sw('heart',this)"><i class="ti ti-heart"></i><span>學哥</span></button>
+  <button class="nav-item" onclick="sw('exp',this)"><i class="ti ti-map-2"></i><span>體驗</span></button>
+  <button class="nav-item" onclick="sw('more',this)"><i class="ti ti-dots"></i><span>更多</span></button>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script>
+const SK='fulldash_v3';
+function load(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function save(d){localStorage.setItem(SK,JSON.stringify(d));}
+let db=load();
+if(!db.history)db.history={};
+if(!db.custom)db.custom=[];
+if(!db.streak)db.streak={current:0,best:0};
+if(!db.totalDone)db.totalDone=0;
+if(!db.qIndex)db.qIndex=0;
+if(!db.notes)db.notes={};
+if(!db.saved)db.saved=[];
+if(!db.expStatus)db.expStatus={};
+if(!db.dailyDone)db.dailyDone={};
+if(!db.balanceNote)db.balanceNote='';
+
+const DAYS=['日','一','二','三','四','五','六'];
+const now=new Date();
+const todayStr=now.toISOString().slice(0,10);
+const dow=now.getDay();
+const hr=now.getHours();
+
+document.getElementById('greeting').textContent=hr<12?'早安！':hr<18?'午安！':'晚安！';
+document.getElementById('subdate').textContent=now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate()+' 週'+DAYS[dow];
+
+if(!db.history[todayStr])db.history[todayStr]={};
+
+const DAILY_KEY='daily_tasks_v1';
+function loadDailyTasks(){
+  try{
+    const s=localStorage.getItem(DAILY_KEY);
+    if(s)return JSON.parse(s);
+  }catch(e){}
+  // 首次升級：把舊版自訂任務(db.custom)一併搬過來，避免資料遺失
+  return [...CONFIG.dailyTasks,...(db.custom||[]).map(t=>({id:t.id,title:t.title,meta:t.meta||'',icon:'📌'}))];
+}
+function saveDailyTasks(){localStorage.setItem(DAILY_KEY,JSON.stringify(dailyTasks));}
+let dailyTasks=loadDailyTasks();
+if(!localStorage.getItem(DAILY_KEY)){saveDailyTasks();db.custom=[];save(db);}
+
+function renderTasks(){
+  document.getElementById('task-list').innerHTML=dailyTasks.map(t=>{
+    const done=!!db.history[todayStr][t.id];
+    return`<div class="task-item">
+      <div class="chk ${done?'done':''}" onclick="toggleTask('${t.id}')"></div>
+      <div class="task-body">
+        <div class="task-title ${done?'done':''}" ${t.link?`style="cursor:pointer;" onclick="openLink('${t.link}')"`:''}>
+          ${t.icon?t.icon+' ':''}${t.title}${t.link?` <span style="color:var(--info);font-size:11px;">↗</span>`:''}
+        </div>
+        ${t.meta?`<div class="task-meta">${t.meta}</div>`:''}
+      </div>
+      <button class="del-btn" onclick="deleteDailyTask('${t.id}')">×</button>
+    </div>`;
+  }).join('');
+  const dc=dailyTasks.filter(t=>db.history[todayStr][t.id]).length;
+  document.getElementById('task-prog').style.width=(dailyTasks.length?Math.round(dc/dailyTasks.length*100):0)+'%';
+}
+function toggleTask(id){
+  const prev=!!db.history[todayStr][id];
+  db.history[todayStr][id]=!prev;
+  if(!prev)db.totalDone=(db.totalDone||0)+1;
+  else db.totalDone=Math.max(0,(db.totalDone||0)-1);
+  save(db);renderTasks();updateStreak();
+}
+function addTask(){
+  const inp=document.getElementById('new-task');
+  const v=inp.value.trim();if(!v)return;
+  dailyTasks.push({id:'dc_'+Date.now(),title:v,meta:'',icon:'📌'});
+  saveDailyTasks();inp.value='';renderTasks();showToast('已新增：'+v);
+}
+function deleteDailyTask(id){
+  if(!confirm('確定刪除這個每日任務嗎？'))return;
+  dailyTasks=dailyTasks.filter(t=>t.id!==id);
+  delete db.history[todayStr][id];
+  save(db);saveDailyTasks();renderTasks();showToast('已刪除');
+}
+document.getElementById('new-task').addEventListener('keydown',e=>{if(e.key==='Enter')addTask();});
+
+function updateStreak(){
+  let s=0;
+  for(let i=0;i<365;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const h=db.history[ds];
+    if(!h||!Object.keys(h).some(k=>h[k]))break;
+    s++;
+  }
+  db.streak.current=s;db.streak.best=Math.max(db.streak.best||0,s);
+  save(db);
+  document.getElementById('streak-badge').textContent='🔥 '+s+' 天';
+}
+function calcWeekRate(){
+  let tot=0,dn=0;
+  for(let i=0;i<7;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const h=db.history[d.toISOString().slice(0,10)];
+    if(h){const k=Object.keys(h);tot+=k.length;dn+=k.filter(x=>h[x]).length;}
+  }
+  return tot>0?Math.round(dn/tot*100):0;
+}
+function renderStats(){
+  document.getElementById('s-streak').textContent=db.streak.current||0;
+  document.getElementById('s-best').textContent=db.streak.best||0;
+  document.getElementById('s-rate').textContent=calcWeekRate();
+  document.getElementById('s-total').textContent=db.totalDone||0;
+  const all=dailyTasks;
+  let rows='';
+  for(let i=0;i<7;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const lbl=i===0?'今天':(d.getMonth()+1)+'/'+d.getDate();
+    const h=db.history[ds]||{};
+    const dots=all.map(t=>`<div class="dot ${h[t.id]?'done':''}"></div>`).join('');
+    rows+=`<div class="hist-item"><span class="hist-date">${lbl}</span><div class="hist-dots">${dots}</div></div>`;
+  }
+  document.getElementById('hist-list2').innerHTML=rows;
+}
+function renderLoveQuote(){
+  const idx=new Date().getDate()%loveQuotes.length;
+  const q=loveQuotes[idx];
+  const el=document.getElementById('love-quote-box');
+  if(!el)return;
+  el.style.background=q.color;
+  el.style.borderLeft=`3px solid ${q.border}`;
+  el.style.borderRadius=`0 var(--radius) var(--radius) 0`;
+  el.style.padding='12px 14px';
+  el.style.marginBottom='12px';
+  el.style.fontSize='13px';
+  el.style.lineHeight='1.8';
+  el.style.fontStyle='italic';
+  el.style.color='var(--text2)';
+  el.textContent='「'+q.text+'」';
+}
+
+function renderReflectHistory(){
+  const reflectHist=db.reflectHistory||[];
+  const qHist=db.qHistory||[];
+  const all=[
+    ...reflectHist.map(r=>({...r,type:'reflect'})),
+    ...qHist.map(r=>({...r,type:'think'}))
+  ].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30);
+  const el=document.getElementById('reflect-history-list');
+  if(!all.length){
+    el.innerHTML='<div style="font-size:13px;color:var(--text3);padding:8px 0;">還沒有回答記錄，去學哥分頁開始回答吧！</div>';
+    return;
+  }
+  el.innerHTML=all.map((r,i)=>`
+    <div style="padding:10px 0;border-bottom:.5px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;padding:1px 7px;border-radius:6px;background:${r.type==='think'?'var(--info-bg)':'var(--danger-bg)'};color:${r.type==='think'?'var(--info)':'var(--danger)'};">${r.type==='think'?'💭 思考題':'🔍 覺察'}</span>
+          <span style="font-size:11px;color:var(--text3);">${r.date}</span>
+        </div>
+        <button onclick="deleteHistoryItem('${r.type}','${r.date}')" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;">×</button>
+      </div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:4px;">Q: ${r.question}</div>
+      <div style="font-size:14px;color:var(--text);line-height:1.6;">${r.answer}</div>
+    </div>`).join('');
+}
+
+function deleteHistoryItem(type,date){
+  if(type==='reflect'){
+    db.reflectHistory=(db.reflectHistory||[]).filter(r=>r.date!==date);
+  } else {
+    db.qHistory=(db.qHistory||[]).filter(r=>r.date!==date);
+  }
+  save(db);renderReflectHistory();showToast('已刪除');
+}
+
+function copyReflectHistory(){
+  const reflectHist=db.reflectHistory||[];
+  const qHist=db.qHistory||[];
+  const all=[
+    ...reflectHist.map(r=>({...r,type:'reflect'})),
+    ...qHist.map(r=>({...r,type:'think'}))
+  ].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30);
+  if(!all.length){showToast('還沒有回答記錄');return;}
+  let text='【學哥分頁回顧 — 近期回答】\n\n';
+  all.forEach(r=>{
+    text+=`📅 ${r.date} ${r.type==='think'?'💭 思考題':'🔍 關係覺察'}\nQ: ${r.question}\nA: ${r.answer}\n\n`;
+  });
+  navigator.clipboard.writeText(text).then(()=>showToast('已複製！貼給 Claude 做週期回顧'));
+}
+
+const questions=CONFIG.questions;
+const reflectQs=CONFIG.reflectQs;
+const loveQuotes=CONFIG.loveQuotes;
+const dailyActions=CONFIG.dailyActions;
+
+if(!db.dailyDone[todayStr])db.dailyDone[todayStr]={};
+
+// ── 今日一題（思考題／關係覺察 依日期輪流，一天只出一題）──
+function getTodayQ(){
+  const start=new Date('2026-06-01');
+  const diff=Math.floor((new Date(todayStr)-start)/86400000);
+  const kind=((diff%2)+2)%2===0?'think':'reflect';
+  const half=Math.floor(diff/2);
+  if(kind==='think'){
+    const idx=((half%questions.length)+questions.length)%questions.length;
+    const q=questions[idx];
+    return{kind,text:q.text,hint:q.hint,label:q.label,tag:q.tag};
+  }
+  const idx=((half%reflectQs.length)+reflectQs.length)%reflectQs.length;
+  return{kind,text:reflectQs[idx],hint:'',label:'關係覺察',tag:'relation'};
+}
+function dqHist(){return getTodayQ().kind==='think'?(db.qHistory||[]):(db.reflectHistory||[]);}
+function dqDraftKey(){return getTodayQ().kind==='think'?'qAnswers':'reflectAnswers';}
+function dqStreak(){
+  const dates=new Set([...(db.qHistory||[]),...(db.reflectHistory||[])].map(r=>r.date));
+  let s=0;
+  for(let i=0;i<365;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    if(!dates.has(ds)){if(i===0)continue;break;}
+    s++;
+  }
+  return s;
+}
+let dqEditing=false;
+function renderDQ(){
+  const q=getTodayQ();
+  const todayEntry=dqHist().find(r=>r.date===todayStr);
+  const streak=dqStreak();
+  const draft=(db[dqDraftKey()]&&db[dqDraftKey()][todayStr])||'';
+  let html;
+  if(todayEntry&&!dqEditing){
+    html=`<div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:14px;font-weight:600;color:var(--success);">✅ 今日已記錄${streak>0?' · 🔥 '+streak+' 天':''}</div>
+      <button onclick="dqEdit()" style="background:none;border:.5px solid var(--border2);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--text2);cursor:pointer;">✏️ 修改</button>
+    </div>
+    <div style="font-size:12px;color:var(--text3);margin-top:8px;line-height:1.5;">Q: ${q.text}</div>
+    <div style="font-size:14px;color:var(--text);line-height:1.6;margin-top:4px;">${todayEntry.answer}</div>`;
+  }else{
+    html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <div class="qtag qt-${q.tag}" style="margin-bottom:0;">${q.kind==='think'?'💭 '+q.label:'🔍 關係覺察'}</div>
+      <div style="font-size:11px;color:var(--text3);">${todayStr}${streak>0?' · 🔥 '+streak+' 天':''}</div>
+    </div>
+    <div class="q-text" style="font-size:15px;">${q.text}</div>
+    ${q.hint?`<div class="q-hint">${q.hint}</div>`:''}
+    <textarea class="textarea dq-input" rows="3" placeholder="一句話也可以，重點是每天都有記下來..." oninput="dqDraft(this)"></textarea>
+    <button onclick="dqSave()" style="width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">💾 記錄下來</button>
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button onclick="dqSave('（今天很平常，沒有特別想法）')" style="flex:1;padding:8px;font-size:12px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text2);cursor:pointer;">😌 今天很平常</button>
+      <button onclick="dqSave('（今天累了，先打卡維持習慣）')" style="flex:1;padding:8px;font-size:12px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text2);cursor:pointer;">💤 累了，先打卡</button>
+    </div>`;
+  }
+  ['dq-today','dq-heart'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=html;});
+  document.querySelectorAll('.dq-input').forEach(t=>{t.value=draft;});
+}
+function dqDraft(el){
+  const k=dqDraftKey();
+  if(!db[k])db[k]={};
+  db[k][todayStr]=el.value;
+  save(db);
+  document.querySelectorAll('.dq-input').forEach(t=>{if(t!==el)t.value=el.value;});
+}
+function dqSave(quick){
+  const q=getTodayQ();
+  let answer=quick;
+  if(!answer){
+    const t=document.querySelector('.dq-input');
+    answer=t?t.value.trim():'';
+  }
+  if(!answer){showToast('請先寫下你的想法（一句話也可以）');return;}
+  if(q.kind==='think'){
+    if(!db.qHistory)db.qHistory=[];
+    const ex=db.qHistory.findIndex(r=>r.date===todayStr);
+    if(ex>-1){db.qHistory[ex].answer=answer;db.qHistory[ex].question=q.text;}
+    else db.qHistory.unshift({type:'think',date:todayStr,question:q.text,answer});
+    if(db.qHistory.length>90)db.qHistory=db.qHistory.slice(0,90);
+    if(!db.qAnswers)db.qAnswers={};
+    db.qAnswers[todayStr]=answer;
+  }else{
+    if(!db.reflectHistory)db.reflectHistory=[];
+    const ex=db.reflectHistory.findIndex(r=>r.date===todayStr);
+    if(ex>-1){db.reflectHistory[ex].answer=answer;db.reflectHistory[ex].question=q.text;}
+    else db.reflectHistory.unshift({date:todayStr,question:q.text,answer});
+    if(db.reflectHistory.length>90)db.reflectHistory=db.reflectHistory.slice(0,90);
+    if(!db.reflectAnswers)db.reflectAnswers={};
+    db.reflectAnswers[todayStr]=answer;
+  }
+  save(db);
+  dqEditing=false;
+  renderDQ();
+  showToast('已記錄 ✓ 連續 '+dqStreak()+' 天');
+  ghAutoSync();
+}
+function dqEdit(){
+  dqEditing=true;
+  renderDQ();
+  const t=document.querySelector('.dq-input');
+  if(t)t.focus();
+}
+
+function renderDaily(){
+  document.getElementById('daily-list').innerHTML=dailyActions.map(a=>{
+    const done=!!db.dailyDone[todayStr][a.id];
+    return`<div class="daily-item">
+      <div class="sm-chk ${done?'done':''}" onclick="toggleDaily('${a.id}')"></div>
+      <div class="daily-txt ${done?'done':''}">${a.text}</div>
+    </div>`;
+  }).join('');
+  const dc=dailyActions.filter(a=>db.dailyDone[todayStr][a.id]).length;
+  document.getElementById('heart-prog').style.width=Math.round(dc/dailyActions.length*100)+'%';
+}
+function toggleDaily(id){db.dailyDone[todayStr][id]=!db.dailyDone[todayStr][id];save(db);renderDaily();}
+
+const CAT_LABEL={food:'美食',outdoor:'戶外',culture:'文化',travel:'旅遊',craft:'手作',sport:'運動'};
+const DEFAULT_EXPERIENCES=CONFIG.experiences;
+const EXP_KEY='exp_list_v1';
+function loadExperiences(){
+  try{const s=localStorage.getItem(EXP_KEY);return s?JSON.parse(s):[...DEFAULT_EXPERIENCES];}
+  catch(e){return[...DEFAULT_EXPERIENCES];}
+}
+function saveExperiences(){localStorage.setItem(EXP_KEY,JSON.stringify(experiences));}
+let experiences=loadExperiences();
+
+let expFilter='all';
+let expEditId=null;
+
+function renderExp(){
+  let list=experiences;
+  if(expFilter==='want')list=experiences.filter(e=>db.expStatus[e.id]==='want');
+  else if(expFilter==='done')list=experiences.filter(e=>db.expStatus[e.id]==='done');
+  else if(Object.keys(CAT_LABEL).includes(expFilter))list=experiences.filter(e=>e.cat===expFilter);
+  const el=document.getElementById('exp-list');
+  el.innerHTML=list.length===0?'<div style="font-size:14px;color:var(--text3);padding:8px 0;">沒有符合的項目</div>':list.map(e=>{
+    const st=db.expStatus[e.id]||'';
+    const cl=CAT_LABEL[e.cat]||e.cat;
+    return`<div class="exp-item">
+      <div class="exp-main">
+        <div><span class="exp-cat ec-${e.cat}">${cl}</span></div>
+        <div class="exp-title ${st==='done'?'done':''}">${e.title}</div>
+        ${e.sub?`<div class="exp-sub">${e.sub}</div>`:''}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;">
+        <div style="display:flex;gap:5px;">
+          <button class="icon-btn ${st==='want'?'aw':''}" onclick="setExp('${e.id}','want')" title="想去">♡</button>
+          <button class="icon-btn ${st==='done'?'ad':''}" onclick="setExp('${e.id}','done')" title="完成">✓</button>
+        </div>
+        <div style="display:flex;gap:5px;">
+          <button class="icon-btn" onclick="expFormOpen('${e.id}')" title="編輯" style="font-size:12px;padding:4px 8px;">✏️</button>
+          <button class="icon-btn" onclick="expDelete('${e.id}')" title="刪除" style="font-size:12px;padding:4px 8px;color:var(--danger);">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('cnt-want').textContent=experiences.filter(e=>db.expStatus[e.id]==='want').length;
+  document.getElementById('cnt-done').textContent=experiences.filter(e=>db.expStatus[e.id]==='done').length;
+  document.getElementById('cnt-left').textContent=experiences.filter(e=>db.expStatus[e.id]!=='done').length;
+}
+
+function setExp(id,st){
+  db.expStatus[id]=db.expStatus[id]===st?null:st;
+  save(db);renderExp();
+  showToast(db.expStatus[id]==='want'?'加入想去清單':db.expStatus[id]==='done'?'記錄完成！':'已取消');
+}
+
+function filterExp(f,btn){
+  expFilter=f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderExp();
+}
+
+function expFormOpen(id){
+  expEditId=id||null;
+  const form=document.getElementById('exp-form');
+  const addBtn=document.getElementById('exp-add-btn');
+  document.getElementById('exp-form-title').textContent=id?'編輯體驗':'新增體驗';
+  if(id){
+    const e=experiences.find(x=>x.id===id);
+    if(e){
+      document.getElementById('exp-input-title').value=e.title;
+      document.getElementById('exp-input-sub').value=e.sub||'';
+      document.getElementById('exp-input-cat').value=e.cat;
+    }
+  } else {
+    document.getElementById('exp-input-title').value='';
+    document.getElementById('exp-input-sub').value='';
+    document.getElementById('exp-input-cat').value='food';
+  }
+  form.style.display='block';
+  addBtn.style.display='none';
+  document.getElementById('exp-input-title').focus();
+}
+
+function expFormCancel(){
+  document.getElementById('exp-form').style.display='none';
+  document.getElementById('exp-add-btn').style.display='block';
+  expEditId=null;
+}
+
+function expFormSave(){
+  const title=document.getElementById('exp-input-title').value.trim();
+  const sub=document.getElementById('exp-input-sub').value.trim();
+  const cat=document.getElementById('exp-input-cat').value;
+  if(!title){showToast('請輸入體驗名稱');return;}
+  if(expEditId){
+    const idx=experiences.findIndex(e=>e.id===expEditId);
+    if(idx>-1){experiences[idx]={...experiences[idx],title,sub,cat};}
+    showToast('已更新！');
+  } else {
+    experiences.push({id:'u_'+Date.now(),cat,title,sub});
+    showToast('已新增體驗！');
+  }
+  saveExperiences();
+  expFormCancel();
+  renderExp();
+}
+
+function expDelete(id){
+  if(!confirm('確定刪除這個體驗嗎？'))return;
+  experiences=experiences.filter(e=>e.id!==id);
+  delete db.expStatus[id];
+  save(db);saveExperiences();renderExp();showToast('已刪除');
+}
+
+let newsLoaded=false;
+async function translate(text){
+  if(!text)return'';
+  try{
+    const res=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(text.slice(0,500))+'&langpair=en|zh-TW',{signal:AbortSignal.timeout(6000)});
+    const data=await res.json();
+    return data.responseData?.translatedText||text;
+  }catch(e){return text;}
+}
+async function loadNews(){
+  newsLoaded=true;
+  const card=document.getElementById('news-card');
+  card.innerHTML='<div class="loading-pill"><div class="spinner"></div>載入並翻譯新聞中，約需 10 秒...</div>';
+  const KEY='pub_9eaf82fc747e458b890ab8cdb3020d8d';
+  const sources=[
+    {label:'世界大事',cls:'nt-world',q:'world news today',lang:'en'},
+    {label:'化工新技術',cls:'nt-chem',q:'chemical engineering technology',lang:'en'},
+    {label:'投資趨勢',cls:'nt-invest',q:'stock market finance',lang:'en'},
+  ];
+  async function fetchAndTranslate(s){
+    const url=`https://newsdata.io/api/1/news?apikey=${KEY}&q=${encodeURIComponent(s.q)}&language=${s.lang}&size=3`;
+    const res=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const data=await res.json();
+    if(!data.results||!data.results.length)throw new Error('no result');
+    const items=await Promise.all(data.results.slice(0,3).map(async item=>{
+      const rawTitle=item.title||'';
+      const rawDesc=(item.description||'').replace(/<[^>]+>/g,'').slice(0,200);
+      const [title,summary]=await Promise.all([translate(rawTitle),translate(rawDesc)]);
+      return{title:title.slice(0,80),summary:summary.slice(0,120),link:item.link||''};
+    }));
+    return{label:s.label,cls:s.cls,items};
+  }
+  const results=await Promise.allSettled(sources.map(fetchAndTranslate));
+  let html='';
+  results.forEach((r,i)=>{
+    const s=sources[i];
+    html+=`<div style="margin-bottom:${i<2?'16px':'0'};">
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;">
+        <span class="ntag ${s.cls}" style="margin-bottom:0;">${s.label}</span>
+      </div>`;
+    if(r.status==='fulfilled'){
+      r.value.items.forEach((n,j)=>{
+        html+=`<div class="news-item" onclick="openLink('${n.link}')" style="cursor:pointer;padding-left:4px;">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:2px;">${j+1}</div>
+          <div class="news-hl">${n.title}</div>
+          <div class="news-sm">${n.summary}</div>
+          <div style="font-size:11px;color:var(--info);margin-top:3px;">閱讀全文 →</div>
+        </div>`;
+      });
+    }else{html+=`<div style="font-size:14px;color:var(--text3);padding:8px 0;">暫時無法載入</div>`;}
+    html+='</div>';
+  });
+  card.innerHTML=html||'<div style="font-size:14px;color:var(--text2);">無法載入新聞，請稍後再試。</div>';
+}
+function openLink(url){if(url)window.open(url,'_blank');}
+
+// ── 備份 version 6（新增 dumbKey）──
+const WK_KEY='weekly_tasks_v1';
+const DUMB_KEY='dumb_notes_v1';
+
+function exportBackup(){
+  const backup={
+    version:6,
+    exportedAt:new Date().toISOString(),
+    mainData:db,
+    expKey:localStorage.getItem(EXP_KEY)||'',
+    weeklyKey:localStorage.getItem(WK_KEY)||'',
+    dailyKey:localStorage.getItem(DAILY_KEY)||'',
+    dumbKey:localStorage.getItem(DUMB_KEY)||'',
+  };
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='backup_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('備份已下載！');
+}
+
+function importBackup(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const backup=JSON.parse(e.target.result);
+      if(!backup.version||!backup.mainData){showToast('檔案格式不正確');return;}
+      if(!confirm('確定要還原備份嗎？目前的資料會被覆蓋。')){input.value='';return;}
+      localStorage.setItem(SK,JSON.stringify(backup.mainData));
+      if(backup.expKey)localStorage.setItem(EXP_KEY,backup.expKey);
+      if(backup.weeklyKey)localStorage.setItem(WK_KEY,backup.weeklyKey);
+      if(backup.dailyKey)localStorage.setItem(DAILY_KEY,backup.dailyKey);
+      if(backup.dumbKey)localStorage.setItem(DUMB_KEY,backup.dumbKey);
+      input.value='';
+      showToast('備份還原成功！重新載入中...');
+      setTimeout(()=>location.reload(),1200);
+    }catch(err){
+      showToast('還原失敗，請確認檔案正確');
+      input.value='';
+    }
+  };
+  reader.readAsText(file);
+}
+
+function clearToday(){
+  db.history[todayStr]={};
+  if(db.dailyDone)db.dailyDone[todayStr]={};
+  save(db);renderTasks();renderDaily();showToast('今日打勾已重置');
+}
+function clearAll(){
+  if(confirm('確定要清除所有資料嗎？')){
+    localStorage.removeItem(SK);
+    localStorage.removeItem(EXP_KEY);
+    localStorage.removeItem(WK_KEY);
+    localStorage.removeItem(DAILY_KEY);
+    localStorage.removeItem(DUMB_KEY);
+    location.reload();
+  }
+}
+
+function sw(tab,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+  if(tab==='more'){renderStats();renderReflectHistory();renderDumbNotes();renderGhStatus();}
+  if(tab==='news'&&!newsLoaded)loadNews();
+  if(tab==='heart'){renderDQ();renderDaily();renderLoveQuote();renderObservations();}
+  if(tab==='today')renderDQ();
+  if(tab==='exp')renderExp();
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ── 本週任務 ──
+const DEFAULT_WEEKLY=CONFIG.weeklyTasks;
+function loadWeeklyTasks(){
+  try{const s=localStorage.getItem(WK_KEY);return s?JSON.parse(s):[...DEFAULT_WEEKLY];}
+  catch(e){return[...DEFAULT_WEEKLY];}
+}
+function saveWeeklyTasks(){localStorage.setItem(WK_KEY,JSON.stringify(weeklyTasks));}
+let weeklyTasks=loadWeeklyTasks();
+
+function getWeekStr(){
+  const d=new Date();
+  const day=d.getDay();
+  const diff=d.getDate()-day+(day===0?-6:1);
+  const mon=new Date(d.setDate(diff));
+  return mon.toISOString().slice(0,10);
+}
+
+const weekStr=getWeekStr();
+if(!db.weeklyDone)db.weeklyDone={};
+if(!db.weeklyDone[weekStr])db.weeklyDone[weekStr]={};
+
+function renderWeekly(){
+  const list=document.getElementById('weekly-list');
+  list.innerHTML=weeklyTasks.map(t=>{
+    const done=!!db.weeklyDone[weekStr][t.id];
+    return`<div class="task-item">
+      <div class="chk ${done?'done':''}" onclick="toggleWeekly('${t.id}')"></div>
+      <div class="task-body" style="cursor:${t.link?'pointer':'default'}" ${t.link?`onclick="openLink('${t.link}')"`:''}>
+        <div class="task-title ${done?'done':''}">${t.icon||'📌'} ${t.title}${t.link?` <span style="color:var(--info);font-size:11px;">↗</span>`:''}</div>
+        ${t.meta?`<div class="task-meta">${t.meta}</div>`:''}
+      </div>
+      <button class="del-btn" onclick="deleteWeeklyTask('${t.id}')">×</button>
+    </div>`;
+  }).join('');
+  const dc=weeklyTasks.filter(t=>db.weeklyDone[weekStr][t.id]).length;
+  document.getElementById('weekly-prog').style.width=Math.round(dc/weeklyTasks.length*100)+'%';
+}
+
+function toggleWeekly(id){
+  db.weeklyDone[weekStr][id]=!db.weeklyDone[weekStr][id];
+  save(db);renderWeekly();
+}
+
+function addWeeklyTask(){
+  const inp=document.getElementById('new-weekly');
+  const v=inp.value.trim();
+  if(!v)return;
+  weeklyTasks.push({id:'wc_'+Date.now(),title:v,meta:'',icon:'📌'});
+  saveWeeklyTasks();
+  inp.value='';
+  renderWeekly();
+  showToast('已新增：'+v);
+}
+
+function deleteWeeklyTask(id){
+  if(!confirm('確定刪除這個本週任務嗎？'))return;
+  weeklyTasks=weeklyTasks.filter(t=>t.id!==id);
+  delete db.weeklyDone[weekStr][id];
+  save(db);saveWeeklyTasks();renderWeekly();showToast('已刪除');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('new-weekly');
+  if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')addWeeklyTask();});
+});
+
+
+// ── 學哥觀察記錄 ──
+function saveObservation(){
+  const text=document.getElementById('obs-input').value.trim();
+  if(!text){showToast('請先輸入觀察內容');return;}
+  if(!db.observations)db.observations=[];
+  db.observations.unshift({
+    date:todayStr,
+    time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}),
+    text
+  });
+  if(db.observations.length>100)db.observations=db.observations.slice(0,100);
+  save(db);
+  document.getElementById('obs-input').value='';
+  renderObservations();
+  showToast('已記錄 ✓');
+  ghAutoSync();
+}
+
+function renderObservations(){
+  const el=document.getElementById('obs-list');
+  if(!el)return;
+  const list=db.observations||[];
+  if(!list.length){el.innerHTML='';return;}
+  el.innerHTML=list.slice(0,15).map((o,i)=>`
+    <div style="padding:8px 0;border-top:.5px solid var(--border);display:flex;gap:10px;align-items:flex-start;">
+      <div style="flex:1;">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:3px;">${o.date} ${o.time}</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.6;">${o.text}</div>
+      </div>
+      <button onclick="deleteObservation(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;">×</button>
+    </div>`).join('');
+}
+
+function deleteObservation(idx){
+  db.observations.splice(idx,1);
+  save(db);renderObservations();showToast('已刪除');
+}
+
+// ── 我怎麼這樣 ──
+function loadDumbNotes(){
+  try{const s=localStorage.getItem(DUMB_KEY);return s?JSON.parse(s):[];}
+  catch(e){return[];}
+}
+function saveDumbNotes(list){localStorage.setItem(DUMB_KEY,JSON.stringify(list));}
+
+function saveDumbNote(){
+  const text=document.getElementById('dumb-input').value.trim();
+  if(!text){showToast('請先輸入內容');return;}
+  const list=loadDumbNotes();
+  list.unshift({
+    date:todayStr,
+    time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}),
+    text
+  });
+  if(list.length>50)list.splice(50);
+  saveDumbNotes(list);
+  document.getElementById('dumb-input').value='';
+  renderDumbNotes();
+  showToast('已記下來 🫠');
+  ghAutoSync();
+}
+
+function renderDumbNotes(){
+  const el=document.getElementById('dumb-list');
+  if(!el)return;
+  const list=loadDumbNotes();
+  if(!list.length){
+    el.innerHTML='<div style="font-size:13px;color:var(--text3);padding:4px 0;">還沒有記錄，去上面寫第一筆吧！</div>';
+    return;
+  }
+  el.innerHTML=list.slice(0,20).map((o,i)=>`
+    <div style="padding:10px 0;border-top:.5px solid var(--border);display:flex;gap:10px;align-items:flex-start;">
+      <div style="flex:1;">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:3px;">${o.date} ${o.time}</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.6;">${o.text}</div>
+      </div>
+      <button onclick="deleteDumbNote(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;flex-shrink:0;">×</button>
+    </div>`).join('');
+}
+
+function deleteDumbNote(idx){
+  const list=loadDumbNotes();
+  list.splice(idx,1);
+  saveDumbNotes(list);
+  renderDumbNotes();
+  showToast('已刪除');
+}
+
+// ── 相機提醒 Banner ──
+function closeCameraBanner(){
+  localStorage.setItem('camera_banner_closed', new Date().toDateString());
+  const el=document.getElementById('camera-banner');
+  if(el)el.style.display='none';
+}
+function initCameraBanner(){
+  const el=document.getElementById('camera-banner');
+  if(!el)return;
+  const closed=localStorage.getItem('camera_banner_closed');
+  if(closed===new Date().toDateString())el.style.display='none';
+}
+
+// ── GitHub 自動同步（notes.json → 私人 repo）──
+// Token 存於 GH_KEY，僅存本機、刻意不納入 backup.json（安全考量）
+// 筆記同步到獨立的 private repo，避免公開的 Pages repo 洩漏私人筆記
+const GH_KEY='gh_sync_v1';
+const GH_REPO='chrisitine951/my-notes';
+const GH_PATH='notes.json';
+function ghLoad(){try{return JSON.parse(localStorage.getItem(GH_KEY))||{};}catch(e){return{};}}
+function ghStore(o){localStorage.setItem(GH_KEY,JSON.stringify(o));}
+function saveGhToken(){
+  const inp=document.getElementById('gh-token-input');
+  const v=inp.value.trim();
+  if(!v){showToast('請先貼上 Token');return;}
+  const o=ghLoad();o.token=v;ghStore(o);
+  inp.value='';
+  renderGhStatus();
+  showToast('Token 已儲存（僅存於此裝置）');
+}
+function clearGhToken(){
+  if(!confirm('確定清除 Token 嗎？清除後將停止自動同步。'))return;
+  localStorage.removeItem(GH_KEY);
+  renderGhStatus();
+  showToast('已清除 Token');
+}
+function renderGhStatus(){
+  const el=document.getElementById('gh-sync-status');
+  if(!el)return;
+  const o=ghLoad();
+  el.textContent=o.token?('✅ 已設定 Token'+(o.lastSync?(' · 上次同步 '+o.lastSync):' · 尚未同步過')):'尚未設定 Token（設定後才會自動同步）';
+}
+function b64utf8(str){return btoa(unescape(encodeURIComponent(str)));}
+let ghSyncTimer=null;
+function ghAutoSync(){
+  const o=ghLoad();
+  if(!o.token)return;
+  clearTimeout(ghSyncTimer);
+  ghSyncTimer=setTimeout(()=>syncToGitHub(true),4000);
+}
+async function syncToGitHub(silent){
+  const o=ghLoad();
+  if(!o.token){if(!silent)showToast('請先在下方設定 GitHub Token');return;}
+  if(!silent)showToast('☁️ 同步中...');
+  const notes={
+    syncedAt:new Date().toISOString(),
+    observations:db.observations||[],
+    qHistory:db.qHistory||[],
+    reflectHistory:db.reflectHistory||[],
+    dumbNotes:loadDumbNotes(),
+  };
+  const api='https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_PATH;
+  const headers={'Authorization':'Bearer '+o.token,'Accept':'application/vnd.github+json'};
+  try{
+    let sha=null;
+    const g=await fetch(api,{headers,signal:AbortSignal.timeout(10000)});
+    if(g.status===200){const j=await g.json();sha=j.sha;}
+    const payload={message:'sync notes '+todayStr,content:b64utf8(JSON.stringify(notes,null,2))};
+    if(sha)payload.sha=sha;
+    const p=await fetch(api,{method:'PUT',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(10000)});
+    if(!p.ok)throw new Error('HTTP '+p.status);
+    o.lastSync=new Date().toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    ghStore(o);
+    renderGhStatus();
+    showToast('☁️ 已同步到 GitHub ✓');
+  }catch(e){
+    showToast('☁️ 同步失敗（'+(e.message||'請檢查 Token 與網路')+'）');
+  }
+}
+
+// ── 諮詢學哥顧問（複製諮詢包）──
+function copyConsultPack(){
+  const q=document.getElementById('consult-input').value.trim();
+  if(!q){showToast('先寫下你想諮詢的問題');return;}
+  const obs=(db.observations||[]).slice(0,20);
+  const hist=[...(db.qHistory||[]),...(db.reflectHistory||[])]
+    .sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
+  let text='【學哥諮詢包】\n\n=== 學哥檔案（我整理的他的思考模式）===\n';
+  text+=(CONFIG.partnerProfile||'（尚未建立檔案）')+'\n\n';
+  if(obs.length){
+    text+='=== 最近的觀察記錄 ===\n';
+    obs.forEach(o=>{text+='- '+o.date+' '+o.time+'｜'+o.text+'\n';});
+    text+='\n';
+  }
+  if(hist.length){
+    text+='=== 我最近的思考與覺察 ===\n';
+    hist.forEach(r=>{text+='- '+r.date+'｜Q: '+r.question+'｜A: '+r.answer+'\n';});
+    text+='\n';
+  }
+  text+='=== 我現在的困惑 ===\n'+q+'\n\n';
+  text+='請根據以上檔案和記錄幫我分析：1) 他可能是怎麼想的（給 2-3 種可能的解讀，不要只給一種）2) 我可以怎麼回應或跟他確認 3) 這件事有沒有值得更新進學哥檔案的新洞察。';
+  navigator.clipboard.writeText(text)
+    .then(()=>showToast('已複製！貼到 Claude 的「學哥」專案'))
+    .catch(()=>showToast('複製失敗，請再試一次'));
+}
+
+// ── 每週回顧包（打包過去 7 天記錄）──
+function copyWeeklyPack(){
+  const cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-6);
+  const cutStr=cutoff.toISOString().slice(0,10);
+  const inRange=d=>d>=cutStr&&d<=todayStr;
+  const ans=[
+    ...(db.qHistory||[]).map(r=>({...r,kind:'💭 思考題'})),
+    ...(db.reflectHistory||[]).map(r=>({...r,kind:'🔍 覺察'}))
+  ].filter(r=>inRange(r.date)).sort((a,b)=>a.date.localeCompare(b.date));
+  const obs=(db.observations||[]).filter(o=>inRange(o.date));
+  const dumb=loadDumbNotes().filter(o=>inRange(o.date));
+  if(!ans.length&&!obs.length&&!dumb.length){showToast('這週還沒有任何記錄');return;}
+  let text='【本週回顧包 '+cutStr+' ~ '+todayStr+'】\n\n';
+  text+='=== 本週統計 ===\n';
+  text+='- 學習連續打卡：'+(db.streak.current||0)+' 天\n';
+  text+='- 本週任務完成率：'+calcWeekRate()+'%\n';
+  text+='- 今日一題連續記錄：'+dqStreak()+' 天\n\n';
+  if(ans.length){
+    text+='=== 今日一題回答 ===\n';
+    ans.forEach(r=>{text+='- '+r.date+' '+r.kind+'｜Q: '+r.question+'｜A: '+r.answer+'\n';});
+    text+='\n';
+  }
+  if(obs.length){
+    text+='=== 觀察記錄 ===\n';
+    obs.forEach(o=>{text+='- '+o.date+' '+o.time+'｜'+o.text+'\n';});
+    text+='\n';
+  }
+  if(dumb.length){
+    text+='=== 我怎麼這樣 🫠 ===\n';
+    dumb.forEach(o=>{text+='- '+o.date+' '+o.time+'｜'+o.text+'\n';});
+    text+='\n';
+  }
+  text+='=== 給 Claude 的指示 ===\n請根據以上本週記錄幫我做週回顧：1) 本週的亮點與重複出現的模式 2) 學哥檔案（config.js 的 partnerProfile）有沒有值得更新的洞察？有的話直接給我可以貼進去的修訂段落 3) 下週的觀察重點（2-3 個就好）4) 儀表板有沒有需要調整的地方。';
+  navigator.clipboard.writeText(text)
+    .then(()=>showToast('已複製！貼到「學哥」專案開新對話'))
+    .catch(()=>showToast('複製失敗，請再試一次'));
+}
+
+// ── #write 深連結（配合 iPhone 捷徑自動化）──
+function handleHash(){
+  if(location.hash!=='#write')return;
+  const todayBtn=document.querySelectorAll('.nav-item')[0];
+  if(todayBtn)sw('today',todayBtn);
+  setTimeout(()=>{
+    const card=document.getElementById('dq-today');
+    if(!card)return;
+    card.scrollIntoView({behavior:'smooth',block:'center'});
+    const t=card.querySelector('.dq-input');
+    if(t)t.focus();
+  },300);
+}
+window.addEventListener('hashchange',handleHash);
+
+// ── 初始化 ──
+renderTasks();
+renderWeekly();
+updateStreak();
+renderDQ();
+renderGhStatus();
+initCameraBanner();
+handleHash();
+</script>
+</body>
+</html>.task-title.done{text-decoration:line-through;color:var(--text3)}
+.task-meta{font-size:12px;color:var(--text2);margin-top:3px}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:4px;font-size:18px;flex-shrink:0}
+.prog-bar{height:4px;background:var(--border);border-radius:2px;margin-top:10px}
+.prog-fill{height:100%;border-radius:2px;background:var(--success);transition:width .4s}
+.add-row{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:.5px solid var(--border)}
+.add-row input{flex:1;padding:10px 12px;font-size:15px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none}
+.add-row button,.action-btn{padding:10px 14px;font-size:14px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;white-space:nowrap;font-weight:500}
+.news-item{padding:10px 0;border-bottom:.5px solid var(--border)}
+.news-item:last-child{border-bottom:none}
+.ntag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;margin-bottom:5px}
+.nt-world{background:var(--info-bg);color:var(--info)}
+.nt-chem{background:var(--success-bg);color:var(--success)}
+.nt-invest{background:var(--warn-bg);color:var(--warn)}
+.news-hl{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.news-sm{font-size:13px;color:var(--text2);margin-top:3px;line-height:1.5}
+.loading-pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text3);padding:4px 0}
+.spinner{width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--text2);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+.stat-card{background:var(--bg);border-radius:var(--radius-lg);padding:14px}
+.stat-lbl{font-size:12px;color:var(--text2);margin-bottom:4px}
+.stat-val{font-size:26px;font-weight:600;color:var(--text)}
+.stat-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.hist-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:.5px solid var(--border);font-size:14px}
+.hist-item:last-child{border-bottom:none}
+.hist-date{color:var(--text2)}
+.hist-dots{display:flex;gap:5px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border2)}
+.dot.done{background:var(--success)}
+.q-card{background:var(--bg2);border-radius:var(--radius-lg);padding:16px;margin-bottom:12px}
+.qtag{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;margin-bottom:10px}
+.qt-relation{background:var(--danger-bg);color:var(--danger)}
+.qt-self{background:var(--info-bg);color:var(--info)}
+.qt-life{background:var(--success-bg);color:var(--success)}
+.q-text{font-size:16px;font-weight:600;color:var(--text);line-height:1.6;margin-bottom:8px}
+.q-hint{font-size:13px;color:var(--text2);line-height:1.6}
+.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn{flex:1;padding:10px;font-size:14px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);cursor:pointer;font-weight:500}
+.textarea{width:100%;padding:10px 12px;font-size:14px;border:.5px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);resize:none;margin-top:10px;line-height:1.6;font-family:inherit;outline:none}
+.daily-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:.5px solid var(--border);font-size:14px}
+.daily-item:last-child{border-bottom:none}
+.sm-chk{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sm-chk.done{background:var(--danger-bg);border-color:var(--danger)}
+.sm-chk.done::after{content:'';width:8px;height:8px;background:var(--danger);border-radius:50%}
+.daily-txt{flex:1;color:var(--text)}
+.daily-txt.done{text-decoration:line-through;color:var(--text3)}
+.heart-prog-bar{height:3px;background:var(--border);border-radius:2px;margin-top:10px}
+.heart-prog-fill{height:100%;border-radius:2px;background:var(--danger);transition:width .4s}
+.counter-row{display:flex;gap:10px;margin-bottom:12px}
+.counter{flex:1;background:var(--bg);border-radius:var(--radius-lg);padding:14px 10px;text-align:center}
+.cnt-num{font-size:24px;font-weight:600;color:var(--text)}
+.cnt-lbl{font-size:12px;color:var(--text2);margin-top:2px}
+.exp-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:.5px solid var(--border)}
+.exp-item:last-child{border-bottom:none}
+.exp-cat{display:inline-block;font-size:11px;padding:2px 7px;border-radius:6px;margin-bottom:4px}
+.ec-food{background:var(--warn-bg);color:var(--warn)}
+.ec-outdoor{background:var(--success-bg);color:var(--success)}
+.ec-culture{background:var(--info-bg);color:var(--info)}
+.ec-travel{background:var(--danger-bg);color:var(--danger)}
+.ec-craft{background:var(--bg2);color:var(--text2)}
+.ec-sport{background:var(--success-bg);color:var(--success)}
+.exp-main{flex:1;min-width:0}
+.exp-title{font-size:15px;font-weight:500;color:var(--text)}
+.exp-title.done{text-decoration:line-through;color:var(--text3)}
+.exp-sub{font-size:13px;color:var(--text2);margin-top:3px}
+.exp-actions{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.icon-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:15px;color:var(--text2)}
+.icon-btn.aw{border-color:var(--danger);color:var(--danger);background:var(--danger-bg)}
+.icon-btn.ad{border-color:var(--success);color:var(--success);background:var(--success-bg)}
+.filter-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.fbtn{padding:5px 11px;font-size:12px;border:.5px solid var(--border2);border-radius:20px;background:none;color:var(--text2);cursor:pointer;font-weight:500}
+.fbtn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);border-radius:20px;padding:9px 18px;font-size:13px;color:#fff;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;z-index:200}
+.toast.show{opacity:1}
+.quote-box{background:var(--danger-bg);border-left:3px solid var(--danger);border-radius:0 var(--radius) var(--radius) 0;padding:12px 14px;margin-bottom:12px;font-size:13px;color:var(--text2);line-height:1.7;font-style:italic}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="header">
+  <div class="header-row">
+    <div><div class="greeting" id="greeting"></div><div class="subdate" id="subdate"></div></div>
+    <div class="streak-badge" id="streak-badge">🔥 1 天</div>
+  </div>
+</div>
+
+<!-- 今日 -->
+<div id="tab-today" class="panel active">
   <div class="sec-label" style="margin-top:8px;">📅 每日任務</div>
   <div class="card">
     <div id="task-list"></div>
