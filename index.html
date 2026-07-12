@@ -185,51 +185,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   </div>
 </div>
 
-<!-- 體驗 -->
-<div id="tab-exp" class="panel">
-  <div class="counter-row" style="margin-top:8px;">
-    <div class="counter"><div class="cnt-num" id="cnt-want">0</div><div class="cnt-lbl">想去</div></div>
-    <div class="counter"><div class="cnt-num" id="cnt-done">0</div><div class="cnt-lbl">完成</div></div>
-    <div class="counter"><div class="cnt-num" id="cnt-left">0</div><div class="cnt-lbl">待探索</div></div>
-  </div>
-  <div class="filter-row">
-    <button class="fbtn active" onclick="filterExp('all',this)">全部</button>
-    <button class="fbtn" onclick="filterExp('want',this)">想去</button>
-    <button class="fbtn" onclick="filterExp('done',this)">完成</button>
-    <button class="fbtn" onclick="filterExp('food',this)">美食</button>
-    <button class="fbtn" onclick="filterExp('outdoor',this)">戶外</button>
-    <button class="fbtn" onclick="filterExp('culture',this)">文化</button>
-    <button class="fbtn" onclick="filterExp('travel',this)">旅遊</button>
-    <button class="fbtn" onclick="filterExp('craft',this)">手作</button>
-    <button class="fbtn" onclick="filterExp('sport',this)">運動</button>
-  </div>
-  <div class="card" id="exp-list"></div>
-  <div class="card" id="exp-form" style="display:none;border:.5px solid var(--info);">
-    <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;" id="exp-form-title">新增體驗</div>
-    <input type="text" id="exp-input-title" placeholder="體驗名稱，例：第一次一起看棒球" maxlength="40"
-      style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
-    <input type="text" id="exp-input-sub" placeholder="補充說明（可選）" maxlength="60"
-      style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
-    <select id="exp-input-cat"
-      style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:12px;">
-      <option value="food">美食</option>
-      <option value="outdoor">戶外</option>
-      <option value="culture">文化</option>
-      <option value="travel">旅遊</option>
-      <option value="craft">手作</option>
-      <option value="sport">運動</option>
-    </select>
-    <div style="display:flex;gap:8px;">
-      <button onclick="expFormSave()" style="flex:1;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">儲存</button>
-      <button onclick="expFormCancel()" style="padding:11px 16px;font-size:14px;border:.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer;">取消</button>
-    </div>
-  </div>
-  <button onclick="expFormOpen()" id="exp-add-btn"
-    style="width:100%;padding:12px;font-size:14px;font-weight:500;border:.5px solid var(--border2);border-radius:var(--radius-lg);background:var(--bg);color:var(--text);cursor:pointer;margin-top:4px;">
-    ＋ 新增體驗
-  </button>
-</div>
-
 <!-- 更多 -->
 <div id="tab-more" class="panel">
   <div class="sec-label" style="margin-top:8px;">🫠 我怎麼這樣</div>
@@ -254,7 +209,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   </div>
   <div class="sec-label" style="margin-top:12px;">關係覺察回顧</div>
   <div class="card" id="reflect-history-card">
-    <div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.6;">最近的回答記錄，每次回顧可以複製這些內容給 Claude。</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.6;">最近的回答記錄（若已設定 GitHub 同步，本機只留近 14 天，完整歷史在雲端 notes.json），每次回顧可以複製這些內容給 Claude。</div>
     <div id="reflect-history-list"></div>
     <button onclick="copyReflectHistory()" style="width:100%;margin-top:12px;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--info);color:#fff;cursor:pointer;">📋 複製所有回答（用於週期回顧）</button>
   </div>
@@ -266,7 +221,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   <div class="card" style="font-size:14px;color:var(--text2);line-height:1.8;">Safari → 分享 → 加入主畫面</div>
   <div class="sec-label" style="margin-top:12px;">☁️ GitHub 自動同步</div>
   <div class="card">
-    <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;">設定 Token 後，每次儲存「今日一題／觀察記錄／我怎麼這樣」會自動同步到 repo 的 <b>notes.json</b>。Token 只存在這台裝置的瀏覽器裡，<b>不會</b>包含在 backup.json。</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;">設定 Token 後，每次儲存「今日一題／觀察記錄／我怎麼這樣」會自動同步到 repo 的 <b>notes.json</b>（Token 只存在這台裝置，<b>不會</b>包含在 backup.json）。<br><br>同步成功後，本機只會保留最近 14 天的記錄，讓頁面保持乾淨；完整歷史都安全封存在雲端的 notes.json 裡，需要時可以到 my-notes repo 查看，不會遺失。</div>
     <input type="password" id="gh-token-input" placeholder="貼上 github_pat_ 開頭的 Token" style="width:100%;padding:10px 12px;font-size:14px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;margin-bottom:8px;"/>
     <div style="display:flex;gap:8px;margin-bottom:10px;">
       <button onclick="saveGhToken()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;">儲存 Token</button>
@@ -296,7 +251,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
   <button class="nav-item active" onclick="sw('today',this)"><i class="ti ti-home"></i><span>今日</span></button>
   <button class="nav-item" onclick="sw('news',this)"><i class="ti ti-news"></i><span>新聞</span></button>
   <button class="nav-item" onclick="sw('heart',this)"><i class="ti ti-heart"></i><span>學哥</span></button>
-  <button class="nav-item" onclick="sw('exp',this)"><i class="ti ti-map-2"></i><span>體驗</span></button>
   <button class="nav-item" onclick="sw('more',this)"><i class="ti ti-dots"></i><span>更多</span></button>
 </div>
 </div>
@@ -510,16 +464,41 @@ function getTodayQ(){
 }
 function dqHist(){return getTodayQ().kind==='think'?(db.qHistory||[]):(db.reflectHistory||[]);}
 function dqDraftKey(){return getTodayQ().kind==='think'?'qAnswers':'reflectAnswers';}
-function dqStreak(){
-  const dates=new Set([...(db.qHistory||[]),...(db.reflectHistory||[])].map(r=>r.date));
-  let s=0;
+// streak 改用累加計數器（db.dqStreakCurrent/dqLastAnsweredDate），不再每次掃描完整歷史陣列，
+// 這樣本機歷史被封存清空後，連續天數紀錄仍然正確（詳見 syncToGitHub 的封存邏輯）
+function migrateDqStreak(){
+  if(db.dqStreakCurrent!==undefined)return;
+  const dateSet=new Set([...(db.qHistory||[]),...(db.reflectHistory||[])].map(r=>r.date));
+  let mostRecent=null;
   for(let i=0;i<365;i++){
     const d=new Date(now);d.setDate(d.getDate()-i);
     const ds=d.toISOString().slice(0,10);
-    if(!dates.has(ds)){if(i===0)continue;break;}
-    s++;
+    if(dateSet.has(ds)){mostRecent=ds;break;}
   }
-  return s;
+  let s=0;
+  if(mostRecent){
+    let cur=new Date(mostRecent);
+    while(dateSet.has(cur.toISOString().slice(0,10))){s++;cur.setDate(cur.getDate()-1);}
+  }
+  db.dqStreakCurrent=s;
+  db.dqStreakBest=s;
+  db.dqLastAnsweredDate=mostRecent;
+  save(db);
+}
+function bumpDqStreak(){
+  if(db.dqLastAnsweredDate===todayStr)return; // 今天已經算過了
+  const yesterday=new Date(now);yesterday.setDate(yesterday.getDate()-1);
+  const yStr=yesterday.toISOString().slice(0,10);
+  db.dqStreakCurrent=(db.dqLastAnsweredDate===yStr)?(db.dqStreakCurrent||0)+1:1;
+  db.dqStreakBest=Math.max(db.dqStreakBest||0,db.dqStreakCurrent);
+  db.dqLastAnsweredDate=todayStr;
+}
+function dqStreak(){
+  if(!db.dqLastAnsweredDate)return 0;
+  const yesterday=new Date(now);yesterday.setDate(yesterday.getDate()-1);
+  const yStr=yesterday.toISOString().slice(0,10);
+  if(db.dqLastAnsweredDate===todayStr||db.dqLastAnsweredDate===yStr)return db.dqStreakCurrent||0;
+  return 0; // 超過一天沒記錄，streak 已中斷
 }
 let dqEditing=false;
 function renderDQ(){
@@ -585,6 +564,8 @@ function dqSave(quick){
     db.reflectAnswers[todayStr]=answer;
   }
   save(db);
+  bumpDqStreak();
+  save(db);
   dqEditing=false;
   renderDQ();
   showToast('已記錄 ✓ 連續 '+dqStreak()+' 天');
@@ -609,116 +590,6 @@ function renderDaily(){
   document.getElementById('heart-prog').style.width=Math.round(dc/dailyActions.length*100)+'%';
 }
 function toggleDaily(id){db.dailyDone[todayStr][id]=!db.dailyDone[todayStr][id];save(db);renderDaily();}
-
-const CAT_LABEL={food:'美食',outdoor:'戶外',culture:'文化',travel:'旅遊',craft:'手作',sport:'運動'};
-const DEFAULT_EXPERIENCES=CONFIG.experiences;
-const EXP_KEY='exp_list_v1';
-function loadExperiences(){
-  try{const s=localStorage.getItem(EXP_KEY);return s?JSON.parse(s):[...DEFAULT_EXPERIENCES];}
-  catch(e){return[...DEFAULT_EXPERIENCES];}
-}
-function saveExperiences(){localStorage.setItem(EXP_KEY,JSON.stringify(experiences));}
-let experiences=loadExperiences();
-
-let expFilter='all';
-let expEditId=null;
-
-function renderExp(){
-  let list=experiences;
-  if(expFilter==='want')list=experiences.filter(e=>db.expStatus[e.id]==='want');
-  else if(expFilter==='done')list=experiences.filter(e=>db.expStatus[e.id]==='done');
-  else if(Object.keys(CAT_LABEL).includes(expFilter))list=experiences.filter(e=>e.cat===expFilter);
-  const el=document.getElementById('exp-list');
-  el.innerHTML=list.length===0?'<div style="font-size:14px;color:var(--text3);padding:8px 0;">沒有符合的項目</div>':list.map(e=>{
-    const st=db.expStatus[e.id]||'';
-    const cl=CAT_LABEL[e.cat]||e.cat;
-    return`<div class="exp-item">
-      <div class="exp-main">
-        <div><span class="exp-cat ec-${e.cat}">${cl}</span></div>
-        <div class="exp-title ${st==='done'?'done':''}">${e.title}</div>
-        ${e.sub?`<div class="exp-sub">${e.sub}</div>`:''}
-      </div>
-      <div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;">
-        <div style="display:flex;gap:5px;">
-          <button class="icon-btn ${st==='want'?'aw':''}" onclick="setExp('${e.id}','want')" title="想去">♡</button>
-          <button class="icon-btn ${st==='done'?'ad':''}" onclick="setExp('${e.id}','done')" title="完成">✓</button>
-        </div>
-        <div style="display:flex;gap:5px;">
-          <button class="icon-btn" onclick="expFormOpen('${e.id}')" title="編輯" style="font-size:12px;padding:4px 8px;">✏️</button>
-          <button class="icon-btn" onclick="expDelete('${e.id}')" title="刪除" style="font-size:12px;padding:4px 8px;color:var(--danger);">🗑</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-  document.getElementById('cnt-want').textContent=experiences.filter(e=>db.expStatus[e.id]==='want').length;
-  document.getElementById('cnt-done').textContent=experiences.filter(e=>db.expStatus[e.id]==='done').length;
-  document.getElementById('cnt-left').textContent=experiences.filter(e=>db.expStatus[e.id]!=='done').length;
-}
-
-function setExp(id,st){
-  db.expStatus[id]=db.expStatus[id]===st?null:st;
-  save(db);renderExp();
-  showToast(db.expStatus[id]==='want'?'加入想去清單':db.expStatus[id]==='done'?'記錄完成！':'已取消');
-}
-
-function filterExp(f,btn){
-  expFilter=f;
-  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');renderExp();
-}
-
-function expFormOpen(id){
-  expEditId=id||null;
-  const form=document.getElementById('exp-form');
-  const addBtn=document.getElementById('exp-add-btn');
-  document.getElementById('exp-form-title').textContent=id?'編輯體驗':'新增體驗';
-  if(id){
-    const e=experiences.find(x=>x.id===id);
-    if(e){
-      document.getElementById('exp-input-title').value=e.title;
-      document.getElementById('exp-input-sub').value=e.sub||'';
-      document.getElementById('exp-input-cat').value=e.cat;
-    }
-  } else {
-    document.getElementById('exp-input-title').value='';
-    document.getElementById('exp-input-sub').value='';
-    document.getElementById('exp-input-cat').value='food';
-  }
-  form.style.display='block';
-  addBtn.style.display='none';
-  document.getElementById('exp-input-title').focus();
-}
-
-function expFormCancel(){
-  document.getElementById('exp-form').style.display='none';
-  document.getElementById('exp-add-btn').style.display='block';
-  expEditId=null;
-}
-
-function expFormSave(){
-  const title=document.getElementById('exp-input-title').value.trim();
-  const sub=document.getElementById('exp-input-sub').value.trim();
-  const cat=document.getElementById('exp-input-cat').value;
-  if(!title){showToast('請輸入體驗名稱');return;}
-  if(expEditId){
-    const idx=experiences.findIndex(e=>e.id===expEditId);
-    if(idx>-1){experiences[idx]={...experiences[idx],title,sub,cat};}
-    showToast('已更新！');
-  } else {
-    experiences.push({id:'u_'+Date.now(),cat,title,sub});
-    showToast('已新增體驗！');
-  }
-  saveExperiences();
-  expFormCancel();
-  renderExp();
-}
-
-function expDelete(id){
-  if(!confirm('確定刪除這個體驗嗎？'))return;
-  experiences=experiences.filter(e=>e.id!==id);
-  delete db.expStatus[id];
-  save(db);saveExperiences();renderExp();showToast('已刪除');
-}
 
 let newsLoaded=false;
 async function translate(text){
@@ -776,16 +647,15 @@ async function loadNews(){
 }
 function openLink(url){if(url)window.open(url,'_blank');}
 
-// ── 備份 version 6（新增 dumbKey）──
+// ── 備份 version 7（移除體驗分頁，不再備份 expKey）──
 const WK_KEY='weekly_tasks_v1';
 const DUMB_KEY='dumb_notes_v1';
 
 function exportBackup(){
   const backup={
-    version:6,
+    version:7,
     exportedAt:new Date().toISOString(),
     mainData:db,
-    expKey:localStorage.getItem(EXP_KEY)||'',
     weeklyKey:localStorage.getItem(WK_KEY)||'',
     dailyKey:localStorage.getItem(DAILY_KEY)||'',
     dumbKey:localStorage.getItem(DUMB_KEY)||'',
@@ -810,7 +680,6 @@ function importBackup(input){
       if(!backup.version||!backup.mainData){showToast('檔案格式不正確');return;}
       if(!confirm('確定要還原備份嗎？目前的資料會被覆蓋。')){input.value='';return;}
       localStorage.setItem(SK,JSON.stringify(backup.mainData));
-      if(backup.expKey)localStorage.setItem(EXP_KEY,backup.expKey);
       if(backup.weeklyKey)localStorage.setItem(WK_KEY,backup.weeklyKey);
       if(backup.dailyKey)localStorage.setItem(DAILY_KEY,backup.dailyKey);
       if(backup.dumbKey)localStorage.setItem(DUMB_KEY,backup.dumbKey);
@@ -833,7 +702,7 @@ function clearToday(){
 function clearAll(){
   if(confirm('確定要清除所有資料嗎？')){
     localStorage.removeItem(SK);
-    localStorage.removeItem(EXP_KEY);
+    localStorage.removeItem('exp_list_v1'); // 舊版體驗分頁殘留資料，一併清除
     localStorage.removeItem(WK_KEY);
     localStorage.removeItem(DAILY_KEY);
     localStorage.removeItem(DUMB_KEY);
@@ -850,7 +719,6 @@ function sw(tab,btn){
   if(tab==='news'&&!newsLoaded)loadNews();
   if(tab==='heart'){renderDQ();renderDaily();renderLoveQuote();renderObservations();}
   if(tab==='today')renderDQ();
-  if(tab==='exp')renderExp();
 }
 
 function showToast(msg){
@@ -1057,6 +925,7 @@ function renderGhStatus(){
   el.textContent=o.token?('✅ 已設定 Token'+(o.lastSync?(' · 上次同步 '+o.lastSync):' · 尚未同步過')):'尚未設定 Token（設定後才會自動同步）';
 }
 function b64utf8(str){return btoa(unescape(encodeURIComponent(str)));}
+function utf8b64decode(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));}
 let ghSyncTimer=null;
 function ghAutoSync(){
   const o=ghLoad();
@@ -1064,33 +933,74 @@ function ghAutoSync(){
   clearTimeout(ghSyncTimer);
   ghSyncTimer=setTimeout(()=>syncToGitHub(true),4000);
 }
+// 合併雲端既有封存與本機資料，依 keyFn 去重（本機版本優先，因為可能剛編輯過）
+function mergeUnique(localArr,remoteArr,keyFn){
+  const seen=new Set();const out=[];
+  [...localArr,...remoteArr].forEach(item=>{
+    const k=keyFn(item);
+    if(!seen.has(k)){seen.add(k);out.push(item);}
+  });
+  return out;
+}
+// 本機只保留最近 N 天，較舊的資料已經封存在雲端 notes.json，不需要留在本機拖慢頁面
+const ARCHIVE_KEEP_DAYS=14;
+function trimByDate(arr){
+  const cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-ARCHIVE_KEEP_DAYS);
+  const cutStr=cutoff.toISOString().slice(0,10);
+  return (arr||[]).filter(r=>r.date>=cutStr);
+}
 async function syncToGitHub(silent){
   const o=ghLoad();
   if(!o.token){if(!silent)showToast('請先在下方設定 GitHub Token');return;}
   if(!silent)showToast('☁️ 同步中...');
-  const notes={
-    syncedAt:new Date().toISOString(),
-    observations:db.observations||[],
-    qHistory:db.qHistory||[],
-    reflectHistory:db.reflectHistory||[],
-    dumbNotes:loadDumbNotes(),
-  };
   const api='https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_PATH;
   const headers={'Authorization':'Bearer '+o.token,'Accept':'application/vnd.github+json'};
   try{
     let sha=null;
+    let remote={observations:[],qHistory:[],reflectHistory:[],dumbNotes:[]};
     const g=await fetch(api,{headers,signal:AbortSignal.timeout(10000)});
-    if(g.status===200){const j=await g.json();sha=j.sha;}
+    if(g.status===200){
+      const j=await g.json();
+      sha=j.sha;
+      try{
+        const parsed=JSON.parse(utf8b64decode(j.content));
+        remote={
+          observations:parsed.observations||[],
+          qHistory:parsed.qHistory||[],
+          reflectHistory:parsed.reflectHistory||[],
+          dumbNotes:parsed.dumbNotes||[],
+        };
+      }catch(e){/* 雲端內容讀不懂就當作空封存，不中斷同步 */}
+    }
+    // 合併：本機（含最近清單）+ 雲端既有封存，去重後就是完整歷史，一起寫回雲端
+    const merged={
+      observations:mergeUnique(db.observations||[],remote.observations,o=>o.date+'|'+o.time+'|'+o.text),
+      qHistory:mergeUnique(db.qHistory||[],remote.qHistory,r=>r.date+'|think'),
+      reflectHistory:mergeUnique(db.reflectHistory||[],remote.reflectHistory,r=>r.date+'|reflect'),
+      dumbNotes:mergeUnique(loadDumbNotes(),remote.dumbNotes,o=>o.date+'|'+o.time+'|'+o.text),
+    };
+    ['observations','qHistory','reflectHistory','dumbNotes'].forEach(k=>{
+      merged[k].sort((a,b)=>b.date.localeCompare(a.date));
+      if(merged[k].length>1000)merged[k]=merged[k].slice(0,1000); // 安全上限，正常使用不會碰到
+    });
+    const notes={syncedAt:new Date().toISOString(),...merged};
     const payload={message:'sync notes '+todayStr,content:b64utf8(JSON.stringify(notes,null,2))};
     if(sha)payload.sha=sha;
     const p=await fetch(api,{method:'PUT',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(10000)});
     if(!p.ok)throw new Error('HTTP '+p.status);
+    // 雲端封存成功後，本機才裁剪為近期窗口（streak 已改用獨立計數器，不受影響）
+    db.observations=trimByDate(db.observations);
+    db.qHistory=trimByDate(db.qHistory);
+    db.reflectHistory=trimByDate(db.reflectHistory);
+    save(db);
+    saveDumbNotes(trimByDate(loadDumbNotes()));
+    renderObservations();renderDumbNotes();renderReflectHistory();
     o.lastSync=new Date().toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
     ghStore(o);
     renderGhStatus();
-    showToast('☁️ 已同步到 GitHub ✓');
+    showToast('☁️ 已封存到 GitHub ✓ 本機已清理近期以外的資料');
   }catch(e){
-    showToast('☁️ 同步失敗（'+(e.message||'請檢查 Token 與網路')+'）');
+    showToast('☁️ 同步失敗（'+(e.message||'請檢查 Token 與網路')+'），本機資料未受影響');
   }
 }
 
@@ -1177,6 +1087,7 @@ window.addEventListener('hashchange',handleHash);
 renderTasks();
 renderWeekly();
 updateStreak();
+migrateDqStreak();
 renderDQ();
 renderGhStatus();
 initCameraBanner();
